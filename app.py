@@ -35,7 +35,6 @@ st.markdown(f"""
 <style>
     @import url('https://googleapis.com');
 
-    /* Aplicare font și fundal */
     .stApp {{
         {bg_style}
         background-size: cover !important;
@@ -49,7 +48,6 @@ st.markdown(f"""
         font-family: 'Rajdhani', sans-serif !important;
     }}
 
-    /* Bara de Navigare de Sus */
     .nav-bar {{
         background: rgba(0, 0, 0, 0.5);
         backdrop-filter: blur(10px);
@@ -62,7 +60,6 @@ st.markdown(f"""
         border: 1px solid rgba(255,255,255,0.05);
     }}
 
-    /* Cardurile Premium Glassmorphism */
     .premium-card {{
         background: {glass_bg};
         backdrop-filter: blur(20px);
@@ -74,7 +71,6 @@ st.markdown(f"""
         box-shadow: 0 12px 40px 0 {glass_shadow};
     }}
     
-    /* Ecran Scor și Minute */
     .live-badge {{
         background: #ef4444;
         color: white;
@@ -99,7 +95,6 @@ st.markdown(f"""
         margin: 10px 0;
     }}
 
-    /* Statistici Meci (Bare de progres și detalii) */
     .stat-row {{
         display: flex;
         justify-content: space-between;
@@ -119,7 +114,6 @@ st.markdown(f"""
         font-weight: 700;
     }}
 
-    /* Cote și Butoane */
     .cota-box {{
         background: rgba(0, 0, 0, 0.3);
         border: 1px solid rgba(0, 255, 102, 0.3);
@@ -133,7 +127,6 @@ st.markdown(f"""
         background: rgba(0, 255, 102, 0.1);
     }}
 
-    /* Suprascriere Butoane Streamlit */
     .stButton > button {{
         background: linear-gradient(135deg, #00ff66 0%, #00ea53 100%) !important;
         color: #040c08 !important;
@@ -187,7 +180,6 @@ with col_stanga:
         
         <hr style="border-color: rgba(255,255,255,0.08); margin: 15px 0;">
         
-        <!-- Statistici Live detaliate -->
         <div class="stat-row">
             <span class="stat-val">52%</span>
             <span class="stat-label">Posesie %</span>
@@ -262,3 +254,5 @@ with col_dreapta:
         st.markdown("""
         <div class="premium-card" style="border-color: rgba(34, 197, 94, 0.4);">
             <p style="font-size: 24px; font-weight: 800; color: #22c55e; margin: 0; text-align:center;">PACHET STANDARD LOW</p>
+            <h1 style="text-align: center; color: white; margin: 10px 0; font-size: 42px;">19 RON <span style='font-size:16px; color:#94a3b8;'>/ lună</span></h1>
+            <hr style="border-color: rgba(255,255,255,0.08);">
