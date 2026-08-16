@@ -24,8 +24,6 @@ def incarc_imagine_locala(cale_imagine):
 teren_base64 = incarc_imagine_locala("teren.jpg")
 logo_base64 = incarc_imagine_locala("logo.png")
 
-# Stiluri CSS simple și sigure (fără acolade problematice în interiorul textelor de meciuri)
-bg_style = ""
 if teren_base64:
     bg_style = f"background: linear-gradient(rgba(4, 14, 8, 0.94), rgba(2, 6, 4, 0.96)), url('data:image/jpeg;base64,{teren_base64}') !important; background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important; background-attachment: fixed !important;"
 else:
@@ -86,7 +84,6 @@ with col_meciuri:
     
     with tab_global:
         st.write("")
-        # Inserare widget live ScoreBat securizat
         st.markdown("""
             <div style="width:100%; height:550px; overflow:auto; background:rgba(5,15,10,0.9); border-radius:12px; border:1px solid rgba(0,255,102,0.2); padding:10px;">
                 <iframe src="https://scorebat.com" frameborder="0" width="100%" height="520px" allowfullscreen allow="autoplay; fullscreen"></iframe>
@@ -95,10 +92,11 @@ with col_meciuri:
         
     with tab_analiza:
         st.write("")
-        # Folosim containere și metrici native Streamlit pentru graficul simetric (100% Imun la erori de sintaxă)
         with st.container():
             st.markdown(f"<p style='text-align:center; color:#94a3b8; margin:0;'>MECIUL DE TOP DE AZI &bull; {data_azi}</p>", unsafe_allow_html=True)
-            st.markdown("<h2 style='text-align:center; color:#00ff66; margin: 5px 0;'>ANALIZĂ DERBY &bull; SUPERLIGA</h2>", unsafe_allow_html=True)
+            # CORECTAT: Am adăugat numele echipelor direct în titlul central din grafic
+            st.markdown("<h2 style='text-align:center; color:#00ff66; margin: 5px 0;'>BAȘAKȘEHIR vs KOCAELISPOR</h2>", unsafe_allow_html=True)
+            st.markdown("<p style='text-align:center; color:#a0aec0; font-size:14px; margin-top:2px;'>SUPER LIG &bull; TURKEY</p>", unsafe_allow_html=True)
             st.write("---")
             
             # Rândul 1 de cifre meci
@@ -143,7 +141,7 @@ with col_meciuri:
             st.progress(0.50)
             
             st.write("---")
-            st.info(f"🔸 **Sistem Algoritm Automat PariuriGO**\nMeci extras și calculat automat pentru data de {data_azi}")
+            st.info(f"🔸 **Sistem Algoritm Automat PariuriGO**\nMeci extras și calculat automat în funcție de statistici")
 
 # 4. SECȚIUNE ABONAMENTE VIP REPARATĂ TOTAL (Dreapta)
 with col_abonamente:
@@ -151,7 +149,6 @@ with col_abonamente:
     
     tab_low, tab_med, tab_high = st.tabs(["🟢 LOW", "🟡 MEDIUM", "🔥 HIGH"])
     
-    # Pune aici linkul tău de Telegram când ești gata, boss!
     link_telegram_afacere = "https://t.me"
     
     with tab_low:
@@ -163,7 +160,6 @@ with col_abonamente:
             st.write("✅ Cote sigure selectate din ligile mari")
             st.write("✅ Acces grup comunitate chat")
             st.write("")
-            # Link-ul deschide direct Telegramul vostru într-o filă nouă
             st.link_button("Abonare LOW 🚀", link_telegram_afacere, use_container_width=True)
 
     with tab_med:
