@@ -9,7 +9,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Funcție securizată pentru citirea imaginii de fundal de pe GitHub
+# Funcție securizată pentru citirea imaginii de fundal (teren.png) de pe GitHub
 def incarc_teren_fotbal(cale_imagine):
     try:
         with open(cale_imagine, "rb") as f:
@@ -19,21 +19,41 @@ def incarc_teren_fotbal(cale_imagine):
 
 img_data = incarc_teren_fotbal("teren.png")
 
-# Aplicarea stilului GOLDEN/DARK extras direct din imaginea ta
-css_fond = ""
+# Link securizat către o insignă albă, curată cu o minge de fotbal (folosită ca watermark)
+insigna_minge_url = "https://flaticon.com"
+
+# Aplicare design verde cu terenul tău + insigna mare cu minge în centrul fundalului
 if img_data:
-    # Dacă ai teren.png urcat, îl combină cu tema neagră-aurie din imaginea ta
-    css_fond = f"background: linear-gradient(rgba(10, 10, 10, 0.95), rgba(5, 5, 5, 0.98)), url('data:image/png;base64,{img_data}') !important; background-size: cover !important; background-attachment: fixed !important;"
+    # Combinăm imaginea terenului de fotbal (teren.png) cu insigna mare cu minge poziționată pe centru
+    bg_style = f"""
+        background-image: 
+            linear-gradient(rgba(10, 24, 15, 0.92), rgba(10, 24, 15, 0.92)), 
+            url('{insigna_minge_url}'), 
+            url('data:image/png;base64,{img_data}') !important;
+        background-blend-mode: normal, overlay, normal !important;
+        background-size: cover, 400px, cover !important; /* Dimensiunea insignei este de 400px în centru */
+        background-position: center, center, center !important;
+        background-repeat: no-repeat, no-repeat, no-repeat !important;
+        background-attachment: fixed !important;
+    """
 else:
-    # Fundalul oficial stil Golden Analytics (Negru profund cu reflexii calde)
-    css_fond = "background: radial-gradient(circle at center, #141414 0%, #080808 100%) !important;"
+    # Soluție de rezervă în caz că teren.png lipsește temporar din folder
+    bg_style = f"""
+        background-image: 
+            linear-gradient(rgba(10, 24, 15, 0.95), rgba(10, 24, 15, 0.95)), 
+            url('{insigna_minge_url}') !important;
+        background-size: cover, 450px !important;
+        background-position: center, center !important;
+        background-repeat: no-repeat, no-repeat !important;
+        background-color: #06110b !important;
+    """
 
 st.markdown(f"""
 <style>
     @import url('https://googleapis.com');
     
     .stApp {{
-        {css_fond}
+        {bg_style}
         color: #ffffff !important;
         font-family: 'Rajdhani', sans-serif !important;
     }}
@@ -42,26 +62,26 @@ st.markdown(f"""
         font-weight: 700 !important;
     }}
     
-    /* Carduri tip sticlă mată în nuanțe închise cu accente fine aurii */
+    /* Carduri tip sticlă mată în nuanțe verzi, perfect luminate din spate de fundal */
     div[data-testid="stVerticalBlockBorder"] {{
-        background: rgba(18, 18, 18, 0.8) !important;
-        backdrop-filter: blur(15px) !important;
-        border: 1px solid rgba(234, 179, 8, 0.15) !important;
+        background: rgba(13, 31, 23, 0.72) !important;
+        backdrop-filter: blur(16px) !important;
+        border: 1px solid rgba(0, 255, 102, 0.2) !important;
         border-radius: 16px !important;
         padding: 22px !important;
-        box-shadow: 0 10px 40px 0 rgba(0,0,0,0.8) !important;
+        box-shadow: 0 10px 40px 0 rgba(0,0,0,0.6) !important;
     }}
 
-    /* Stil pentru barele de progres native Streamlit - le facem aurii/portocalii */
+    /* Barele de progres native configurate pe verde aprins asortat cu tema */
     div[data-testid="stProgress"] div[role="progressbar"] {{
-        background: linear-gradient(90deg, #ff9900 0%, #eab308 100%) !important;
+        background: linear-gradient(90deg, #00ea53 0%, #00ff66 100%) !important;
     }}
 </style>
 """, unsafe_allow_html=True)
 
 # 2. Header-ul principal al aplicației
 st.title("⚽ PARIURIGO &bull; LIVE CENTER")
-st.caption("Meciurile Reale de Astăzi &bull; Interfață Premium Golden Analytics")
+st.caption("Meciurile Reale de Astăzi &bull; Interfață Premium Stadium Glass cu Watermark")
 st.write("---")
 
 # Împărțirea ecranului în două secțiuni: Meciuri (Stânga) și Abonamente (Dreapta)
@@ -79,7 +99,7 @@ with col_meciuri:
         with col_header2:
             st.markdown("<p style='text-align:right; color:#94a3b8; margin:0;'>ROMÂNIA SUPERLIGA</p>", unsafe_allow_html=True)
             
-        st.markdown("<h2 style='text-align:center; color:#eab308; margin: 10px 0;'>OȚELUL GALAȚI &nbsp;&nbsp; 1 - 1 &nbsp;&nbsp; UNIV. CRAIOVA</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align:center; color:#00ff66; margin: 10px 0;'>OȚELUL GALAȚI &nbsp;&nbsp; 1 - 1 &nbsp;&nbsp; UNIV. CRAIOVA</h2>", unsafe_allow_html=True)
         st.write("---")
         
         c1, c2, c3, c4 = st.columns(4)
