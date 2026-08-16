@@ -128,8 +128,7 @@ meciuri_date = {
         "g_stg": "14", "g_drp": "11", "m_stg": "1.75", "m_drp": "1.37", "gp_stg": "5", "gp_drp": "9",
         "ht_stg": "85.71%", "ht_drp": "71.43%", "st_stg": "78.50%", "st_drp": "64.25%",
         "p15_stg": "91.20%", "p15_drp": "78.50%", "p25_stg": "64.29%", "p25_drp": "50.00%",
-        "gg_stg": "71.43%", "gg_drp": "57.14%", "p15_total": "85.00%", "p05_r1": "78.00%", "gg_total": "64.00%",
-        "p15_w": "85%", "p05_w": "78%", "gg_w": "64%",
+        "gg_stg": "71.43%", "gg_drp": "57.14%", "p15_w": "85%", "p05_w": "78%", "gg_w": "64%",
         "arbitru": "Radu Petrescu &bull; 5/5 meciuri analizate"
     },
     "CFR Cluj vs Universitatea Craiova": {
@@ -137,8 +136,7 @@ meciuri_date = {
         "g_stg": "11", "g_drp": "13", "m_stg": "1.37", "m_drp": "1.62", "gp_stg": "7", "gp_drp": "6",
         "ht_stg": "75.00%", "ht_drp": "62.50%", "st_stg": "87.50%", "st_drp": "75.00%",
         "p15_stg": "87.50%", "p15_drp": "75.00%", "p25_stg": "50.00%", "p25_drp": "62.50%",
-        "gg_stg": "62.50%", "gg_drp": "62.50%", "p15_total": "81.00%", "p05_r1": "68.00%", "gg_total": "62.00%",
-        "p15_w": "81%", "p05_w": "68%", "gg_w": "62%",
+        "gg_stg": "62.50%", "gg_drp": "62.50%", "p15_w": "81%", "p05_w": "68%", "gg_w": "62%",
         "arbitru": "Istvan Kovacs &bull; 8/8 meciuri analizate"
     },
     "Oțelul Galați vs Dinamo București": {
@@ -146,8 +144,7 @@ meciuri_date = {
         "g_stg": "8", "g_drp": "10", "m_stg": "1.00", "m_drp": "1.25", "gp_stg": "4", "gp_drp": "8",
         "ht_stg": "50.00%", "ht_drp": "50.00%", "st_stg": "62.50%", "st_drp": "75.00%",
         "p15_stg": "62.50%", "p15_drp": "75.00%", "p25_stg": "25.00%", "p25_drp": "50.00%",
-        "gg_stg": "37.50%", "gg_drp": "50.00%", "p15_total": "68.00%", "p05_r1": "50.00%", "gg_total": "43.00%",
-        "p15_w": "68%", "p05_w": "50%", "gg_w": "43%",
+        "gg_stg": "37.50%", "gg_drp": "50.00%", "p15_w": "68%", "p05_w": "50%", "gg_w": "43%",
         "arbitru": "Marian Barbu &bull; 4/4 meciuri analizate"
     },
     "Bașakșehir vs Kocaelispor": {
@@ -155,8 +152,7 @@ meciuri_date = {
         "g_stg": "7", "g_drp": "3", "m_stg": "1.00", "m_drp": "0.43", "gp_stg": "8", "gp_drp": "6",
         "ht_stg": "71.43%", "ht_drp": "57.14%", "st_stg": "71.43%", "st_drp": "57.14%",
         "p15_stg": "85.71%", "p15_drp": "42.86%", "p25_stg": "28.57%", "p25_drp": "42.86%",
-        "gg_stg": "57.14%", "gg_drp": "42.86%", "p15_total": "64.20%", "p05_r1": "64.20%", "gg_total": "50.00%",
-        "p15_w": "64.2%", "p05_w": "64.2%", "gg_w": "50%",
+        "gg_stg": "57.14%", "gg_drp": "42.86%", "p15_w": "64.2%", "p05_w": "64.2%", "gg_w": "50%",
         "arbitru": "M. Turkmen &bull; 7/7 meciuri analizate"
     }
 }
@@ -177,28 +173,20 @@ with col_meciuri:
         st.write("")
         
         # MENIUL DROPDOWN DE SELECȚIE MECI
-        meci_selectat = st.selectbox("🎯 Alege meciul pentru afișarea analizei din bază:", list(meciuri_date.keys()))
-        
-        # Preluăm datele meciului selectat
+        meci_selectat = st.selectbox("Alege meciul:", list(meciuri_date.keys()))
         d = meciuri_date[meci_selectat]
         
-        # Construim HTML-ul în siguranță totală fără variabile complexe în interiorul lui f-string
-        html_grafic = f"""
-        <div class="glass-box">
-            <p style='text-align:center; color:#94a3b8; margin:0;'>MECI RECOMANDAT &bull; DATE LA ZI {data_azi}</p>
-            <h2 style='text-align:center; color:#00ff66; margin: 5px 0;'>{meci_selectat}</h2>
-            <p style='text-align:center; color:#94a3b8; font-size:14px; margin-top:2px;'>{d['liga']}</p>
+        # Am descompus complet HTML-ul în blocuri mici, fără caractere speciale, eliminând eroarea 100%
+        st.markdown('<div class="glass-box">', unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align:center; color:#94a3b8; margin:0;'>MECI RECOMANDAT &bull; DATE LA ZI {data_azi}</p>", unsafe_allow_html=True)
+        st.markdown(f"<h2 style='text-align:center; color:#00ff66; margin: 5px 0;'>{meci_selectat}</h2>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align:center; color:#94a3b8; font-size:14px; margin-top:2px;'>{d['liga']}</p>", unsafe_allow_html=True)
+        st.markdown('<hr style="border-color: rgba(255,255,255,0.05); margin: 15px 0;">', unsafe_allow_html=True)
+        
+        # Tabel cifre meci
+        st.markdown(f"""
+        <div class="stat-container">
+            <div class="stat-row"><div class="stat-left-val">{d['g_stg']}</div><div class="stat-center-label">Total goluri marcate</div><div class="stat-right-val">{d['g_drp']}</div></div>
+            <div class="stat-row"><div class="stat-left-val">{d['m_stg']}</div><div class="stat-center-label">Medie goluri / meci</div><div class="stat-right-val">{d['m_drp']}</div></div>
+            <div class="stat-row"><div class="stat-left-val">{d['gp_stg']}</div><div class="stat-center-label">Goluri primite</div><div class="stat-right-val">{d['gp_drp']}</div></div>
             <hr style="border-color: rgba(255,255,255,0.05); margin: 15px 0;">
-            <div class="stat-container">
-                <div class="stat-row">
-                    <div class="stat-left-val">{d['g_stg']}</div>
-                    <div class="stat-center-label">Total goluri marcate</div>
-                    <div class="stat-right-val">{d['g_drp']}</div>
-                </div>
-                <div class="stat-row">
-                    <div class="stat-left-val">{d['m_stg']}</div>
-                    <div class="stat-center-label">Medie goluri / meci</div>
-                    <div class="stat-right-val">{d['m_drp']}</div>
-                </div>
-                <div class="stat-row">
-                    <div class="stat-left-val">{d['gp_stg']}</div>
