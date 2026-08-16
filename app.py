@@ -10,10 +10,10 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Determinarea automată a datei curente
+# Determinarea datei curente
 data_azi = datetime.now().strftime("%d.%m.%Y")
 
-# Funcție securizată pentru citirea imaginilor de pe GitHub
+# Funcție pentru citirea imaginii locale JPG de pe GitHub
 def incarc_imagine_locala(cale_imagine):
     try:
         with open(cale_imagine, "rb") as f:
@@ -56,7 +56,7 @@ st.markdown(f"""
         margin-bottom: 25px !important;
     }}
 
-    /* Selectbox custom verde */
+    /* Meniu selectare meci */
     div[data-testid="stSelectbox"] div[data-baseweb="select"] {{
         background-color: rgba(10, 30, 18, 0.9) !important;
         border: 1px solid #00ff66 !important;
@@ -109,8 +109,9 @@ st.markdown(f"""
         font-weight: 800;
         color: #ffffff;
     }}
+    .green-footer-box {{ background: rgba(0, 255, 102, 0.05); border: 1px solid rgba(0, 255, 102, 0.18); border-radius: 10px; padding: 12px 20px; margin-top: 20px; display: flex; align-items: center; gap: 12px; }}
 
-    /* ANIMAȚIE DE TIP PULS / GLOW PENTRU BUTOANELE DIN DREAPTA */
+    /* ANIMAȚIE MARE DE TIP PULS / GLOW PENTRU BUTOANELE VIP */
     .animated-btn {{
         background: linear-gradient(135deg, #00ff66 0%, #00bc43 100%) !important;
         color: #000000 !important;
@@ -136,7 +137,7 @@ st.markdown(f"""
 </style>
 """, unsafe_allow_html=True)
 
-# 2. Header-ul principal al aplicației cu Logo
+# 2. Header-ul principal cu Logo
 if logo_base64:
     st.markdown(f'<div style="text-align: center; margin-bottom: 15px;"><img src="data:image/png;base64,{logo_base64}" width="280"></div>', unsafe_allow_html=True)
 else:
@@ -144,19 +145,19 @@ else:
 
 st.write("---")
 
-# Împărțirea ecranului (Fluxul în Stânga, Abonamente în Dreapta)
+# Împărțirea ecranului (Mecuri în Stânga, Abonamente în Dreapta)
 col_meciuri, col_abonamente = st.columns([1.3, 0.7], gap="large")
 
-# BAZA DE DATE CURATĂ PENTRU STATISTICILE MECIURILOR REALE
+# BAZA DE DATE MECIURI REALE SUPERLIGA
 meciuri_date = {
     "FCSB vs Rapid București": {
         "liga": "ROMÂNIA SUPERLIGA",
-        "g_gz": "7", "g_os": "3", "med_gz": "1.00", "med_os": "0.43", "gp_gz": "8", "gp_os": "6",
-        "ht_gz": "71.43%", "ht_os": "57.14%", "st_gz": "71.43%", "st_os": "57.14%",
-        "p15_gz": "85.71%", "p15_os": "42.86%", "p25_gz": "28.57%", "p25_os": "0.00%",
-        "gg_gz": "57.14%", "gg_os": "42.86%", "c_gz": "14.29%", "c_os": "28.57%",
+        "g_gz": "14", "g_os": "11", "med_gz": "1.75", "med_os": "1.37", "gp_gz": "5", "gp_os": "9",
+        "ht_gz": "85.71%", "ht_os": "71.43%", "st_gz": "78.50%", "st_os": "64.25%",
+        "p15_gz": "91.20%", "p15_os": "78.50%", "p25_gz": "64.29%", "p25_os": "50.00%",
+        "gg_gz": "71.43%", "gg_os": "57.14%", "c_gz": "14.29%", "c_os": "28.57%",
         "cor_gz": "-", "cor_os": "14.29%",
-        "w_p15": "64.29%", "w_p25": "14.29%", "w_p05r1": "64.29%", "w_p05r2": "64.29%", "w_gg": "50.00%", "w_c35": "21.43%", "w_cor95": "7.14%"
+        "w_p15": "85.00%", "w_p25": "64.29%", "w_p05r1": "85.71%", "w_p05r2": "78.50%", "w_gg": "71.43%", "w_c35": "21.43%", "w_cor95": "14.29%"
     },
     "CFR Cluj vs Universitatea Craiova": {
         "liga": "ROMÂNIA SUPERLIGA",
@@ -166,10 +167,19 @@ meciuri_date = {
         "gg_gz": "62.50%", "gg_os": "62.50%", "c_gz": "25.00%", "c_os": "37.50%",
         "cor_gz": "12.50%", "cor_os": "25.00%",
         "w_p15": "81.00%", "w_p25": "56.00%", "w_p05r1": "68.00%", "w_p05r2": "81.00%", "w_gg": "62.00%", "w_c35": "31.00%", "w_cor95": "18.00%"
+    },
+    "Bașakșehir vs Kocaelispor": {
+        "liga": "SUPER LIG &bull; TURKEY",
+        "g_gz": "7", "g_os": "3", "med_gz": "1.00", "med_os": "0.43", "gp_gz": "8", "gp_os": "6",
+        "ht_gz": "71.43%", "ht_os": "57.14%", "st_gz": "71.43%", "st_os": "57.14%",
+        "p15_gz": "85.71%", "p15_os": "42.86%", "p25_gz": "28.57%", "p25_os": "42.86%",
+        "gg_gz": "57.14%", "gg_os": "42.86%", "c_gz": "14.29%", "c_os": "28.57%",
+        "cor_gz": "-", "cor_os": "14.29%",
+        "w_p15": "64.29%", "w_p25": "14.29%", "w_p05r1": "64.29%", "w_p05r2": "64.29%", "w_gg": "50.00%", "w_c35": "21.43%", "w_cor95": "7.14%"
     }
 }
 
-# 3. SECȚIUNEA DIN STÂNGA: WIDGET REALE + GRAFIC PREMIUM RECONSTRUIT EXACT CA ÎN POZĂ
+# 3. SECȚIUNEA DIN STÂNGA: WIDGET REALE + GRAFIC PREMIUM RECONSTRUIT VERDE
 with col_meciuri:
     st.subheader("🌍 Meciuri Live din Toate Ligele Lumii")
     
@@ -182,23 +192,16 @@ with col_meciuri:
     st.write("---")
     st.subheader("📊 Modul Algoritm & Probabilități (Meci de Top)")
     
-    meci_ales = st.selectbox("🎯 Schimbă meciul pentru analiză automată:", list(meciuri_date.keys()))
+    meci_ales = st.selectbox("🎯 Schimbă meciul din ziua respectivă:", list(meciuri_date.keys()))
     m = meciuri_date[meci_ales]
     
-    # GRAFIC PREMIUM IDENTIC CU POZA, DAR COMPLET ÎN NUANȚE VERZI NEON
-    html_grafic = f"""
-    <div class="glass-box-container">
-        <p style='text-align:center; color:#94a3b8; margin:0;'>MECI RECOMANDAT &bull; DATE LA ZI {data_azi}</p>
-        <h2 style='text-align:center; color:#00ff66; margin: 5px 0;'>{meci_ales}</h2>
-        <p style='text-align:center; color:#94a3b8; font-size:14px; margin-top:2px;'>{m['liga']}</p>
-        <hr style="border-color: rgba(255,255,255,0.05); margin: 15px 0;">
-        
-        <div class="stat-container">
-            <div class="stat-row"><div class="stat-left-val">{m['g_gz']}</div><div class="stat-center-label">Total goluri marcate</div><div class="stat-right-val">{m['g_os']}</div></div>
-            <div class="stat-row"><div class="stat-left-val">{m['med_gz']}</div><div class="stat-center-label">Medie goluri</div><div class="stat-right-val">{m['med_os']}</div></div>
-            <div class="stat-row"><div class="stat-left-val">{m['gp_gz']}</div><div class="stat-center-label">Goluri primite</div><div class="stat-right-val">{m['gp_os']}</div></div>
-            <hr style="border-color: rgba(255,255,255,0.05); margin: 15px 0;">
-            <div class="stat-row"><div class="stat-left-val"><span class="green-badge">{m['ht_gz']}</span></div><div class="stat-center-label">Peste 0.5 HT</div><div class="stat-right-val"><span class="green-badge">{m['ht_os']}</span></div></div>
-            <div class="stat-row"><div class="stat-left-val"><span class="green-badge">{m['st_gz']}</span></div><div class="stat-center-label">Peste 0.5 ST</div><div class="stat-right-val"><span class="green-badge">{m['st_os']}</span></div></div>
-            <div class="stat-row"><div class="stat-left-val"><span class="green-badge">{m['p15_gz']}</span></div><div class="stat-center-label">Peste 1.5 goluri</div><div class="stat-right-val"><span class="green-badge">{m['p15_os']}</span></div></div>
-            <div class="stat-row"><div class="stat-left-val" style="color:#00ff66;">{m['p25_gz']}</div><div class="stat-center-label">Peste 2.5 goluri</div><div class="stat-right-val" style="color:#00ff66;">{m['p25_os']}</div></div>
+    st.markdown('<div class="glass-box-container">', unsafe_allow_html=True)
+    st.markdown(f"<p style='text-align:center; color:#94a3b8; margin:0;'>MECI RECOMANDAT &bull; DATE LA ZI {data_azi}</p>", unsafe_allow_html=True)
+    st.markdown(f"<h2 style='text-align:center; color:#00ff66; margin: 5px 0;'>{meci_ales}</h2>", unsafe_allow_html=True)
+    st.markdown(f"<p style='text-align:center; color:#94a3b8; font-size:14px; margin-top:2px;'>{m['liga']}</p>", unsafe_allow_html=True)
+    st.markdown('<hr style="border-color: rgba(255,255,255,0.05); margin: 15px 0;">', unsafe_allow_html=True)
+    
+    st.markdown('<div class="stat-container">', unsafe_allow_html=True)
+    st.markdown(f'<div class="stat-row"><div class="stat-left-val">{m["g_gz"]}</div><div class="stat-center-label">Total goluri marcate</div><div class="stat-right-val">{m["g_os"]}</div></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="stat-row"><div class="stat-left-val">{m["med_gz"]}</div><div class="stat-center-label">Medie goluri</div><div class="stat-right-val">{m["med_os"]}</div></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="stat-row"><div class="stat-left-val">{m["gp_gz"]}</div><div class="stat-center-label">Goluri primite</div><div class="stat-right-val">{m["gp_os"]}</div></div>', unsafe_allow_html=True)
