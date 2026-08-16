@@ -1,5 +1,6 @@
 import streamlit as st
 import base64
+from datetime import datetime
 
 # 1. Configurare Pagină (MANDATORIU PRIMA LINIE)
 st.set_page_config(
@@ -8,6 +9,9 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="collapsed"
 )
+
+# Determinarea automată a datei curente
+data_azi = datetime.now().strftime("%d.%m.%Y")
 
 # Funcție pentru citirea imaginii locale JPG de pe GitHub și transformarea ei în fundal
 def decodifica_imagine_locala(cale_imagine):
@@ -42,7 +46,7 @@ st.markdown(f"""
     }}
     
     /* Carduri tip sticlă mată în nuanțe verzi */
-    div[data-testid="stVerticalBlockBorder"] {{
+    .glass-box {{
         background: rgba(8, 22, 15, 0.86) !important;
         backdrop-filter: blur(20px) !important;
         -webkit-backdrop-filter: blur(20px) !important;
@@ -51,6 +55,30 @@ st.markdown(f"""
         padding: 24px !important;
         box-shadow: 0 12px 40px 0 rgba(0,0,0,0.65) !important;
         margin-bottom: 25px !important;
+    }}
+
+    /* Stiluri pentru selectbox native Streamlit să se asorteze */
+    div[data-testid="stSelectbox"] div[data-baseweb="select"] {{
+        background-color: rgba(10, 30, 18, 0.9) !important;
+        border: 1px solid #00ff66 !important;
+        color: #ffffff !important;
+        border-radius: 8px !important;
+    }}
+
+    /* Stiluri pentru butoanele mari din pachete */
+    .stButton > button {{
+        background: linear-gradient(135deg, #00ff66 0%, #00bc43 100%) !important;
+        color: #000000 !important;
+        font-weight: 800 !important;
+        font-size: 16px !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 10px 20px !important;
+        transition: all 0.2s ease-in-out !important;
+    }}
+    .stButton > button:hover {{
+        transform: translateY(-2px) !important;
+        box-shadow: 0 0 15px rgba(0, 255, 102, 0.5) !important;
     }}
 
     /* Stiluri grafic în tentă verde */
@@ -74,7 +102,6 @@ st.markdown(f"""
     .bar-label {{ width: 25%; font-size: 16px; font-weight: 700; color: #ffffff; }}
     .bar-container {{ width: 75%; background: rgba(255, 255, 255, 0.05); border-radius: 8px; overflow: hidden; height: 24px; position: relative; border: 1px solid rgba(255,255,255,0.05); }}
     .bar-fill-intense-green {{ height: 100%; background: linear-gradient(90deg, #008f33 0%, #00ff66 100%); border-radius: 8px; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; font-size: 13px; font-weight: 800; color: #000000; }}
-    .bar-fill-soft-green {{ height: 100%; background: linear-gradient(90deg, #024c1c 0%, #00bc43 100%); border-radius: 8px; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; font-size: 13px; font-weight: 800; color: #ffffff; }}
     .green-footer-box {{ background: rgba(0, 255, 102, 0.05); border: 1px solid rgba(0, 255, 102, 0.18); border-radius: 10px; padding: 12px 20px; margin-top: 20px; display: flex; align-items: center; gap: 12px; }}
 </style>
 """, unsafe_allow_html=True)
@@ -94,14 +121,48 @@ st.write("---")
 # Împărțirea ecranului (Fluxul în Stânga, Abonamente în Dreapta)
 col_meciuri, col_abonamente = st.columns([1.3, 0.7], gap="large")
 
-# 3. SECȚIUNEA DIN STÂNGA: REPARATĂ CU JOCURI REALE ȘI STATISTICI PE SATE
+# Baza de date pentru meciuri selectabile (Poți modifica tu numele sau cifrele de aici oricând!)
+meciuri_date = {
+    "FCSB vs Rapid București": {
+        "liga": "ROMÂNIA SUPERLIGA",
+        "goluri_mar": "14 - 11", "med_gol": "1.75 - 1.37", "goluri_pri": "5 - 9",
+        "ht_stg": "85.71%", "ht_drp": "71.43%", "st_stg": "78.50%", "st_drp": "64.25%",
+        "p15_stg": "91.20%", "p15_drp": "78.50%", "p25_stg": "64.29%", "p25_drp": "50.00%",
+        "gg_stg": "71.43%", "gg_drp": "57.14%", "p15_total": 85.0, "p05_r1": 78.0, "gg_total": 64.0,
+        "arbitru": "Radu Petrescu &bull; 5/5 meciuri analizate"
+    },
+    "CFR Cluj vs Universitatea Craiova": {
+        "liga": "ROMÂNIA SUPERLIGA",
+        "goluri_mar": "11 - 13", "med_gol": "1.37 - 1.62", "goluri_pri": "7 - 6",
+        "ht_stg": "75.00%", "ht_drp": "62.50%", "st_stg": "87.50%", "st_drp": "75.00%",
+        "p15_stg": "87.50%", "p15_drp": "75.00%", "p25_stg": "50.00%", "p25_drp": "62.50%",
+        "gg_stg": "62.50%", "gg_drp": "62.50%", "p15_total": 81.0, "p05_r1": 68.0, "gg_total": 62.0,
+        "arbitru": "Istvan Kovacs &bull; 8/8 meciuri analizate"
+    },
+    "Oțelul Galați vs Dinamo București": {
+        "liga": "ROMÂNIA SUPERLIGA",
+        "goluri_mar": "8 - 10", "med_gol": "1.00 - 1.25", "goluri_pri": "4 - 8",
+        "ht_stg": "50.00%", "ht_drp": "50.00%", "st_stg": "62.50%", "st_drp": "75.00%",
+        "p15_stg": "62.50%", "p15_drp": "75.00%", "p25_stg": "25.00%", "p25_drp": "50.00%",
+        "gg_stg": "37.50%", "gg_drp": "50.00%", "p15_total": 68.0, "p05_r1": 50.0, "gg_total": 43.0,
+        "arbitru": "Marian Barbu &bull; 4/4 meciuri analizate"
+    },
+    "Bașakșehir vs Kocaelispor": {
+        "liga": "SUPER LIG &bull; TURKEY",
+        "goluri_mar": "7 - 3", "med_gol": "1.00 - 0.43", "goluri_pri": "8 - 6",
+        "ht_stg": "71.43%", "ht_drp": "57.14%", "st_stg": "71.43%", "st_drp": "57.14%",
+        "p15_stg": "85.71%", "p15_drp": "42.86%", "p25_stg": "28.57%", "p25_drp": "42.86%",
+        "gg_stg": "57.14%", "gg_drp": "42.86%", "p15_total": 64.29%, "p05_r1": 64.29%, "gg_total": 50.0,
+        "arbitru": "M. Turkmen &bull; 7/7 meciuri analizate"
+    }
+}
+
+# 3. SECȚIUNEA DIN STÂNGA: WIDGET REALE + STATISTICI AUTOMATE PE ZILE
 with col_meciuri:
-    # Am creat două secțiuni separate (Tab-uri clare) ca Streamlit să nu mai ascundă graficul sub ScoreBat
-    tab_global, tab_analiza = st.tabs(["🌍 TOATE MECIURILE LIVE", "📊 GRAFIC STATISTICI PREMIUM"])
+    tab_global, tab_analiza = st.tabs(["🌍 TOATE MECIURILE LIVE", "📊 SELECTEAZĂ ȘI RECOMANDĂ MECI"])
     
     with tab_global:
-        st.caption("Scoruri reale din toată lumea actualizate automat secundă de secundă.")
-        # Inserare widget live ScoreBat
+        st.write("")
         st.markdown("""
             <div style="width:100%; height:550px; overflow:auto; background:rgba(5,15,10,0.9); border-radius:12px; border:1px solid rgba(0,255,102,0.2); padding:10px;">
                 <iframe src="https://scorebat.com" frameborder="0" width="100%" height="520px" allowfullscreen allow="autoplay; fullscreen"></iframe>
@@ -109,86 +170,34 @@ with col_meciuri:
         """, unsafe_allow_html=True)
         
     with tab_analiza:
-        st.caption("Analiză matematică avansată bazată pe istoricul meciurilor.")
-        # Graficul tău premium copiat exact din poză, în tentă verde
-        with st.container():
-            st.markdown("<p style='text-align:center; color:#94a3b8; margin:0;'>SUPER LIG &bull; TURKEY</p>", unsafe_allow_html=True)
-            st.markdown("<h2 style='text-align:center; color:#00ff66; margin: 5px 0;'>BAȘAKȘEHIR vs KOCAELISPOR</h2>", unsafe_allow_html=True)
-            st.write("---")
-            
-            st.markdown("""
+        st.write("")
+        
+        # MENIUL DROPDOWN DE SELECȚIE MECI
+        meci_selectat = st.selectbox("🎯 Alege meciul pentru afișarea analizei din bază:", list(meciuri_date.keys()))
+        
+        # Preluăm automat datele meciului selectat din baza de mai sus
+        d = meciuri_date[meci_selectat]
+        
+        # Graficul premium dinamic asamblat curat
+        st.markdown(f"""
+        <div class="glass-box">
+            <p style='text-align:center; color:#94a3b8; margin:0;'>MECI RECOMANDAT &bull; DATE LA ZI {data_azi}</p>
+            <h2 style='text-align:center; color:#00ff66; margin: 5px 0;'>{meci_selectat}</h2>
+            <p style='text-align:center; color:#94a3b8; font-size:14px; margin-top:2px;'>{d['liga']}</p>
+            <hr style="border-color: rgba(255,255,255,0.05); margin: 15px 0;">
             <div class="stat-container">
                 <div class="stat-row">
-                    <div class="stat-left-val">7</div>
+                    <div class="stat-left-val">{d['goluri_mar'].split(' - ')[0]}</div>
                     <div class="stat-center-label">Total goluri marcate</div>
-                    <div class="stat-right-val">3</div>
+                    <div class="stat-right-val">{d['goluri_mar'].split(' - ')[1]}</div>
                 </div>
                 <div class="stat-row">
-                    <div class="stat-left-val">1.00</div>
-                    <div class="stat-center-label">Medie goluri</div>
-                    <div class="stat-right-val">0.43</div>
+                    <div class="stat-left-val">{d['med_gol'].split(' - ')[0]}</div>
+                    <div class="stat-center-label">Medie goluri / meci</div>
+                    <div class="stat-right-val">{d['med_gol'].split(' - ')[1]}</div>
                 </div>
                 <div class="stat-row">
-                    <div class="stat-left-val">8</div>
+                    <div class="stat-left-val">{d['goluri_pri'].split(' - ')[0]}</div>
                     <div class="stat-center-label">Goluri primite</div>
-                    <div class="stat-right-val">6</div>
+                    <div class="stat-right-val">{d['goluri_pri'].split(' - ')[1]}</div>
                 </div>
-                <hr style="border-color: rgba(255,255,255,0.05); margin: 15px 0;">
-                <div class="stat-row">
-                    <div class="stat-left-val"><span class="green-badge">71.43%</span></div>
-                    <div class="stat-center-label">Peste 0.5 HT</div>
-                    <div class="stat-right-val"><span class="green-badge">57.14%</span></div>
-                </div>
-                <div class="stat-row">
-                    <div class="stat-left-val"><span class="green-badge">71.43%</span></div>
-                    <div class="stat-center-label">Peste 0.5 ST</div>
-                    <div class="stat-right-val"><span class="green-badge">57.14%</span></div>
-                </div>
-                <div class="stat-row">
-                    <div class="stat-left-val"><span class="green-badge">85.71%</span></div>
-                    <div class="stat-center-label">Peste 1.5 goluri</div>
-                    <div class="stat-right-val"><span class="green-badge">42.86%</span></div>
-                </div>
-                <div class="stat-row">
-                    <div class="stat-left-val" style="color:#00ff66;">28.57%</div>
-                    <div class="stat-center-label">Peste 2.5 goluri</div>
-                    <div class="stat-right-val" style="color:#00ff66;">42.86%</div>
-                </div>
-                <div class="stat-row">
-                    <div class="stat-left-val" style="color:#00ff66;">57.14%</div>
-                    <div class="stat-center-label">Ambele marchează</div>
-                    <div class="stat-right-val" style="color:#00ff66;">42.86%</div>
-                </div>
-            </div>
-            <hr style="border-color: rgba(255,255,255,0.05); margin: 20px 0;">
-            """, unsafe_allow_html=True)
-            
-            st.write("**📈 EVOLUȚIE PROBABILITĂȚI GENERALE GLOBAL:**")
-            st.markdown("""
-            <div class="bar-wrapper">
-                <div class="bar-label">Peste 1.5:</div>
-                <div class="bar-container"><div class="bar-fill-intense-green" style="width: 64.29%;">64.29%</div></div>
-            </div>
-            <div class="bar-wrapper">
-                <div class="bar-label">Peste 0.5 R1:</div>
-                <div class="bar-container"><div class="bar-fill-intense-green" style="width: 64.29%;">64.29%</div></div>
-            </div>
-            <div class="bar-wrapper">
-                <div class="bar-label">Ambele marchează:</div>
-                <div class="bar-container"><div class="bar-fill-intense-green" style="width: 50.00%;">50.00%</div></div>
-            </div>
-            <div class="green-footer-box">
-                <div style="font-size:20px; color:#00ff66;">🔸</div>
-                <div>
-                    <strong>Stats arbitru &bull; probabilitate matematică</strong><br>
-                    <span style="color:#a0aec0; font-size:14px;">M. Turkmen &bull; 7/7 meciuri din ligă analizate cu succes</span>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-
-# 4. SECȚIUNE ABONAMENTE VIP (Dreapta)
-with col_abonamente:
-    st.subheader("🏆 Abonamente VIP")
-    
-    tab_low, tab_med, tab_high = st.tabs(["🟢 LOW", "🟡 MEDIUM", "🔥 HIGH"])
-    
