@@ -57,7 +57,12 @@ st.markdown(f"""
         border-radius: 16px !important;
         padding: 24px !important;
         box-shadow: 0 12px 40px 0 rgba(0,0,0,0.65) !important;
-        margin-bottom: 15px !important;
+        margin-bottom: 20px !important;
+    }}
+
+    /* Barele de progres native configurate pe verde aprins */
+    div[data-testid="stProgress"] div[role="progressbar"] {{
+        background: linear-gradient(90deg, #00ea53 0%, #00ff66 100%) !important;
     }}
 </style>
 """, unsafe_allow_html=True)
@@ -96,20 +101,76 @@ with st.container():
 
 st.write("---")
 
-# Împărțirea ecranului: Meciuri Internaționale (Stânga) și Abonamente VIP (Dreapta)
+# Împărțirea ecranului: Meciuri Internaționale + Recomandate (Stânga) și Abonamente VIP (Dreapta)
 col_meciuri, col_abonamente = st.columns([1.3, 0.7], gap="large")
 
-# 4. SECȚIUNEA GLOBALĂ DE LIVESCORE ÎN TIMP REAL (Stânga)
+# 4. SECȚIUNEA DIN STÂNGA: WIDGET + CELE 2 MECIURI SPECIALE
 with col_meciuri:
     st.subheader("🌍 Meciuri Live din Toate Ligele Lumii")
-    st.caption("Date preluate live prin flux internațional securizat.")
+    st.caption("Date globale prelucrate secundă de secundă.")
     
     # Inserare widget live internațional nativ
     st.markdown("""
-        <div style="width:100%; height:550px; overflow:auto; background:rgba(5,15,10,0.9); border-radius:12px; border:1px solid rgba(0,255,102,0.2); padding:10px;">
-            <iframe src="https://scorebat.com" frameborder="0" width="100%" height="530px" allowfullscreen allow="autoplay; fullscreen"></iframe>
+        <div style="width:100%; height:450px; overflow:auto; background:rgba(5,15,10,0.9); border-radius:12px; border:1px solid rgba(0,255,102,0.2); padding:10px; margin-bottom: 25px;">
+            <iframe src="https://scorebat.com" frameborder="0" width="100%" height="430px" allowfullscreen allow="autoplay; fullscreen"></iframe>
         </div>
     """, unsafe_allow_html=True)
+    
+    st.write("---")
+    st.subheader("🏟️ Meciurile Recomandate de PariuriGO")
+    st.caption("Analize statistice extinse pentru meciurile de top din SuperLiga.")
+    
+    # MECIUL 1 RECOMANDAT: OȚELUL GALAȚI vs UNIVERSITATEA CRAIOVA
+    with st.container(border=True):
+        col_h1, col_h2 = st.columns(2)
+        with col_h1:
+            st.error("🔴 ÎN DESFĂȘURARE &bull; LIVE Min 65")
+        with col_h2:
+            st.markdown("<p style='text-align:right; color:#94a3b8; margin:0;'>ROMÂNIA SUPERLIGA</p>", unsafe_allow_html=True)
+            
+        st.markdown("<h2 style='text-align:center; color:#ffcc00; margin: 10px 0;'>OȚELUL GALAȚI &nbsp;&nbsp; 1 - 1 &nbsp;&nbsp; UNIV. CRAIOVA</h2>", unsafe_allow_html=True)
+        st.write("---")
+        
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric(label="⚽ Posesie minge", value="46% - 54%")
+        c2.metric(label="🎯 Șuturi pe poartă", value="4 - 5")
+        c3.metric(label="🛑 Faulturi comise", value="15 - 11")
+        c4.metric(label="🟨 Cartonașe galbene", value="3 - 2")
+        
+        st.write("---")
+        st.write("**📈 Probabilități din Algoritm:**")
+        st.write("🔹 *Șansă să se marcheze în repriza a 2-a: 84%*")
+        st.progress(0.84)
+        
+        st.write("**🧠 SUGESTIE RECOMANDATĂ:**")
+        st.success("🔥 **Pont recomandat: Sub 2.5 goluri în meci** &nbsp;|&nbsp; **Cotă live: 1.65**")
+
+    st.write("") # Spațiere între blocuri
+
+    # MECIUL 2 RECOMANDAT: FC CORVINUL HUNEDOARA vs CFR CLUJ
+    with st.container(border=True):
+        col_p1, col_p2 = st.columns(2)
+        with col_p1:
+            st.info("🟢 RECOMANDAT &bull; PRE-MECI 21:30")
+        with col_p2:
+            st.markdown("<p style='text-align:right; color:#94a3b8; margin:0;'>ROMÂNIA SUPERLIGA</p>", unsafe_allow_html=True)
+            
+        st.markdown("<h3 style='text-align:center; color:#ffffff; margin: 10px 0;'>CORVINUL HUNEDOARA &nbsp;&nbsp; vs &nbsp;&nbsp; CFR CLUJ</h3>", unsafe_allow_html=True)
+        st.write("---")
+        
+        st.write("**🎲 Cote Finale 1X2 la Casele de Pariuri:**")
+        cx1, cx2, cx3 = st.columns(3)
+        cx1.button("1 (Corvinul) &bull; 3.80", key="c_corv", use_container_width=True)
+        cx2.button("X (Egal) &bull; 3.40", key="c_egal", use_container_width=True)
+        cx3.button("2 (CFR Cluj) &bull; 1.95", key="c_cfr", use_container_width=True)
+        
+        st.write("---")
+        st.write("**📈 Probabilități din Istoricul H2H:**")
+        st.write("🔹 *Șansă victorie CFR Cluj sau Egal (X2): 78%*")
+        st.progress(0.78)
+        
+        st.write("**🧠 PRONOSTIC TIPSTER PREMIUM:**")
+        st.warning("⭐️ **Pont final: Victorie CFR Cluj (2) sau Egal** &nbsp;|&nbsp; **Cotă: 1.40**")
 
 # 5. SECȚIUNE ABONAMENTE LUNARE VIP (Dreapta)
 with col_abonamente:
