@@ -58,7 +58,7 @@ st.markdown(f"""
         padding: 24px !important;
         box-shadow: 0 12px 40px 0 rgba(0,0,0,0.65) !important;
         margin-bottom: 15px !important;
-    })
+    }}
 </style>
 """, unsafe_allow_html=True)
 
@@ -104,7 +104,7 @@ with col_meciuri:
     st.subheader("🌍 Meciuri Live din Toate Ligele Lumii")
     st.caption("Date preluate live prin flux internațional securizat.")
     
-    # Inserare widget live internațional nativ (ScoreBat / Livescore global)
+    # Inserare widget live internațional nativ
     st.markdown("""
         <div style="width:100%; height:550px; overflow:auto; background:rgba(5,15,10,0.9); border-radius:12px; border:1px solid rgba(0,255,102,0.2); padding:10px;">
             <iframe src="https://scorebat.com" frameborder="0" width="100%" height="530px" allowfullscreen allow="autoplay; fullscreen"></iframe>
