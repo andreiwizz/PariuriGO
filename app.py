@@ -22,14 +22,7 @@ teren_base64 = decodifica_imagine_locala("teren.jpg")
 logo_base64 = decodifica_imagine_locala("logo.png")
 
 if teren_base64:
-    bg_style = f"""
-        background: linear-gradient(rgba(4, 14, 8, 0.92), rgba(2, 8, 4, 0.96)), 
-                    url('data:image/jpeg;base64,{teren_base64}') !important;
-        background-size: cover !important;
-        background-position: center !important;
-        background-repeat: no-repeat !important;
-        background-attachment: fixed !important;
-    """
+    bg_style = f"background: linear-gradient(rgba(4, 14, 8, 0.94), rgba(2, 6, 4, 0.96)), url('data:image/jpeg;base64,{teren_base64}') !important; background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important; background-attachment: fixed !important;"
 else:
     bg_style = "background: radial-gradient(circle at center, #0a1f14 0%, #030c08 100%) !important;"
 
@@ -50,15 +43,39 @@ st.markdown(f"""
     
     /* Carduri tip sticlă mată în nuanțe verzi */
     div[data-testid="stVerticalBlockBorder"] {{
-        background: rgba(8, 22, 15, 0.85) !important;
+        background: rgba(8, 22, 15, 0.86) !important;
         backdrop-filter: blur(20px) !important;
         -webkit-backdrop-filter: blur(20px) !important;
         border: 1px solid rgba(0, 255, 102, 0.22) !important;
         border-radius: 16px !important;
         padding: 24px !important;
         box-shadow: 0 12px 40px 0 rgba(0,0,0,0.65) !important;
-        margin-bottom: 20px !important;
+        margin-bottom: 25px !important;
     }}
+
+    /* Stiluri grafic în tentă verde */
+    .stat-container {{ width: 100%; margin: 0 auto; }}
+    .stat-row {{ display: flex; justify-content: space-between; align-items: center; margin: 10px 0; text-align: center; }}
+    .stat-left-val, .stat-right-val {{ width: 20%; font-size: 22px; font-weight: 800; color: #ffffff; text-align: center; }}
+    .stat-center-label {{ width: 60%; font-size: 16px; font-weight: 700; color: #a0aec0; text-transform: uppercase; letter-spacing: 0.5px; }}
+    
+    .green-badge {{
+        background: linear-gradient(135deg, #00ff66 0%, #00bc43 100%);
+        color: #000000 !important;
+        padding: 4px 15px;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 800;
+        display: inline-block;
+        box-shadow: 0 2px 10px rgba(0, 255, 102, 0.25);
+    }}
+    
+    .bar-wrapper {{ display: flex; align-items: center; margin: 12px 0; }}
+    .bar-label {{ width: 25%; font-size: 16px; font-weight: 700; color: #ffffff; }}
+    .bar-container {{ width: 75%; background: rgba(255, 255, 255, 0.05); border-radius: 8px; overflow: hidden; height: 24px; position: relative; border: 1px solid rgba(255,255,255,0.05); }}
+    .bar-fill-intense-green {{ height: 100%; background: linear-gradient(90deg, #008f33 0%, #00ff66 100%); border-radius: 8px; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; font-size: 13px; font-weight: 800; color: #000000; }}
+    .bar-fill-soft-green {{ height: 100%; background: linear-gradient(90deg, #024c1c 0%, #00bc43 100%); border-radius: 8px; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; font-size: 13px; font-weight: 800; color: #ffffff; }}
+    .green-footer-box {{ background: rgba(0, 255, 102, 0.05); border: 1px solid rgba(0, 255, 102, 0.18); border-radius: 10px; padding: 12px 20px; margin-top: 20px; display: flex; align-items: center; gap: 12px; }}
 </style>
 """, unsafe_allow_html=True)
 
@@ -74,22 +91,101 @@ else:
 
 st.write("---")
 
-# Împărțirea ecranului direct în cele două secțiuni principale (Widget Stânga, Pachet Dreapta)
+# Împărțirea ecranului (Fluxul de Meciuri în Stânga, Abonamente în Dreapta)
 col_meciuri, col_abonamente = st.columns([1.3, 0.7], gap="large")
 
-# 3. SECȚIUNEA DIN STÂNGA: WIDGET GLOBAL REALE ÎN TIMP REAL
+# 3. SECȚIUNEA DIN STÂNGA: WIDGET SCOREBAT + GRAFICUL PREMIUM DE SUB EL
 with col_meciuri:
     st.subheader("🌍 Meciuri Live din Toate Ligele Lumii")
-    st.caption("Scoruri reale din ziua respectivă actualizate automat secundă de secundă.")
+    st.caption("Scoruri reale actualizate automat secundă de secundă.")
     
-    # Inserare widget live internațional nativ securizat
+    # Inserare widget live ScoreBat
     st.markdown("""
-        <div style="width:100%; height:550px; overflow:auto; background:rgba(5,15,10,0.9); border-radius:12px; border:1px solid rgba(0,255,102,0.2); padding:10px; margin-bottom: 25px;">
-            <iframe src="https://scorebat.com" frameborder="0" width="100%" height="530px" allowfullscreen allow="autoplay; fullscreen"></iframe>
+        <div style="width:100%; height:450px; overflow:auto; background:rgba(5,15,10,0.9); border-radius:12px; border:1px solid rgba(0,255,102,0.2); padding:10px; margin-bottom: 25px;">
+            <iframe src="https://scorebat.com" frameborder="0" width="100%" height="430px" allowfullscreen allow="autoplay; fullscreen"></iframe>
         </div>
     """, unsafe_allow_html=True)
+    
+    st.write("---")
+    
+    # Graficul premium în tentă verde adăugat imediat sub widget
+    st.subheader("📊 Modul Algoritm & Probabilități (Meci de Top)")
+    with st.container(border=True):
+        st.markdown("<p style='text-align:center; color:#94a3b8; margin:0;'>SUPER LIG &bull; TURKEY</p>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align:center; color:#00ff66; margin: 5px 0;'>BAȘAKȘEHIR vs KOCAELISPOR</h2>", unsafe_allow_html=True)
+        st.write("---")
+        
+        st.markdown("""
+        <div class="stat-container">
+            <div class="stat-row">
+                <div class="stat-left-val">7</div>
+                <div class="stat-center-label">Total goluri marcate</div>
+                <div class="stat-right-val">3</div>
+            </div>
+            <div class="stat-row">
+                <div class="stat-left-val">1.00</div>
+                <div class="stat-center-label">Medie goluri</div>
+                <div class="stat-right-val">0.43</div>
+            </div>
+            <div class="stat-row">
+                <div class="stat-left-val">8</div>
+                <div class="stat-center-label">Goluri primite</div>
+                <div class="stat-right-val">6</div>
+            </div>
+            <hr style="border-color: rgba(255,255,255,0.05); margin: 15px 0;">
+            <div class="stat-row">
+                <div class="stat-left-val"><span class="green-badge">71.43%</span></div>
+                <div class="stat-center-label">Peste 0.5 HT</div>
+                <div class="stat-right-val"><span class="green-badge">57.14%</span></div>
+            </div>
+            <div class="stat-row">
+                <div class="stat-left-val"><span class="green-badge">71.43%</span></div>
+                <div class="stat-center-label">Peste 0.5 ST</div>
+                <div class="stat-right-val"><span class="green-badge">57.14%</span></div>
+            </div>
+            <div class="stat-row">
+                <div class="stat-left-val"><span class="green-badge">85.71%</span></div>
+                <div class="stat-center-label">Peste 1.5 goluri</div>
+                <div class="stat-right-val"><span class="green-badge">42.86%</span></div>
+            </div>
+            <div class="stat-row">
+                <div class="stat-left-val" style="color:#00ff66;">28.57%</div>
+                <div class="stat-center-label">Peste 2.5 goluri</div>
+                <div class="stat-right-val" style="color:#00ff66;">42.86%</div>
+            </div>
+            <div class="stat-row">
+                <div class="stat-left-val" style="color:#00ff66;">57.14%</div>
+                <div class="stat-center-label">Ambele marchează</div>
+                <div class="stat-right-val" style="color:#00ff66;">42.86%</div>
+            </div>
+        </div>
+        <hr style="border-color: rgba(255,255,255,0.05); margin: 20px 0;">
+        """, unsafe_allow_html=True)
+        
+        st.write("**📈 EVOLUȚIE PROBABILITĂȚI GENERALE GLOBAL:**")
+        st.markdown("""
+        <div class="bar-wrapper">
+            <div class="bar-label">Peste 1.5:</div>
+            <div class="bar-container"><div class="bar-fill-intense-green" style="width: 64.29%;">64.29%</div></div>
+        </div>
+        <div class="bar-wrapper">
+            <div class="bar-label">Peste 0.5 R1:</div>
+            <div class="bar-container"><div class="bar-fill-intense-green" style="width: 64.29%;">64.29%</div></div>
+        </div>
+        <div class="bar-wrapper">
+            <div class="bar-label">Ambele marchează:</div>
+            <div class="bar-container"><div class="bar-fill-intense-green" style="width: 50.00%;">50.00%</div></div>
+        </div>
+        <div class="green-footer-box">
+            <div style="font-size:20px; color:#00ff66;">🔸</div>
+            <div>
+                <strong>Stats arbitru &bull; probabilitate matematică</strong><br>
+                <span style="color:#a0aec0; font-size:14px;">M. Turkmen &bull; 7/7 meciuri din ligă analizate cu succes</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
-# 4. SECȚIUNE ABONAMENTE CU PREȚURILE TALE CORECTE (Dreapta)
+# 4. SECȚIUNE ABONAMENTE VIP (Dreapta)
 with col_abonamente:
     st.subheader("🏆 Abonamente VIP")
     
@@ -103,15 +199,3 @@ with col_abonamente:
             st.button("Abonare LOW", key="b_low", use_container_width=True)
 
     with tab_med:
-        with st.container(border=True):
-            st.markdown("<h4 style='color:#eab308; text-align:center;'>PACHET MEDIUM</h4>", unsafe_allow_html=True)
-            st.markdown("<h3 style='text-align:center;'>70 RON <span style='font-size:14px; color:#94a3b8;'>/ lună</span></h3>", unsafe_allow_html=True)
-            st.write("✅ 1 Bilet Premium în fiecare zi")
-            st.button("Abonare MEDIUM", key="b_med", use_container_width=True)
-
-    with tab_high:
-        with st.container(border=True):
-            st.markdown("<h4 style='color:#ef4444; text-align:center;'>HIGH VIP ELITE</h4>", unsafe_allow_html=True)
-            st.markdown("<h3 style='text-align:center;'>120 RON <span style='font-size:14px; color:#94a3b8;'>/ lună</span></h3>", unsafe_allow_html=True)
-            st.write("✅ Cota 2 VIP zilnică asigurată")
-            st.button("Deblochează VIP ELITE", key="b_high", use_container_width=True)
