@@ -19,12 +19,14 @@ def incarc_teren_fotbal(cale_imagine):
 
 img_data = incarc_teren_fotbal("teren.png")
 
-# Aplicare design curat și font sportiv prin CSS simplu
+# Aplicarea stilului GOLDEN/DARK extras direct din imaginea ta
 css_fond = ""
 if img_data:
-    css_fond = f"background: linear-gradient(rgba(10, 24, 15, 0.92), rgba(10, 24, 15, 0.92)), url('data:image/png;base64,{img_data}') !important; background-size: cover !important; background-attachment: fixed !important;"
+    # Dacă ai teren.png urcat, îl combină cu tema neagră-aurie din imaginea ta
+    css_fond = f"background: linear-gradient(rgba(10, 10, 10, 0.95), rgba(5, 5, 5, 0.98)), url('data:image/png;base64,{img_data}') !important; background-size: cover !important; background-attachment: fixed !important;"
 else:
-    css_fond = "background-color: #06110b !important;"
+    # Fundalul oficial stil Golden Analytics (Negru profund cu reflexii calde)
+    css_fond = "background: radial-gradient(circle at center, #141414 0%, #080808 100%) !important;"
 
 st.markdown(f"""
 <style>
@@ -39,27 +41,33 @@ st.markdown(f"""
         font-family: 'Rajdhani', sans-serif !important;
         font-weight: 700 !important;
     }}
-    /* Carduri stilizate tip sticlă */
+    
+    /* Carduri tip sticlă mată în nuanțe închise cu accente fine aurii */
     div[data-testid="stVerticalBlockBorder"] {{
-        background: rgba(13, 31, 23, 0.75) !important;
+        background: rgba(18, 18, 18, 0.8) !important;
         backdrop-filter: blur(15px) !important;
-        border: 1px solid rgba(0, 255, 102, 0.2) !important;
+        border: 1px solid rgba(234, 179, 8, 0.15) !important;
         border-radius: 16px !important;
         padding: 22px !important;
-        box-shadow: 0 8px 32px 0 rgba(0,0,0,0.6) !important;
+        box-shadow: 0 10px 40px 0 rgba(0,0,0,0.8) !important;
+    }}
+
+    /* Stil pentru barele de progres native Streamlit - le facem aurii/portocalii */
+    div[data-testid="stProgress"] div[role="progressbar"] {{
+        background: linear-gradient(90deg, #ff9900 0%, #eab308 100%) !important;
     }}
 </style>
 """, unsafe_allow_html=True)
 
 # 2. Header-ul principal al aplicației
 st.title("⚽ PARIURIGO &bull; LIVE CENTER")
-st.caption("Meciurile Reale de Astăzi &bull; Actualizat din SuperLiga")
+st.caption("Meciurile Reale de Astăzi &bull; Interfață Premium Golden Analytics")
 st.write("---")
 
 # Împărțirea ecranului în două secțiuni: Meciuri (Stânga) și Abonamente (Dreapta)
 col_meciuri, col_abonamente = st.columns([1.3, 0.7], gap="large")
 
-# 3. SECȚIUNEA DIN STÂNGA: MECIURI REALE
+# 3. SECȚIUNEA DIN STÂNGA: MECIURI REALE DIN SUPERLIGĂ
 with col_meciuri:
     st.subheader("🏟️ Meciurile Zilei (SuperLiga)")
     
@@ -71,7 +79,7 @@ with col_meciuri:
         with col_header2:
             st.markdown("<p style='text-align:right; color:#94a3b8; margin:0;'>ROMÂNIA SUPERLIGA</p>", unsafe_allow_html=True)
             
-        st.markdown("<h2 style='text-align:center; color:#ffcc00; margin: 10px 0;'>OȚELUL GALAȚI &nbsp;&nbsp; 1 - 1 &nbsp;&nbsp; UNIV. CRAIOVA</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align:center; color:#eab308; margin: 10px 0;'>OȚELUL GALAȚI &nbsp;&nbsp; 1 - 1 &nbsp;&nbsp; UNIV. CRAIOVA</h2>", unsafe_allow_html=True)
         st.write("---")
         
         c1, c2, c3, c4 = st.columns(4)
@@ -88,7 +96,7 @@ with col_meciuri:
         st.write("**🧠 SUGESTIE ALGORITM INTELIGENȚĂ ARTIFICIALĂ:**")
         st.success("🔥 **Pont: Sub 2.5 goluri în meci** &nbsp;|&nbsp; **Cotă live: 1.65**")
         
-    st.write("") # Spațiere
+    st.write("") # Spațiere între meciuri
     
     # CORVINUL HUNEDOARA vs CFR CLUJ
     with st.container(border=True):
@@ -110,11 +118,10 @@ with col_meciuri:
         st.write("**🧠 RECOMANDARE TIPSTER PREMIUM:**")
         st.warning("⭐️ **Pont: Victorie CFR Cluj (2) sau Egal** &nbsp;|&nbsp; **Cotă: 1.40**")
 
-# 4. SECȚIUNEA DIN DREAPTA: PACHETE ABONAMENT VIP (CORECTATĂ DEFINITIV)
+# 4. SECȚIUNEA DIN DREAPTA: PACHETE ABONAMENT VIP
 with col_abonamente:
     st.subheader("🏆 Acces VIP Premium")
     
-    # Am salvat taburile în trei variabile separate pentru a evita eroarea cu "with"
     tab_low, tab_med, tab_high = st.tabs(["🟢 LOW", "🟡 MEDIUM", "🔥 HIGH"])
     
     with tab_low:
