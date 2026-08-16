@@ -39,7 +39,7 @@ st.markdown(f"""
         font-family: 'Rajdhani', sans-serif !important;
     }}
     
-    h1, h2, h3, h4, p, span, label {{
+    h1, h2, h3, h4, p, span, label, .stTabs button {{
         font-family: 'Rajdhani', sans-serif !important;
         font-weight: 700 !important;
     }}
@@ -86,7 +86,7 @@ st.write("---")
 # Împărțirea ecranului (Fluxul în Stânga, Abonamente în Dreapta)
 col_meciuri, col_abonamente = st.columns([1.3, 0.7], gap="large")
 
-# BAZA DE DATE CURATĂ PENTRU MECIURI
+# BAZA DE DATE INTEGRALĂ ȘI REPARATĂ CHIEIE CU CHEIE
 meciuri_date = {
     "FCSB vs Rapid București": {
         "liga": "ROMÂNIA SUPERLIGA",
@@ -136,96 +136,89 @@ meciuri_date = {
         "p_st": "71.43%", "d_st": "57.14% Oaspeți",
         "p_15": "85.71%", "d_15": "42.86% Oaspeți",
         "p_25": "28.57%", "d_25": "42.86% Oaspeți",
-        "p_gg": "57.14%", "d_gg": "42.86% Oaspe گا۔",
+        "p_gg": "57.14%", "d_gg": "42.86% Oaspeți",
         "prog_15": 0.64, "prog_05": 0.64, "prog_gg": 0.50,
         "arbitru": "M. Turkmen &bull; 7/7 meciuri analizate"
     }
 }
 
-# 3. SECȚIUNEA DIN STÂNGA: WIDGET REALE + STATISTICI
+# 3. SECȚIUNEA DIN STÂNGA: CELE DOUĂ TABURI REALE CARE MERGEAU BRICI
 with col_meciuri:
-    st.subheader("🌍 Meciuri Live din Toate Ligele Lumii")
+    tab_global, tab_analiza = st.tabs(["🌍 TOATE MECIURILE LIVE", "📊 GRAFIC STATISTICI PREMIUM"])
     
-    st.markdown("""
-        <div style="width:100%; height:400px; overflow:auto; background:rgba(5,15,10,0.9); border-radius:12px; border:1px solid rgba(0,255,102,0.2); padding:10px; margin-bottom: 20px;">
-            <iframe src="https://scorebat.com" frameborder="0" width="100%" height="370px" allowfullscreen allow="autoplay; fullscreen"></iframe>
-        </div>
-    """, unsafe_allow_html=True)
-    
-    st.write("---")
-    st.subheader("📊 Analiză Grafic Premium")
-    
-    meci_ales = st.selectbox("🎯 Schimbă meciul pentru analiză:", list(meciuri_date.keys()))
-    m = meciuri_date[meci_ales]
-    
-    with st.container():
-        st.markdown(f"<p style='text-align:center; color:#94a3b8; margin:0;'>DATE LA ZI {data_azi}</p>", unsafe_allow_html=True)
-        st.markdown(f"<h2 style='text-align:center; color:#00ff66; margin: 5px 0;'>{meci_ales}</h2>", unsafe_allow_html=True)
-        st.caption(m['liga'])
-        st.write("---")
+    with tab_global:
+        st.write("")
+        st.markdown("""
+            <div style="width:100%; height:550px; overflow:auto; background:rgba(5,15,10,0.9); border-radius:12px; border:1px solid rgba(0,255,102,0.2); padding:10px;">
+                <iframe src="https://scorebat.com" frameborder="0" width="100%" height="520px" allowfullscreen allow="autoplay; fullscreen"></iframe>
+            </div>
+        """, unsafe_allow_html=True)
         
-        c1, c2, c3 = st.columns(3)
-        c1.metric(label="⚽ GOLURI MARCATE (Gazde)", value=m["g_gazde"])
-        c2.markdown("<p style='text-align:center; color:#a0aec0; margin-top:25px;'>TOTAL GOLURI MARCATE</p>", unsafe_allow_html=True)
-        c3.metric(label="⚽ GOLURI MARCATE (Oaspeți)", value=m["g_oaspeti"])
+    with tab_analiza:
+        st.write("")
+        meci_ales = st.selectbox("🎯 ALEGE MECIUL PENTRU ANALIZĂ:", list(meciuri_date.keys()))
+        m = meciuri_date[meci_ales]
         
-        c4, c5, c6 = st.columns(3)
-        c4.metric(label="📈 MEDIE GOLURI (Gazde)", value=m["m_gazde"])
-        c5.markdown("<p style='text-align:center; color:#a0aec0; margin-top:25px;'>MEDIE GOLURI / MECI</p>", unsafe_allow_html=True)
-        c6.metric(label="📈 MEDIE GOLURI (Oaspeți)", value=m["m_oaspeti"])
-        
-        c7, c8, c9 = st.columns(3)
-        c7.metric(label="🛡️ GOLURI PRIMITE (Gazde)", value=m["gp_gazde"])
-        c8.markdown("<p style='text-align:center; color:#a0aec0; margin-top:25px;'>GOLURI PRIMITE</p>", unsafe_allow_html=True)
-        c9.metric(label="🛡️ GOLURI PRIMITE (Oaspeți)", value=m["gp_oaspeti"])
-        
-        st.write("---")
-        st.write("**📋 Procente evenimente:**")
-        
-        cx1, cx2, cx3 = st.columns(3)
-        cx1.metric(label="🟢 PESTE 0.5 HT", value=m["p_ht"], delta=m["d_ht"], delta_color="off")
-        cx2.metric(label="🟢 PESTE 0.5 ST", value=m["p_st"], delta=m["d_st"], delta_color="off")
-        cx3.metric(label="🟢 PESTE 1.5 GOLURI", value=m["p_15"], delta=m["d_15"], delta_color="off")
-        
-        st.write("---")
-        st.write("**📈 EVOLUȚIE PROBABILITĂȚI GENERALE GLOBAL:**")
-        
-        st.write(f"🔹 Peste 1.5 total: **{int(m['prog_15']*100)}%**")
-        st.progress(m['prog_15'])
-        st.write(f"🔹 Peste 0.5 R1: **{int(m['prog_05']*100)}%**")
-        st.progress(m['prog_05'])
-        st.write(f"🔹 Ambele echipe marchează (GG): **{int(m['prog_gg']*100)}%**")
-        st.progress(m['prog_gg'])
+        with st.container():
+            st.markdown(f"<p style='text-align:center; color:#94a3b8; margin:0;'>MECIUL SELECTAT &bull; DATE LA ZI {data_azi}</p>", unsafe_allow_html=True)
+            st.markdown(f"<h2 style='text-align:center; color:#00ff66; margin: 5px 0;'>{meci_ales}</h2>", unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align:center; color:#a0aec0; font-size:14px; margin-top:2px;'>{m['liga']}</p>", unsafe_allow_html=True)
+            st.write("---")
+            
+            c1, c2, c3 = st.columns(3)
+            c1.metric(label="⚽ GOLURI MARCATE (Gazde)", value=m["g_gazde"])
+            c2.markdown("<p style='text-align:center; color:#a0aec0; margin-top:25px;'>TOTAL GOLURI MARCATE</p>", unsafe_allow_html=True)
+            c3.metric(label="⚽ GOLURI MARCATE (Oaspeți)", value=m["g_oaspeti"])
+            
+            c4, c5, c6 = st.columns(3)
+            c4.metric(label="📈 MEDIE GOLURI (Gazde)", value=m["m_gazde"])
+            c5.markdown("<p style='text-align:center; color:#a0aec0; margin-top:25px;'>MEDIE GOLURI / MECI</p>", unsafe_allow_html=True)
+            c6.metric(label="📈 MEDIE GOLURI (Oaspeți)", value=m["m_oaspeti"])
+            
+            c7, c8, c9 = st.columns(3)
+            c7.metric(label="🛡️ GOLURI PRIMITE (Gazde)", value=m["gp_gazde"])
+            c8.markdown("<p style='text-align:center; color:#a0aec0; margin-top:25px;'>GOLURI PRIMITE</p>", unsafe_allow_html=True)
+            c9.metric(label="🛡️ GOL безу GOLURI PRIMITE (Oaspeți)", value=m["gp_oaspeti"])
+            
+            st.write("---")
+            st.markdown("<p style='color:#00ff66; font-size:18px;'>📋 PROCENTE ȘI PROBABILITĂȚI:</p>", unsafe_allow_html=True)
+            
+            cx1, cx2, cx3 = st.columns(3)
+            cx1.metric(label="🟢 PESTE 0.5 HT (Prima Repriză)", value=m["p_ht"], delta=m["d_ht"], delta_color="off")
+            cx2.metric(label="🟢 Peste 0.5 ST (A doua Repriză)", value=m["p_st"], delta=m["d_st"], delta_color="off")
+            cx3.metric(label="🟢 Peste 1.5 Goluri în Meci", value=m["p_15"], delta=m["d_15"], delta_color="off")
+            
+            cx4, cx5, _ = st.columns(3)
+            cx4.metric(label="🟢 Peste 2.5 Goluri în Meci", value=m["p_25"], delta=m["d_25"], delta_color="off")
+            cx5.metric(label="🟢 Ambele echipe marchează (GG)", value=m["p_gg"], delta=m["d_gg"], delta_color="off")
+            
+            st.write("---")
+            st.write("**📈 EVOLUȚIE PROBABILITĂȚI GENERALE GLOBAL:**")
+            
+            st.write(f"🔹 Peste 1.5 total: **{int(m['prog_15']*100)}%**")
+            st.progress(m['prog_15'])
+            st.write(f"🔹 Peste 0.5 R1: **{int(m['prog_05']*100)}%**")
+            st.progress(m['prog_05'])
+            st.write(f"🔹 Ambele echipe marchează (GG): **{int(m['prog_gg']*100)}%**")
+            st.progress(m['prog_gg'])
+            
+            st.write("---")
+            st.info(f"🔸 **Sistem Algoritm Automat PariuriGO** &bull; Arbitru delegat: {m['arbitru']}")
 
-# 4. SECȚIUNE ABONAMENTE VIP STRUCTURATĂ LINIAR (Fără tab-uri ascunse)
+# 4. SECȚIUNE ABONAMENTE VIP STRUCTURATĂ PE TABURI (Exact cum funcționa înainte)
 with col_abonamente:
     st.subheader("🏆 Abonamente VIP")
     
+    tab_low, tab_med, tab_high = st.tabs(["🟢 LOW", "🟡 MEDIUM", "🔥 HIGH"])
+    
     link_telegram_afacere = "https://t.me"
     
-    # PACHET 1: LOW
-    with st.container():
-        st.markdown("<h3 style='color:#00ff66; margin:0;'>🟢 PACHET LOW</h3>", unsafe_allow_html=True)
-        st.markdown("<h2 style='margin:5px 0;'>40 RON <span style='font-size:14px; color:#94a3b8;'>/ lună</span></h2>", unsafe_allow_html=True)
-        st.write("📋 **Beneficii:**")
+    with tab_low:
+        st.write("")
+        st.write("### PACHET LOW")
+        st.write("## 40 RON / lună")
+        st.write("---")
         st.write("✅ 3 Bilete gata analizate pe săptămână")
         st.write("✅ Cote sigure selectate din ligile mari")
         st.write("✅ Acces grup comunitate chat")
-        st.link_button("Abonare LOW 🚀", link_telegram_afacere, use_container_width=True)
-        
-    st.write("") # Spațiere mică
-    
-    # PACHET 2: MEDIUM
-    with st.container():
-        st.markdown("<h3 style='color:#eab308; margin:0;'>🟡 PACHET MEDIUM</h3>", unsafe_allow_html=True)
-        st.markdown("<h2 style='margin:5px 0;'>70 RON <span style='font-size:14px; color:#94a3b8;'>/ lună</span></h2>", unsafe_allow_html=True)
-        st.write("📋 **Beneficii:**")
-        st.write("✅ 1 Bilet Premium în fiecare zi calendaristică")
-        st.write("✅ Procente și probabilități avansate live")
-        st.write("✅ Notificări instant pe Telegram")
-        st.link_button("Abonare MEDIUM 🟡", link_telegram_afacere, use_container_width=True)
-        
-    st.write("") # Spațiere mică
-    
-    # PACHET 3: HIGH
-    with st.container():
+        st.write("")
