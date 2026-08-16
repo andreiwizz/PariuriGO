@@ -71,7 +71,7 @@ st.markdown(f"""
 if logo_base64:
     st.markdown(
         f"""
-        <div style="text-align: center; margin-bottom: 10px;">
+        <div style="text-align: center; margin-bottom: 15px;">
             <img src="data:image/png;base64,{logo_base64}" width="280">
         </div>
         """, 
@@ -82,29 +82,10 @@ else:
 
 st.write("---")
 
-# 3. PROMOȚIE FLASH SUB 1 DOLAR
-st.markdown("<h3 style='color: #ffcc00; text-align: center;'>🔥 PROMOȚIE FLASH &bull; ÎNCEARCĂ UN SINGUR BILET</h3>", unsafe_allow_html=True)
-with st.container():
-    c_st, c_dr = st.columns([1.2, 0.8], gap="medium")
-    with c_st:
-        st.markdown("#### 🎫 Biletul Premium de Astăzi (Single Match)")
-        st.write("Cumpără doar biletul calculat de algoritmul nostru pentru meciul de top din această seară, din orice ligă globală.")
-        st.info("📊 **Probabilitate matematică de câștig: 91.4%** | **Cotă estimată: 1.85+**")
-    with c_dr:
-        st.markdown("<h3 style='color: #00ff66; margin:0;'>PREȚ: 4.50 RON <span style='font-size:14px; color:#94a3b8;'>(~ $0.99)</span></h3>", unsafe_allow_html=True)
-        email_client = st.text_input("Introdu adresa de email pentru primirea biletului:", placeholder="nume@email.com", key="flash_email")
-        if st.button("🚀 CUMPĂRĂ BILETUL ACUM", key="buy_flash", use_container_width=True):
-            if email_client:
-                st.success(f"Perfect! Adresa {email_client} a fost înregistrată.")
-            else:
-                st.error("Te rog să introduci o adresă de email validă!")
-
-st.write("---")
-
-# Împărțirea ecranului: Meciuri Internaționale + Recomandate (Stânga) și Abonamente VIP (Dreapta)
+# Împărțirea ecranului direct în cele două secțiuni principale
 col_meciuri, col_abonamente = st.columns([1.3, 0.7], gap="large")
 
-# 4. SECȚIUNEA DIN STÂNGA: WIDGET + CELE 2 MECIURI SPECIALE
+# 3. SECȚIUNEA DIN STÂNGA: WIDGET GLOBAL + MECIURI RECOMANDATE
 with col_meciuri:
     st.subheader("🌍 Meciuri Live din Toate Ligele Lumii")
     st.caption("Date globale prelucrate secundă de secundă.")
@@ -133,9 +114,9 @@ with col_meciuri:
         
         c1, c2, c3, c4 = st.columns(4)
         c1.metric(label="⚽ Posesie minge", value="46% - 54%")
-        c2.metric(label="🎯 Șuturi pe poartă", value="4 - 5")
-        c3.metric(label="🛑 Faulturi comise", value="15 - 11")
-        c4.metric(label="🟨 Cartonașe galbene", value="3 - 2")
+        c2.metric(label="🎯 ȘUTURI PE POARTĂ", value="4 - 5")
+        c3.metric(label="🛑 FAULTURI COMISE", value="15 - 11")
+        c4.metric(label="🟨 CARTONAȘE LIVE", value="3 - 2")
         
         st.write("---")
         st.write("**📈 Probabilități din Algoritm:**")
@@ -172,7 +153,7 @@ with col_meciuri:
         st.write("**🧠 PRONOSTIC TIPSTER PREMIUM:**")
         st.warning("⭐️ **Pont final: Victorie CFR Cluj (2) sau Egal** &nbsp;|&nbsp; **Cotă: 1.40**")
 
-# 5. SECȚIUNE ABONAMENTE LUNARE VIP (Dreapta)
+# 4. SECȚIUNE ABONAMENTE LUNARE VIP (Dreapta)
 with col_abonamente:
     st.subheader("🏆 Abonamente VIP")
     
