@@ -871,8 +871,3 @@ with col_pachete:
         </div>
         """, unsafe_allow_html=True)
         st.button("Abonare Rapidă HIGH VIP", key="click_high", use_container_width=True)
-
-
-
-
-
