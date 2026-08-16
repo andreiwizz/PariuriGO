@@ -1,224 +1,162 @@
+import os
+import requests
+import pandas as pd
 import streamlit as st
-import base64
-from datetime import datetime
+from datetime import date
 
-# 1. Configurare Pagină principală (MANDATORIU PRIMA LINIE)
-st.set_page_config(
-    page_title="PariuriGO World Live Center",
-    page_icon="⚽",
-    layout="wide",
-    initial_sidebar_state="collapsed"
-)
+# ============================================
+# CONFIG
+# ============================================
+st.set_page_config(page_title="Analist Pariuri", page_icon="⚽", layout="wide")
 
-# Determinarea datei curente
-data_azi = datetime.now().strftime("%d.%m.%Y")
+API_KEY = "PUNETI_CHEIA_VOASTRA_AICI"  # luati gratuit de pe football-data.org
+BASE_URL = "https://api.football-data.org/v4"
+HEADERS = {"X-Auth-Token": API_KEY}
 
-# Funcție pentru citirea imaginii locale JPG de pe GitHub
-def incarc_imagine_locala(cale_imagine):
-    try:
-        with open(cale_imagine, "rb") as f:
-            return base64.b64encode(f.read()).decode()
-    except:
-        return ""
-
-teren_base64 = incarc_imagine_locala("teren.jpg")
-logo_base64 = incarc_imagine_locala("logo.png")
-
-if teren_base64:
-    bg_style = f"background: linear-gradient(rgba(4, 14, 8, 0.94), rgba(2, 6, 4, 0.96)), url('data:image/jpeg;base64,{teren_base64}') !important; background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important; background-attachment: fixed !important;"
-else:
-    bg_style = "background-color: #040e08 !important;"
-
-st.markdown(f"""
+# ============================================
+# CSS - tema verde peste teren.jpg
+# ============================================
+st.markdown("""
 <style>
-    @import url('https://googleapis.com');
-    
-    .stApp {{
-        {bg_style}
-        color: #ffffff !important;
-        font-family: 'Rajdhani', sans-serif !important;
-    }}
-    
-    h1, h2, h3, h4, p, span, label {{
-        font-family: 'Rajdhani', sans-serif !important;
-        font-weight: 700 !important;
-    }}
-    
-    /* Carduri tip sticlă mată în nuanțe verzi închise */
-    .glass-box-container {{
-        background: rgba(8, 20, 14, 0.88) !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        border: 1px solid rgba(0, 255, 102, 0.2) !important;
-        border-radius: 16px !important;
-        padding: 24px !important;
-        box-shadow: 0 12px 40px 0 rgba(0,0,0,0.7) !important;
-        margin-bottom: 25px !important;
-    }}
-
-    /* Meniu selectare meci */
-    div[data-testid="stSelectbox"] div[data-baseweb="select"] {{
-        background-color: rgba(10, 30, 18, 0.9) !important;
-        border: 1px solid #00ff66 !important;
-        color: #ffffff !important;
-        border-radius: 8px !important;
-    }}
-
-    /* DESIGN PREMIUM PENTRU GRAFIC (TENTĂ VERDE CONFORM IMAGINII) */
-    .stat-container {{ width: 100%; margin: 0 auto; }}
-    .stat-row {{ display: flex; justify-content: space-between; align-items: center; margin: 12px 0; text-align: center; }}
-    .stat-left-val, .stat-right-val {{ width: 20%; font-size: 22px; font-weight: 800; color: #ffffff; text-align: center; }}
-    .stat-center-label {{ width: 60%; font-size: 16px; font-weight: 700; color: #a0aec0; text-transform: uppercase; letter-spacing: 0.5px; }}
-    
-    .green-badge {{
-        background: linear-gradient(135deg, #00ff66 0%, #00bc43 100%);
-        color: #000000 !important;
-        padding: 5px 18px;
-        border-radius: 6px;
-        font-size: 16px;
-        font-weight: 800;
-        display: inline-block;
-        box-shadow: 0 2px 12px rgba(0, 255, 102, 0.3);
-    }}
-    
-    .bar-wrapper {{ display: flex; align-items: center; margin: 14px 0; }}
-    .bar-label {{ width: 28%; font-size: 16px; font-weight: 700; color: #ffffff; }}
-    .bar-container {{ width: 72%; background: rgba(255, 255, 255, 0.05); border-radius: 12px; overflow: hidden; height: 26px; position: relative; border: 1px solid rgba(255,255,255,0.05); }}
-    
-    .bar-fill-neon {{
-        height: 100%;
-        background: linear-gradient(90deg, #006622 0%, #00ff66 100%);
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        padding-right: 12px;
-        font-size: 13px;
-        font-weight: 800;
-        color: #000000;
-    }}
-    .bar-fill-soft {{
-        height: 100%;
-        background: linear-gradient(90deg, #013a16 0%, #00bc43 100%);
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        padding-right: 12px;
-        font-size: 13px;
-        font-weight: 800;
-        color: #ffffff;
-    }}
-    .green-footer-box {{ background: rgba(0, 255, 102, 0.05); border: 1px solid rgba(0, 255, 102, 0.18); border-radius: 10px; padding: 12px 20px; margin-top: 20px; display: flex; align-items: center; gap: 12px; }}
-
-    /* ANIMAȚIE MARE DE TIP PULS / GLOW PENTRU BUTOANELE VIP */
-    .animated-btn {{
-        background: linear-gradient(135deg, #00ff66 0%, #00bc43 100%) !important;
-        color: #000000 !important;
-        font-weight: 800 !important;
-        font-size: 18px !important;
-        text-align: center !important;
-        padding: 14px !important;
-        border-radius: 8px !important;
-        text-transform: uppercase !important;
-        letter-spacing: 1px !important;
-        margin-top: 15px !important;
-        display: block !important;
-        text-decoration: none !important;
-        box-shadow: 0 0 15px rgba(0, 255, 102, 0.4) !important;
-        animation: pulseGlow 1.8s infinite ease-in-out !important;
-    }}
-
-    @keyframes pulseGlow {{
-        0% {{ transform: scale(1); box-shadow: 0 0 12px rgba(0, 255, 102, 0.4); }}
-        50% {{ transform: scale(1.02); box-shadow: 0 0 25px rgba(0, 255, 102, 0.8), 0 0 30px #00ff66; }}
-        100% {{ transform: scale(1); box-shadow: 0 0 12px rgba(0, 255, 102, 0.4); }}
-    }}
+.stApp {
+    background:
+        linear-gradient(rgba(6, 34, 20, 0.88), rgba(6, 34, 20, 0.93)),
+        url("app/static/teren.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+h1, h2, h3 {
+    color: #d4ffb8 !important;
+    font-family: 'Segoe UI', sans-serif;
+    text-shadow: 0 0 8px rgba(0,0,0,0.6);
+}
+.card {
+    background: rgba(10, 40, 22, 0.75);
+    border: 1px solid rgba(120, 255, 120, 0.25);
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.45);
+}
+.stat-row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin: 10px 0; gap: 14px;
+}
+.stat-label { color: #eafbe0; font-weight: 600; font-size: 0.95rem; min-width: 150px; }
+.bar-track {
+    flex: 1; background: rgba(255,255,255,0.06); border-radius: 8px;
+    height: 30px; overflow: hidden; position: relative;
+}
+.bar-fill {
+    height: 100%; background: linear-gradient(90deg, #1f7a1f, #7ed957);
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 10px; color: #06220f; font-weight: 700; font-size: 0.85rem;
+    border-radius: 8px; transition: width 0.6s ease; white-space: nowrap;
+}
+.bar-fill.low { background: linear-gradient(90deg, #7a1f1f, #d95757); color: #fff0f0; }
+.match-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 12px; border-bottom: 1px solid rgba(120,255,120,0.12); color: #eafbe0;
+}
+.match-row:last-child { border-bottom: none; }
+.match-liga { color: #7ed957; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; }
+.match-scor { font-weight: 700; color: #d4ffb8; }
 </style>
 """, unsafe_allow_html=True)
 
-# 2. Header-ul principal cu Logo
-if logo_base64:
-    st.markdown(f'<div style="text-align: center; margin-bottom: 15px;"><img src="data:image/png;base64,{logo_base64}" width="280"></div>', unsafe_allow_html=True)
-else:
-    st.title("⚽ PARIURIGO &bull; WORLD LIVE CENTER")
+# ============================================
+# FUNCTII
+# ============================================
+def get_meciuri_azi():
+    azi = date.today().isoformat()
+    url = f"{BASE_URL}/matches"
+    params = {"dateFrom": azi, "dateTo": azi}
+    try:
+        r = requests.get(url, headers=HEADERS, params=params, timeout=10)
+        r.raise_for_status()
+        data = r.json()
+    except requests.RequestException as e:
+        return pd.DataFrame(), str(e)
 
-st.write("---")
+    meciuri = []
+    for m in data.get("matches", []):
+        meciuri.append({
+            "Liga": m["competition"]["name"],
+            "Ora": m["utcDate"][11:16],
+            "Gazda": m["homeTeam"]["name"],
+            "Oaspete": m["awayTeam"]["name"],
+            "Scor Gazda": m["score"]["fullTime"]["home"],
+            "Scor Oaspete": m["score"]["fullTime"]["away"],
+        })
+    return pd.DataFrame(meciuri), None
 
-# Împărțirea ecranului (Mecuri în Stânga, Abonamente în Dreapta)
-col_meciuri, col_abonamente = st.columns([1.3, 0.7], gap="large")
 
-# BAZA DE DATE MECIURI REALE SUPERLIGA
-meciuri_date = {
-    "FCSB vs Rapid București": {
-        "liga": "ROMÂNIA SUPERLIGA",
-        "g_gz": "14", "g_os": "11", "med_gz": "1.75", "med_os": "1.37", "gp_gz": "5", "gp_os": "9",
-        "ht_gz": "85.71%", "ht_os": "71.43%", "st_gz": "78.50%", "st_os": "64.25%",
-        "p15_gz": "91.20%", "p15_os": "78.50%", "p25_gz": "64.29%", "p25_os": "50.00%",
-        "gg_gz": "71.43%", "gg_os": "57.14%", "c_gz": "14.29%", "c_os": "28.57%",
-        "cor_gz": "-", "cor_os": "14.29%",
-        "w_p15": "85.00%", "w_p25": "64.29%", "w_p05r1": "85.71%", "w_p05r2": "78.50%", "w_gg": "71.43%", "w_c35": "21.43%", "w_cor95": "14.29%"
-    },
-    "CFR Cluj vs Universitatea Craiova": {
-        "liga": "ROMÂNIA SUPERLIGA",
-        "g_gz": "11", "g_os": "13", "med_gz": "1.37", "med_os": "1.62", "gp_gz": "7", "gp_os": "6",
-        "ht_gz": "75.00%", "ht_os": "62.50%", "st_gz": "87.50%", "st_os": "75.00%",
-        "p15_gz": "87.50%", "p15_os": "75.00%", "p25_gz": "50.00%", "p25_os": "62.50%",
-        "gg_gz": "62.50%", "gg_os": "62.50%", "c_gz": "25.00%", "c_os": "37.50%",
-        "cor_gz": "12.50%", "cor_os": "25.00%",
-        "w_p15": "81.00%", "w_p25": "56.00%", "w_p05r1": "68.00%", "w_p05r2": "81.00%", "w_gg": "62.00%", "w_c35": "31.00%", "w_cor95": "18.00%"
-    },
-    "Bașakșehir vs Kocaelispor": {
-        "liga": "SUPER LIG &bull; TURKEY",
-        "g_gz": "7", "g_os": "3", "med_gz": "1.00", "med_os": "0.43", "gp_gz": "8", "gp_os": "6",
-        "ht_gz": "71.43%", "ht_os": "57.14%", "st_gz": "71.43%", "st_os": "57.14%",
-        "p15_gz": "85.71%", "p15_os": "42.86%", "p25_gz": "28.57%", "p25_os": "42.86%",
-        "gg_gz": "57.14%", "gg_os": "42.86%", "c_gz": "14.29%", "c_os": "28.57%",
-        "cor_gz": "-", "cor_os": "14.29%",
-        "w_p15": "64.29%", "w_p25": "14.29%", "w_p05r1": "64.29%", "w_p05r2": "64.29%", "w_gg": "50.00%", "w_c35": "21.43%", "w_cor95": "7.14%"
+def get_statistici_echipa_demo(nume_echipa):
+    return {
+        "goluri_marcate": 7, "medie_goluri": 1.00, "goluri_primite": 8,
+        "peste_0_5_ht": 71.43, "peste_0_5_st": 71.43, "peste_1_5": 85.71,
+        "peste_2_5": 28.57, "ambele_marcheaza": 57.14,
+        "peste_3_5_cartonase": 14.29, "peste_9_5_cornere": 0.0,
     }
-}
 
-# 3. SECȚIUNEA DIN STÂNGA: SCOREBAT SUS + GRAFIC NATIV SIGUR JOS
-with col_meciuri:
-    st.subheader("🌍 Meciuri Live din Toate Ligele Lumii")
-    
-    st.markdown("""
-        <div style="width:100%; height:420px; overflow:auto; background:rgba(5,15,10,0.9); border-radius:12px; border:1px solid rgba(0,255,102,0.2); padding:10px; margin-bottom: 25px;">
-            <iframe src="https://scorebat.com" frameborder="0" width="100%" height="390px" allowfullscreen allow="autoplay; fullscreen"></iframe>
+
+def bara_procent(eticheta, procent, prag_scazut=30.0):
+    clasa = "low" if procent < prag_scazut else ""
+    st.markdown(f"""
+        <div class="stat-row">
+            <div class="stat-label">{eticheta}</div>
+            <div class="bar-track">
+                <div class="bar-fill {clasa}" style="width:{procent}%">{procent:.2f}%</div>
+            </div>
         </div>
     """, unsafe_allow_html=True)
-    
-    st.write("---")
-    st.subheader("📊 Modul Algoritm & Probabilități (Meci de Top)")
-    
-    meci_ales = st.selectbox("🎯 Schimbă meciul din ziua respectivă:", list(meciuri_date.keys()))
-    m = meciuri_date[meci_ales]
-    
-    # GRAFIC RECONSTRUIT PRIN METRICI SIMPLE (FĂRĂ VARIABILE INTRUZE ÎN STRINGURI)
-    st.markdown('<div class="glass-box-container">', unsafe_allow_html=True)
-    st.write(f"📈 **MECI RECOMANDAT • DATE LA ZI {data_azi}**")
-    st.write(f"## {meci_ales}")
-    st.caption(f"🏆 {m['liga']}")
-    st.write("---")
-    
-    # Rândul 1: Cifre Mari
-    c1, c2, c3 = st.columns(3)
-    c1.metric(label="⚽ Total Goluri Marcate (Gazde)", value=m["g_gz"])
-    c2.metric(label="📊 Balanță Sezon", value="Medie Goluri", delta=f"{m['med_gz']} vs {m['med_os']}", delta_color="off")
-    c3.metric(label="⚽ Total Goluri Marcate (Oaspeți)", value=m["g_os"])
-    
-    st.write("---")
-    
-    # Rândul 2: Goluri Primite
-    c4, c5, _ = st.columns(3)
-    c4.metric(label="🛡️ Goluri Primite (Gazde)", value=m["gp_gz"])
-    c5.metric(label="🛡️ Goluri Primite (Oaspeți)", value=m["gp_os"])
-    
-    st.write("---")
-    st.write("**📋 PROCENTE ȘI PROBABILITĂȚI REALE (HT/ST/GOLURI):**")
-    
-    # Rândul 3: Procente în Căsuțe Native
-    cx1, cx2, cx3 = st.columns(3)
-    cx1.metric(label="🟢 Peste 0.5 HT (Prima Repriză)", value=m["ht_gz"], delta=f"{m['ht_os']} Oaspeți", delta_color="off")
-    cx2.metric(label="🟢 Peste 0.5 ST (A doua Repriză)", value=m["st_gz"], delta=f"{m['st_os']} Oaspeți", delta_color="off")
+
+# ============================================
+# INTERFATA
+# ============================================
+st.title("⚽ Analist Pariuri")
+st.caption("Aplicatie Streamlit — tema verde, date live")
+
+st.markdown("### 📊 Statistici echipa")
+echipa = st.text_input("Nume echipa (demo)", value="Echipa Exemplu")
+stats = get_statistici_echipa_demo(echipa)
+
+st.markdown('<div class="card">', unsafe_allow_html=True)
+col1, col2 = st.columns(2)
+with col1:
+    st.metric("Total goluri marcate", stats["goluri_marcate"])
+    st.metric("Medie goluri", stats["medie_goluri"])
+with col2:
+    st.metric("Goluri primite", stats["goluri_primite"])
+
+bara_procent("Peste 0.5 HT", stats["peste_0_5_ht"])
+bara_procent("Peste 0.5 ST", stats["peste_0_5_st"])
+bara_procent("Peste 1.5 goluri", stats["peste_1_5"])
+bara_procent("Peste 2.5 goluri", stats["peste_2_5"])
+bara_procent("Ambele marcheaza", stats["ambele_marcheaza"])
+bara_procent("Peste 3.5 cartonase", stats["peste_3_5_cartonase"])
+bara_procent("Peste 9.5 cornere", stats["peste_9_5_cornere"])
+st.markdown('</div>', unsafe_allow_html=True)
+
+st.markdown("### 📅 Meciurile zilei")
+df, eroare = get_meciuri_azi()
+
+st.markdown('<div class="card">', unsafe_allow_html=True)
+if eroare:
+    st.warning(f"Nu am putut aduce meciurile de pe API. Verificati cheia. Detaliu: {eroare}")
+elif df.empty:
+    st.info("Nu exista meciuri programate azi.")
+else:
+    for _, row in df.iterrows():
+        scor = f"{row['Scor Gazda']} - {row['Scor Oaspete']}" if row["Scor Gazda"] is not None else "vs"
+        st.markdown(f"""
+            <div class="match-row">
+                <div>
+                    <div class="match-liga">{row['Liga']}</div>
+                    <div>{row['Gazda']} <span class="match-scor">{scor}</span> {row['Oaspete']}</div>
+                </div>
+                <div>{row['Ora']}</div>
+            </div>
+        """, unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
