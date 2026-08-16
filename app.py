@@ -68,25 +68,6 @@ st.markdown(f"""
     div[data-testid="stProgress"] div[role="progressbar"] {{
         background: linear-gradient(90deg, #008f33 0%, #00ff66 100%) !important;
     }}
-
-    /* Suprascriere forțată pentru butoanele de link standard Streamlit */
-    .ststLinkButton a, div[data-testid="stLinkButton"] a {{
-        background: linear-gradient(135deg, #00ff66 0%, #00bc43 100%) !important;
-        color: #000000 !important;
-        font-weight: 800 !important;
-        font-size: 16px !important;
-        border: none !important;
-        border-radius: 8px !important;
-        text-align: center !important;
-        padding: 10px 20px !important;
-        display: block !important;
-        width: 100% !important;
-        box-shadow: 0 4px 15px rgba(0, 255, 102, 0.3) !important;
-        text-decoration: none !important;
-    }}
-    div[data-testid="stLinkButton"] a:hover {{
-        box-shadow: 0 0 20px rgba(0, 255, 102, 0.6) !important;
-    }}
 </style>
 """, unsafe_allow_html=True)
 
@@ -105,7 +86,7 @@ st.write("---")
 # Împărțirea ecranului (Fluxul în Stânga, Abonamente în Dreapta)
 col_meciuri, col_abonamente = st.columns([1.3, 0.7], gap="large")
 
-# Baza de date cu meciuri selectabile
+# BAZA DE DATE REPARATĂ TOTAL (Toate cheile sunt acum identice la fiecare meci)
 meciuri_date = {
     "FCSB vs Rapid București": {
         "liga": "ROMÂNIA SUPERLIGA",
@@ -117,7 +98,8 @@ meciuri_date = {
         "p_15": "91.20%", "d_15": "78.50% Oaspeți",
         "p_25": "64.29%", "d_25": "50.00% Oaspeți",
         "p_gg": "71.43%", "d_gg": "57.14% Oaspeți",
-        "prog_15": 0.85, "prog_05": 0.78, "prog_gg": 0.64
+        "prog_15": 0.85, "prog_05": 0.78, "prog_gg": 0.64,
+        "arbitru": "Radu Petrescu &bull; 5/5 meciuri analizate"
     },
     "CFR Cluj vs Universitatea Craiova": {
         "liga": "ROMÂNIA SUPERLIGA",
@@ -129,7 +111,8 @@ meciuri_date = {
         "p_15": "87.50%", "d_15": "75.00% Oaspeți",
         "p_25": "50.00%", "d_25": "62.50% Oaspeți",
         "p_gg": "62.50%", "d_gg": "62.50% Oaspeți",
-        "prog_15": 0.81, "prog_05": 0.68, "prog_gg": 0.62
+        "prog_15": 0.81, "prog_05": 0.68, "prog_gg": 0.62,
+        "arbitru": "Istvan Kovacs &bull; 8/8 meciuri analizate"
     },
     "Oțelul Galați vs Dinamo București": {
         "liga": "ROMÂNIA SUPERLIGA",
@@ -141,7 +124,8 @@ meciuri_date = {
         "p_15": "62.50%", "d_15": "75.00% Oaspeți",
         "p_25": "25.00%", "d_25": "50.00% Oaspeți",
         "p_gg": "37.50%", "d_gg": "50.00% Oaspeți",
-        "prog_15": 0.68, "prog_05": 0.50, "prog_gg": 0.43
+        "prog_15": 0.68, "prog_05": 0.50, "prog_gg": 0.43,
+        "arbitru": "Marian Barbu &bull; 4/4 meciuri analizate"
     },
     "Bașakșehir vs Kocaelispor": {
         "liga": "SUPER LIG &bull; TURKEY",
@@ -153,7 +137,8 @@ meciuri_date = {
         "p_15": "85.71%", "d_15": "42.86% Oaspeți",
         "p_25": "28.57%", "d_25": "42.86% Oaspeți",
         "p_gg": "57.14%", "d_gg": "42.86% Oaspeți",
-        "prog_15": 0.64, "prog_05": 0.64, "prog_gg": 0.50
+        "prog_15": 0.64, "prog_05": 0.64, "prog_gg": 0.50,
+        "arbitru": "M. Turkmen &bull; 7/7 meciuri analizate"
     }
 }
 
@@ -196,7 +181,7 @@ with col_meciuri:
             c9.metric(label="🛡️ GOLURI PRIMITE (Oaspeți)", value=m["gp_oaspeti"])
             
             st.write("---")
-            st.markdown("<p style='color:#00ff66; font-size:18px;'>📋 PROCENTE ȘI PROBABILITĂȚI GENERATE DIN MECIURILE DIRECTE:</p>", unsafe_allow_html=True)
+            st.markdown("<p style='color:#00ff66; font-size:18px;'>📋 PROCENTE ȘI PROBABILITĂȚI:</p>", unsafe_allow_html=True)
             
             cx1, cx2, cx3 = st.columns(3)
             cx1.metric(label="🟢 PESTE 0.5 HT (Prima Repriză)", value=m["p_ht"], delta=m["d_ht"], delta_color="off")
@@ -220,4 +205,15 @@ with col_meciuri:
             st.write("---")
             st.info(f"🔸 **Sistem Algoritm Automat PariuriGO** &bull; Arbitru delegat: {m['arbitru']}")
 
-# 4. SECȚIUNE ABONAMENTE VIP REPARATĂ TOTAL ȘI 100% VIZIBILĂ (Dreapta)
+# 4. SECȚIUNE ABONAMENTE VIP REPARATĂ COMPLET (Dreapta)
+with col_abonamente:
+    st.subheader("🏆 Abonamente VIP")
+    
+    tab_low, tab_med, tab_high = st.tabs(["🟢 LOW", "🟡 MEDIUM", "🔥 HIGH"])
+    
+    link_telegram_afacere = "https://t.me"
+    
+    with tab_low:
+        with st.container(border=True):
+            st.markdown("<h3 style='color:#00ff66; margin:0;'>PACHET LOW</h3>", unsafe_allow_html=True)
+            st.markdown("<h2 style='margin:5px 0;'>40 RON <span style='font-size:14px; color:#94a3b8;'>/ lună</span></h2>", unsafe_allow_html=True)
