@@ -1,7 +1,7 @@
 import streamlit as st
 import base64
 
-# 1. Configurare Pagină principală (MANDATORIU SĂ FIE PRIMA FUNCȚIE)
+# 1. Configurare Pagină principală (MANDATORIU PRIMA LINIE)
 st.set_page_config(
     page_title="PariuriGO Live Dashboard",
     page_icon="⚽",
@@ -9,253 +9,137 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Funcție pentru citirea imaginii locale de pe GitHub
-def incarcă_teren_fotbal(cale_imagine):
+# Funcție securizată pentru citirea imaginii de fundal de pe GitHub
+def incarc_teren_fotbal(cale_imagine):
     try:
         with open(cale_imagine, "rb") as f:
             return base64.b64encode(f.read()).decode()
     except:
         return ""
 
-img_data = incarcă_teren_fotbal("teren.png")
+img_data = incarc_teren_fotbal("teren.png")
 
-# Structură curată de CSS inline pentru a evita orice eroare de sintaxă string
-css_stiluri = """
+# Aplicare design curat și font sportiv prin CSS simplu
+css_fond = ""
+if img_data:
+    css_fond = f"background: linear-gradient(rgba(10, 24, 15, 0.9), rgba(10, 24, 15, 0.9)), url('data:image/png;base64,{img_data}') !important; background-size: cover !important; background-attachment: fixed !important;"
+else:
+    css_fond = "background-color: #06110b !important;"
+
+st.markdown(f"""
 <style>
     @import url('https://googleapis.com');
-
-    .stApp {
-        background: linear-gradient(rgba(4, 12, 8, 0.9), rgba(4, 12, 8, 0.9)) !important;
-        background-size: cover !important;
-        background-position: center !important;
-        background-attachment: fixed !important;
+    
+    .stApp {{
+        {css_fond}
         color: #ffffff !important;
         font-family: 'Rajdhani', sans-serif !important;
-    }
-"""
-
-if img_data:
-    css_stiluri = css_stiluri.replace(
-        "background: linear-gradient(rgba(4, 12, 8, 0.9), rgba(4, 12, 8, 0.9)) !important;",
-        f"background: linear-gradient(rgba(4, 12, 8, 0.9), rgba(4, 12, 8, 0.9)), url('data:image/png;base64,{img_data}') !important;"
-    )
-
-css_stiluri += """
-    h1, h2, h3, h4, p, span, div, button {
+    }}
+    h1, h2, h3, h4, p, span, label, .stTabs button {{
         font-family: 'Rajdhani', sans-serif !important;
-    }
-
-    .nav-bar {
-        background: rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(10px);
-        padding: 15px 30px;
-        border-radius: 12px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 25px;
-        border: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .premium-card {
-        background: rgba(13, 31, 23, 0.65);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(0, 255, 102, 0.2);
-        border-radius: 20px;
-        padding: 25px;
-        margin-bottom: 25px;
-        box-shadow: 0 12px 40px 0 rgba(0,0,0,0.7);
-    }
-    
-    .live-badge {
-        background: #ef4444;
-        color: white;
-        padding: 4px 12px;
-        border-radius: 6px;
-        font-size: 14px;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-    .scor-display {
-        font-size: 36px !important;
-        font-weight: 800;
-        color: #ffcc00;
-        text-align: center;
-        letter-spacing: 2px;
-        margin: 15px 0;
-    }
-
-    .stat-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 10px 0;
-        font-size: 17px;
-        font-weight: 600;
-    }
-    .stat-label {
-        color: #94a3b8;
-        text-transform: uppercase;
-        font-size: 13px;
-    }
-    .stat-val {
-        color: #ffffff;
-        font-size: 19px;
-        font-weight: 700;
-    }
-
-    .cota-box {
-        background: rgba(0, 0, 0, 0.4);
-        border: 1px solid rgba(0, 255, 102, 0.2);
-        border-radius: 8px;
-        padding: 10px;
-        text-align: center;
-    }
-
-    .stButton > button {
-        background: linear-gradient(135deg, #00ff66 0%, #00ea53 100%) !important;
-        color: #040c08 !important;
-        border: none !important;
-        border-radius: 12px !important;
-        padding: 12px 24px !important;
-        font-weight: 800 !important;
-        font-size: 18px !important;
-        text-transform: uppercase !important;
-        letter-spacing: 1px !important;
-        box-shadow: 0 4px 20px rgba(0, 255, 102, 0.4) !important;
-        width: 100%;
-    }
+        font-weight: 700 !important;
+    }}
+    /* Carduri stilizate tip sticlă */
+    div[data-testid="stVerticalBlockBorder"] {{
+        background: rgba(13, 31, 23, 0.7) !important;
+        backdrop-filter: blur(15px) !important;
+        border: 1px solid rgba(0, 255, 102, 0.2) !important;
+        border-radius: 16px !important;
+        padding: 20px !important;
+        box-shadow: 0 8px 32px 0 rgba(0,0,0,0.5) !important;
+    }}
 </style>
-"""
-
-st.markdown(css_stiluri, unsafe_allow_html=True)
-
-# 2. Bara de Navigare de Sus
-st.markdown("""
-<div class="nav-bar">
-    <div style="display: flex; align-items: center; gap: 10px;">
-        <span style="font-size: 26px; font-weight: 800; color: #00ff66; letter-spacing: 1px;">PARIURIGO</span>
-    </div>
-    <div style="font-size: 15px; font-weight: 600; color: #94a3b8;">
-        🔴 LIVE CENTER &bull; DASHBOARD SPORTIV PREMIUM
-    </div>
-</div>
 """, unsafe_allow_html=True)
 
-col_stanga, col_dreapta = st.columns([1.2, 0.8])
+# 2. Header-ul principal al aplicației
+st.title("⚽ PARIURIGO &bull; LIVE CENTER")
+st.caption("Dashboard Sportiv Premium v2.0 &bull; Actualizat în timp real")
+st.write("---")
 
-# 3. PANOU LIVE (Stânga)
-with col_stanga:
-    st.markdown("### 🏟️ MECIURI ÎN DESFĂȘURARE")
+# Împărțirea ecranului în două secțiuni: Meciuri (Stânga) și Abonamente (Dreapta)
+col_meciuri, col_abonamente = st.columns([1.3, 0.7], gap="large")
+
+# 3. SECȚIUNEA DIN STÂNGA: MECIURI LIVE ȘI STATISTICI
+with col_meciuri:
+    st.subheader("🏟️ Meciuri în Desfășurare")
     
-    st.markdown("""
-    <div class="premium-card">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span class="live-badge">LIVE &bull; MIN 76</span>
-            <span style="color: #94a3b8; font-weight: bold;">LALIGA</span>
-        </div>
+    # MECIUL 1 - BOX LIVE
+    with st.container(border=True):
+        col_header1, col_header2 = st.columns([1, 1])
+        with col_header1:
+            st.error("🔴 LIVE &bull; MIN 76")
+        with col_header2:
+            st.markdown("<p style='text-align:right; color:#94a3b8;'>LALIGA</p>", unsafe_allow_html=True)
+            
+        st.markdown("<h2 style='text-align:center; color:#ffcc00; margin: 10px 0;'>REAL MADRID &nbsp;&nbsp; 2 - 1 &nbsp;&nbsp; BARCELONA</h2>", unsafe_allow_html=True)
+        st.write("---")
         
-        <div class="scor-display">
-            REAL MADRID <span style="color:white; font-size:40px;">2 - 1</span> BARCELONA
-        </div>
+        # Afișare Statistici Live folosind metrici native
+        c1, c2, c3, c4 = st.columns(4)
+        with c1:
+            st.metric(label="📊 POSESIE MINGE", value="52%", delta="Real Madrid")
+        with c2:
+            st.metric(label="🎯 ȘUTURI PE POARTĂ", value="7 - 4")
+        with c3:
+            st.metric(label="🛑 FAULTURI COMISE", value="12 - 14")
+        with c4:
+            st.metric(label="🟨 CARTONAȘE", value="🟨2 &bull; 🟨3")
+            
+        st.write("---")
+        st.write("**🧠 PUGAL RECOMANDAT DE INTELIGENȚA ARTIFICIALĂ:**")
         
-        <hr style="border-color: rgba(255,255,255,0.08);">
+        # Caseta cu pontul zilei
+        st.success("🔥 **Ambele echipe marchează (GG)** &nbsp;|&nbsp; **Cotă: 1.72**")
         
-        <div class="stat-row">
-            <span class="stat-val">52%</span>
-            <span class="stat-label">Posesie Mingi %</span>
-            <span class="stat-val">48%</span>
-        </div>
-        <div class="stat-row">
-            <span class="stat-val" style="color: #00ff66;">7</span>
-            <span class="stat-label">Șuturi pe Poartă</span>
-            <span class="stat-val" style="color: #ef4444;">4</span>
-        </div>
-        <div class="stat-row">
-            <span class="stat-val">12</span>
-            <span class="stat-label">Faulturi Comise</span>
-            <span class="stat-val">14</span>
-        </div>
-        <div class="stat-row">
-            <span class="stat-val" style="color: #eab308;">🟨 2</span>
-            <span class="stat-label">Cartonașe Primite</span>
-            <span class="stat-val" style="color: #eab308;">🟨 3</span>
-        </div>
+    st.write("") # Spațiere
+    
+    # MECIUL 2 - BOX PRE-MECI
+    with st.container(border=True):
+        col_p1, col_p2 = st.columns([1, 1])
+        with col_p1:
+            st.info("🟢 PRE-MECI &bull; 22:00")
+        with col_p2:
+            st.markdown("<p style='text-align:right; color:#94a3b8;'>PREMIER LEAGUE</p>", unsafe_allow_html=True)
+            
+        st.markdown("<h3 style='text-align:center; color:#ffffff; margin: 10px 0;'>MANCHESTER CITY &nbsp;&nbsp; vs &nbsp;&nbsp; LIVERPOOL</h3>", unsafe_allow_html=True)
+        st.write("---")
         
-        <hr style="border-color: rgba(255,255,255,0.08);">
-        
-        <div style="font-size: 15px; font-weight: bold; color: #94a3b8; margin-bottom: 8px;">SUGESTIE ANALIST:</div>
-        <div style="background: rgba(0,255,102,0.05); padding: 12px; border-radius: 8px; border-left: 4px solid #00ff66; display:flex; justify-content:space-between; align-items:center;">
-            <div>
-                <span style="font-weight: 800; font-size: 18px; color: white;">Ambele marchează (GG)</span>
-            </div>
-            <div style="font-size: 22px; font-weight: 800; color: #00ff66;">Cotă 1.72</div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+        # Butoane rapide de cote 1 X 2
+        st.write("**Cote Finale 1X2 (Speranță de câștig):**")
+        cx1, cx2, cx3 = st.columns(3)
+        cx1.button("1 &bull; cota 2.15", key="c1", use_container_width=True)
+        cx2.button("X &bull; cota 3.60", key="cx", use_container_width=True)
+        cx3.button("2 &bull; cota 3.20", key="c2", use_container_width=True)
 
-    st.markdown("""
-    <div class="premium-card">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span class="live-badge" style="background: #22c55e;">PRE-MECI &bull; 22:00</span>
-            <span style="color: #94a3b8; font-weight: bold;">PREMIER LEAGUE</span>
-        </div>
-        
-        <div class="scor-display" style="color: white; font-size: 28px;">
-            MANCHESTER CITY <span style="color:#ffcc00; font-size:26px;">vs</span> LIVERPOOL
-        </div>
-        
-        <hr style="border-color: rgba(255,255,255,0.08);">
-        
-        <div style="display: flex; gap: 15px; margin-bottom: 15px;">
-            <div style="flex:1;" class="cota-box"><span style="color:#94a3b8; font-size:13px;">1</span><br><strong style="font-size:17px;">2.15</strong></div>
-            <div style="flex:1;" class="cota-box"><span style="color:#94a3b8; font-size:13px;">X</span><br><strong style="font-size:17px;">3.60</strong></div>
-            <div style="flex:1;" class="cota-box"><span style="color:#94a3b8; font-size:13px;">2</span><br><strong style="font-size:17px;">3.20</strong></div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-# 4. PANOU ABONAMENTE (Dreapta)
-with col_dreapta:
-    st.markdown("### 🏆 DEBLOCHEAZĂ ACCES VIP")
+# 4. SECȚIUNEA DIN DREAPTA: PACHETE ABONAMENT VIP
+with col_abonamente:
+    st.subheader("🏆 Acces VIP Premium")
     
     opțiune_pachet = st.tabs(["🟢 LOW", "🟡 MEDIUM", "🔥 HIGH"])
     
     with opțiune_pachet[0]:
-        st.markdown("""
-        <div class="premium-card" style="border-color: rgba(34, 197, 94, 0.4);">
-            <p style="font-size: 22px; font-weight: 800; color: #22c55e; text-align:center; margin:0;">PACHET STANDARD LOW</p>
-            <h1 style="text-align: center; color: white; margin: 10px 0; font-size: 38px;">19 RON <span style='font-size:15px; color:#94a3b8;'>/ lună</span></h1>
-            <hr style="border-color: rgba(255,255,255,0.08);">
-            <p>✅ 3 Bilete gata analizate pe săptămână</p>
-            <p>✅ Cote sigure cu probabilitate mare</p>
-        </div>
-        """, unsafe_allow_html=True)
-        st.button("Cumpără LOW", key="b_low")
+        with st.container(border=True):
+            st.markdown("<h3 style='color:#22c55e; text-align:center;'>PACHET LOW</h3>", unsafe_allow_html=True)
+            st.markdown("<h2 style='text-align:center;'>19 RON <span style='font-size:16px; color:#94a3b8;'>/ lună</span></h2>", unsafe_allow_html=True)
+            st.write("---")
+            st.write("✅ 3 Bilete gata analizate pe săptămână")
+            st.write("✅ Cote sigure cu probabilitate mare")
+            st.button("Abonare Standard LOW", key="b_low", use_container_width=True)
 
     with opțiune_pachet[1]:
-        st.markdown("""
-        <div class="premium-card" style="border-color: rgba(234, 179, 8, 0.4);">
-            <p style="font-size: 22px; font-weight: 800; color: #eab308; text-align:center; margin:0;">PACHET GOLD MEDIUM</p>
-            <h1 style="text-align: center; color: white; margin: 10px 0; font-size: 38px;">49 RON <span style='font-size:15px; color:#94a3b8;'>/ lună</span></h1>
-            <hr style="border-color: rgba(255,255,255,0.08);">
-            <p>✅ 1 Bilet Premium în fiecare zi</p>
-            <p>✅ Notificări instant pe Telegram Bot</p>
-        </div>
-        """, unsafe_allow_html=True)
-        st.button("Cumpără GOLD", key="b_med")
+        with st.container(border=True):
+            st.markdown("<h3 style='color:#eab308; text-align:center;'>PACHET MEDIUM</h3>", unsafe_allow_html=True)
+            st.markdown("<h2 style='text-align:center;'>49 RON <span style='font-size:16px; color:#94a3b8;'>/ lună</span></h2>", unsafe_allow_html=True)
+            st.write("---")
+            st.write("✅ 1 Bilet Premium oferit în fiecare zi")
+            st.write("✅ Notificări instatanee pe Telegram Bot")
+            st.button("Abonare Gold MEDIUM", key="b_med", use_container_width=True)
 
     with opțiune_pachet[2]:
-        st.markdown("""
-        <div class="premium-card" style="border-color: rgba(239, 68, 68, 0.4);">
-            <p style="font-size: 22px; font-weight: 800; color: #ef4444; text-align:center; margin:0;">🔥 HIGH VIP ELITE</p>
-            <h1 style="text-align: center; color: white; margin: 10px 0; font-size: 38px;">99 RON <span style='font-size:15px; color:#94a3b8;'>/ lună</span></h1>
-            <hr style="border-color: rgba(255,255,255,0.08);">
-            <p>✅ Acces total la Proiect Dublare</p>
-            <p>✅ Cota 2 VIP zilnică & Suport privat 1-la-1</p>
-        </div>
-        """, unsafe_allow_html=True)
-        st.button("Cumpără VIP ELITE", key="b_high")
+        with st.container(border=True):
+            st.markdown("<h3 style='color:#ef4444; text-align:center;'>HIGH VIP ELITE</h3>", unsafe_allow_html=True)
+            st.markdown("<h2 style='text-align:center;'>99 RON <span style='font-size:16px; color:#94a3b8;'>/ lună</span></h2>", unsafe_allow_html=True)
+            st.write("---")
+            st.write("✅ Acces total la Proiect Dublare & Toate sistemele")
+            st.write("✅ Cota 2 VIP zilnică + Suport privat 1-la-1")
+            st.button("Deblochează VIP ELITE", key="b_high", use_container_width=True)
