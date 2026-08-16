@@ -121,11 +121,11 @@ st.write("---")
 # Împărțirea ecranului (Fluxul în Stânga, Abonamente în Dreapta)
 col_meciuri, col_abonamente = st.columns([1.3, 0.7], gap="large")
 
-# Baza de date pentru meciuri selectabile (Poți modifica tu numele sau cifrele de aici oricând!)
+# Baza de date securizată pentru meciuri selectabile
 meciuri_date = {
     "FCSB vs Rapid București": {
         "liga": "ROMÂNIA SUPERLIGA",
-        "goluri_mar": "14 - 11", "med_gol": "1.75 - 1.37", "goluri_pri": "5 - 9",
+        "g_stg": "14", "g_drp": "11", "m_stg": "1.75", "m_drp": "1.37", "gp_stg": "5", "gp_drp": "9",
         "ht_stg": "85.71%", "ht_drp": "71.43%", "st_stg": "78.50%", "st_drp": "64.25%",
         "p15_stg": "91.20%", "p15_drp": "78.50%", "p25_stg": "64.29%", "p25_drp": "50.00%",
         "gg_stg": "71.43%", "gg_drp": "57.14%", "p15_total": 85.0, "p05_r1": 78.0, "gg_total": 64.0,
@@ -133,7 +133,7 @@ meciuri_date = {
     },
     "CFR Cluj vs Universitatea Craiova": {
         "liga": "ROMÂNIA SUPERLIGA",
-        "goluri_mar": "11 - 13", "med_gol": "1.37 - 1.62", "goluri_pri": "7 - 6",
+        "g_stg": "11", "g_drp": "13", "m_stg": "1.37", "m_drp": "1.62", "gp_stg": "7", "gp_drp": "6",
         "ht_stg": "75.00%", "ht_drp": "62.50%", "st_stg": "87.50%", "st_drp": "75.00%",
         "p15_stg": "87.50%", "p15_drp": "75.00%", "p25_stg": "50.00%", "p25_drp": "62.50%",
         "gg_stg": "62.50%", "gg_drp": "62.50%", "p15_total": 81.0, "p05_r1": 68.0, "gg_total": 62.0,
@@ -141,7 +141,7 @@ meciuri_date = {
     },
     "Oțelul Galați vs Dinamo București": {
         "liga": "ROMÂNIA SUPERLIGA",
-        "goluri_mar": "8 - 10", "med_gol": "1.00 - 1.25", "goluri_pri": "4 - 8",
+        "g_stg": "8", "g_drp": "10", "m_stg": "1.00", "m_drp": "1.25", "gp_stg": "4", "gp_drp": "8",
         "ht_stg": "50.00%", "ht_drp": "50.00%", "st_stg": "62.50%", "st_drp": "75.00%",
         "p15_stg": "62.50%", "p15_drp": "75.00%", "p25_stg": "25.00%", "p25_drp": "50.00%",
         "gg_stg": "37.50%", "gg_drp": "50.00%", "p15_total": 68.0, "p05_r1": 50.0, "gg_total": 43.0,
@@ -149,10 +149,10 @@ meciuri_date = {
     },
     "Bașakșehir vs Kocaelispor": {
         "liga": "SUPER LIG &bull; TURKEY",
-        "goluri_mar": "7 - 3", "med_gol": "1.00 - 0.43", "goluri_pri": "8 - 6",
+        "g_stg": "7", "g_drp": "3", "m_stg": "1.00", "m_drp": "0.43", "gp_stg": "8", "gp_drp": "6",
         "ht_stg": "71.43%", "ht_drp": "57.14%", "st_stg": "71.43%", "st_drp": "57.14%",
         "p15_stg": "85.71%", "p15_drp": "42.86%", "p25_stg": "28.57%", "p25_drp": "42.86%",
-        "gg_stg": "57.14%", "gg_drp": "42.86%", "p15_total": 64.29%, "p05_r1": 64.29%, "gg_total": 50.0,
+        "gg_stg": "57.14%", "gg_drp": "42.86%", "p15_total": 64.2, "p05_r1": 64.2, "gg_total": 50.0,
         "arbitru": "M. Turkmen &bull; 7/7 meciuri analizate"
     }
 }
@@ -175,10 +175,10 @@ with col_meciuri:
         # MENIUL DROPDOWN DE SELECȚIE MECI
         meci_selectat = st.selectbox("🎯 Alege meciul pentru afișarea analizei din bază:", list(meciuri_date.keys()))
         
-        # Preluăm automat datele meciului selectat din baza de mai sus
+        # Preluăm datele meciului selectat
         d = meciuri_date[meci_selectat]
         
-        # Graficul premium dinamic asamblat curat
+        # Graficul premium dinamic în format HTML securizat
         st.markdown(f"""
         <div class="glass-box">
             <p style='text-align:center; color:#94a3b8; margin:0;'>MECI RECOMANDAT &bull; DATE LA ZI {data_azi}</p>
@@ -187,17 +187,19 @@ with col_meciuri:
             <hr style="border-color: rgba(255,255,255,0.05); margin: 15px 0;">
             <div class="stat-container">
                 <div class="stat-row">
-                    <div class="stat-left-val">{d['goluri_mar'].split(' - ')[0]}</div>
+                    <div class="stat-left-val">{d['g_stg']}</div>
                     <div class="stat-center-label">Total goluri marcate</div>
-                    <div class="stat-right-val">{d['goluri_mar'].split(' - ')[1]}</div>
+                    <div class="stat-right-val">{d['g_drp']}</div>
                 </div>
                 <div class="stat-row">
-                    <div class="stat-left-val">{d['med_gol'].split(' - ')[0]}</div>
+                    <div class="stat-left-val">{d['m_stg']}</div>
                     <div class="stat-center-label">Medie goluri / meci</div>
-                    <div class="stat-right-val">{d['med_gol'].split(' - ')[1]}</div>
+                    <div class="stat-right-val">{d['m_drp']}</div>
                 </div>
                 <div class="stat-row">
-                    <div class="stat-left-val">{d['goluri_pri'].split(' - ')[0]}</div>
+                    <div class="stat-left-val">{d['gp_stg']}</div>
                     <div class="stat-center-label">Goluri primite</div>
-                    <div class="stat-right-val">{d['goluri_pri'].split(' - ')[1]}</div>
+                    <div class="stat-right-val">{d['gp_drp']}</div>
                 </div>
+                <hr style="border-color: rgba(255,255,255,0.05); margin: 15px 0;">
+                <div class="stat-row">
