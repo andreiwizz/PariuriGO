@@ -57,16 +57,26 @@ st.markdown(f"""
         margin-bottom: 25px !important;
     }}
 
-    /* Stiluri pentru butoanele mari din pachete */
-    .stButton > button {{
+    /* Stiluri butoane personalizate tip sticlă verde pentru pachete */
+    .pachet-btn {{
         background: linear-gradient(135deg, #00ff66 0%, #00bc43 100%) !important;
         color: #000000 !important;
         font-weight: 800 !important;
-        font-size: 16px !important;
-        border: none !important;
+        font-size: 18px !important;
+        text-align: center !important;
+        padding: 12px !important;
         border-radius: 8px !important;
-        padding: 10px 20px !important;
-        width: 100%;
+        text-transform: uppercase !important;
+        letter-spacing: 1px !important;
+        margin-top: 15px !important;
+        display: block !important;
+        text-decoration: none !important;
+        box-shadow: 0 4px 15px rgba(0, 255, 102, 0.3) !important;
+        transition: all 0.2s ease !important;
+    }}
+    .pachet-btn:hover {{
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(0, 255, 102, 0.5) !important;
     }}
 
     /* Grafic simetric dinamic */
@@ -124,7 +134,7 @@ with col_meciuri:
         
     with tab_analiza:
         st.write("")
-        # Am refăcut graficul premium, încapsulat curat pentru a preveni orice eroare
+        # Graficul premium în tentă verde
         html_grafic = f"""
         <div class="glass-box">
             <p style='text-align:center; color:#94a3b8; margin:0;'>MECIUL DE TOP DE AZI &bull; {data_azi}</p>
@@ -193,17 +203,3 @@ with col_meciuri:
                     <strong>Sistem Algoritm Automat PariuriGO</strong><br>
                     <span style="color:#a0aec0; font-size:14px;">Meci extras și prelucrat în timp real pentru data de {data_azi}</span>
                 </div>
-            </div>
-        </div>
-        """
-        st.markdown(html_grafic, unsafe_allow_html=True)
-
-# 4. SECȚIUNE ABONAMENTE VIP REPARATĂ (Dreapta)
-with col_abonamente:
-    st.subheader("🏆 Abonamente VIP")
-    
-    tab_low, tab_med, tab_high = st.tabs(["🟢 LOW", "🟡 MEDIUM", "🔥 HIGH"])
-    
-    with tab_low:
-        st.write("")
-        st.write("### PACHET LOW")
