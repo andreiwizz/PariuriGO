@@ -10,10 +10,8 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Determinarea datei curente
 data_azi = datetime.now().strftime("%d.%m.%Y")
 
-# Funcție pentru citirea imaginii locale JPG de pe GitHub
 def incarc_imagine_locala(cale_imagine):
     try:
         with open(cale_imagine, "rb") as f:
@@ -31,20 +29,15 @@ else:
 
 st.markdown(f"""
 <style>
-    @import url('https://googleapis.com');
-    
     .stApp {{
         {bg_style}
         color: #ffffff !important;
         font-family: 'Rajdhani', sans-serif !important;
     }}
-    
-    h1, h2, h3, h4, p, span, label, .stTabs button {{
+    h1, h2, h3, h4, p, span, label {{
         font-family: 'Rajdhani', sans-serif !important;
         font-weight: 700 !important;
     }}
-    
-    /* Carduri tip sticlă mată în nuanțe verzi închise pentru stânga */
     .glass-box-container {{
         background: rgba(8, 20, 14, 0.88) !important;
         backdrop-filter: blur(20px) !important;
@@ -55,8 +48,6 @@ st.markdown(f"""
         box-shadow: 0 12px 40px 0 rgba(0,0,0,0.7) !important;
         margin-bottom: 25px !important;
     }}
-
-    /* Carduri speciale pentru pachetele din dreapta să nu se facă negre */
     .vip-card-box {{
         background: rgba(10, 25, 18, 0.9) !important;
         border: 1px solid rgba(0, 255, 102, 0.3) !important;
@@ -65,21 +56,16 @@ st.markdown(f"""
         margin-bottom: 20px !important;
         box-shadow: 0 8px 25px rgba(0,0,0,0.6) !important;
     }}
-
-    /* Meniu selectare meci */
     div[data-testid="stSelectbox"] div[data-baseweb="select"] {{
         background-color: rgba(10, 30, 18, 0.9) !important;
         border: 1px solid #00ff66 !important;
         color: #ffffff !important;
         border-radius: 8px !important;
     }}
-
-    /* DESIGN PREMIUM PENTRU GRAFIC (TENTĂ VERDE CONFORM IMAGINII) */
     .stat-container {{ width: 100%; margin: 0 auto; }}
     .stat-row {{ display: flex; justify-content: space-between; align-items: center; margin: 12px 0; text-align: center; }}
     .stat-left-val, .stat-right-val {{ width: 20%; font-size: 22px; font-weight: 800; color: #ffffff; text-align: center; }}
     .stat-center-label {{ width: 60%; font-size: 16px; font-weight: 700; color: #a0aec0; text-transform: uppercase; letter-spacing: 0.5px; }}
-    
     .green-badge {{
         background: linear-gradient(135deg, #00ff66 0%, #00bc43 100%);
         color: #000000 !important;
@@ -90,11 +76,9 @@ st.markdown(f"""
         display: inline-block;
         box-shadow: 0 2px 12px rgba(0, 255, 102, 0.3);
     }}
-    
     .bar-wrapper {{ display: flex; align-items: center; margin: 14px 0; }}
     .bar-label {{ width: 28%; font-size: 16px; font-weight: 700; color: #ffffff; }}
     .bar-container {{ width: 72%; background: rgba(255, 255, 255, 0.05); border-radius: 12px; overflow: hidden; height: 26px; position: relative; border: 1px solid rgba(255,255,255,0.05); }}
-    
     .bar-fill-neon {{
         height: 100%;
         background: linear-gradient(90deg, #006622 0%, #00ff66 100%);
@@ -120,8 +104,6 @@ st.markdown(f"""
         color: #ffffff;
     }}
     .green-footer-box {{ background: rgba(0, 255, 102, 0.05); border: 1px solid rgba(0, 255, 102, 0.18); border-radius: 10px; padding: 12px 20px; margin-top: 20px; display: flex; align-items: center; gap: 12px; }}
-
-    /* FORȚARE VIZIBILITATE BUTOANE NATIIVE STREAMLIT (VERDE STRĂLUCITOR) */
     div[data-testid="stLinkButton"] a {{
         background: linear-gradient(135deg, #00ff66 0%, #00bc43 100%) !important;
         color: #000000 !important;
@@ -139,17 +121,14 @@ st.markdown(f"""
 </style>
 """, unsafe_allow_html=True)
 
-# 2. Header-ul principal ORIGINAL (Logo + Titlu Oficial corect)
 if logo_base64:
     st.markdown(f'<div style="text-align: center; margin-bottom: 15px;"><img src="data:image/png;base64,{logo_base64}" width="280"></div>', unsafe_allow_html=True)
 st.markdown("<h1 style='text-align: center; color: #ffffff;'>⚽ PARIURIGO &bull; WORLD LIVE CENTER</h1>", unsafe_allow_html=True)
 
 st.write("---")
 
-# Împărțirea ecranului (Mecuri în Stânga, Abonamente în Dreapta)
 col_meciuri, col_abonamente = st.columns([1.3, 0.7], gap="large")
 
-# BAZA DE DATE MECIURI REALE SUPERLIGA
 meciuri_date = {
     "FCSB vs Rapid București": {
         "liga": "ROMÂNIA SUPERLIGA",
@@ -180,29 +159,110 @@ meciuri_date = {
     }
 }
 
-# 3. SECȚIUNEA DIN STÂNGA: WIDGET REALE SCOREBAT + GRAFIC PREMIUM RECONSTRUIT VERDE
+# 3. SECȚIUNEA DIN STÂNGA: WIDGET SCOREBAT + GRAFIC PROBABILITĂȚI
 with col_meciuri:
-    st.subheader("🌍 Meciuri Live din Toate Ligele Lumii")
-    
+    st.subheader("🌍 Meciuri Live din Toate Ligile Lumii")
+
     st.markdown("""
         <div style="width:100%; height:420px; overflow:auto; background:rgba(5,15,10,0.9); border-radius:12px; border:1px solid rgba(0,255,102,0.2); padding:10px; margin-bottom: 25px;">
             <iframe src="https://scorebat.com" frameborder="0" width="100%" height="390px" allowfullscreen allow="autoplay; fullscreen"></iframe>
         </div>
     """, unsafe_allow_html=True)
-    
+
     st.write("---")
     st.subheader("📊 Modul Algoritm & Probabilități (Meci de Top)")
-    
+
     meci_ales = st.selectbox("🎯 Schimbă meciul din ziua respectivă:", list(meciuri_date.keys()))
     m = meciuri_date[meci_ales]
-    
+
     st.markdown('<div class="glass-box-container">', unsafe_allow_html=True)
-    st.markdown("<p style='text-align:center; color:#94a3b8; margin:0;'>MECI RECOMANDAT &bull; DATE LA ZI " + data_azi + "</p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align:center; color:#94a3b8; margin:0;'>MECI RECOMANDAT &bull; DATE LA Z " + data_azi + "</p>", unsafe_allow_html=True)
     st.markdown("<h2 style='text-align:center; color:#00ff66; margin: 5px 0;'>" + meci_ales + "</h2>", unsafe_allow_html=True)
     st.markdown("<p style='text-align:center; color:#94a3b8; font-size:14px; margin-top:2px;'>" + m['liga'] + "</p>", unsafe_allow_html=True)
     st.markdown('<hr style="border-color: rgba(255,255,255,0.05); margin: 15px 0;">', unsafe_allow_html=True)
-    
-    # Rânduri de statistici simetrice
+
     st.markdown('<div class="stat-container">', unsafe_allow_html=True)
     st.markdown('<div class="stat-row"><div class="stat-left-val">' + m["g_gz"] + '</div><div class="stat-center-label">Total goluri marcate</div><div class="stat-right-val">' + m["g_os"] + '</div></div>', unsafe_allow_html=True)
     st.markdown('<div class="stat-row"><div class="stat-left-val">' + m["med_gz"] + '</div><div class="stat-center-label">Medie goluri</div><div class="stat-right-val">' + m["med_os"] + '</div></div>', unsafe_allow_html=True)
+    st.markdown('<div class="stat-row"><div class="stat-left-val">' + m["gp_gz"] + '</div><div class="stat-center-label">Goluri primite</div><div class="stat-right-val">' + m["gp_os"] + '</div></div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<hr style="border-color: rgba(255,255,255,0.05); margin: 15px 0;">', unsafe_allow_html=True)
+
+    st.markdown('<div class="stat-container">', unsafe_allow_html=True)
+    st.markdown('<div class="stat-row"><div class="stat-left-val">' + m["ht_gz"] + '</div><div class="stat-center-label">Peste 0.5 HT</div><div class="stat-right-val">' + m["ht_os"] + '</div></div>', unsafe_allow_html=True)
+    st.markdown('<div class="stat-row"><div class="stat-left-val">' + m["st_gz"] + '</div><div class="stat-center-label">Peste 0.5 ST</div><div class="stat-right-val">' + m["st_os"] + '</div></div>', unsafe_allow_html=True)
+    st.markdown('<div class="stat-row"><div class="stat-left-val">' + m["p15_gz"] + '</div><div class="stat-center-label">Peste 1.5 goluri</div><div class="stat-right-val">' + m["p15_os"] + '</div></div>', unsafe_allow_html=True)
+    st.markdown('<div class="stat-row"><div class="stat-left-val">' + m["p25_gz"] + '</div><div class="stat-center-label">Peste 2.5 goluri</div><div class="stat-right-val">' + m["p25_os"] + '</div></div>', unsafe_allow_html=True)
+    st.markdown('<div class="stat-row"><div class="stat-left-val">' + m["gg_gz"] + '</div><div class="stat-center-label">Ambele marchează</div><div class="stat-right-val">' + m["gg_os"] + '</div></div>', unsafe_allow_html=True)
+    st.markdown('<div class="stat-row"><div class="stat-left-val">' + m["c_gz"] + '</div><div class="stat-center-label">Peste 3.5 cartonașe</div><div class="stat-right-val">' + m["c_os"] + '</div></div>', unsafe_allow_html=True)
+    st.markdown('<div class="stat-row"><div class="stat-left-val">' + m["cor_gz"] + '</div><div class="stat-center-label">Peste 9.5 cornere</div><div class="stat-right-val">' + m["cor_os"] + '</div></div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<hr style="border-color: rgba(255,255,255,0.05); margin: 15px 0;">', unsafe_allow_html=True)
+    st.markdown("<p style='color:#00ff66; font-weight:800; margin-bottom:10px;'>📈 BARE EVOLUȚIE PROBABILITĂȚI GENERALE GLOBAL:</p>", unsafe_allow_html=True)
+
+    def bara(eticheta, procent, tip="neon"):
+        clasa = "bar-fill-neon" if tip == "neon" else "bar-fill-soft"
+        st.markdown(
+            '<div class="bar-wrapper"><div class="bar-label">' + eticheta + '</div>'
+            '<div class="bar-container"><div class="' + clasa + '" style="width:' + procent + ';">' + procent + '</div></div></div>',
+            unsafe_allow_html=True
+        )
+
+    bara("Peste 1.5:", m["w_p15"], "neon")
+    bara("Peste 2.5:", m["w_p25"], "soft")
+    bara("Peste 0.5 R1:", m["w_p05r1"], "neon")
+    bara("Peste 0.5 R2:", m["w_p05r2"], "neon")
+    bara("Ambele marchează:", m["w_gg"], "neon")
+    bara("+ 3.5 Cartonașe:", m["w_c35"], "soft")
+    bara("+ 9.5 Cornere:", m["w_cor95"], "soft")
+
+    st.markdown(
+        '<div class="green-footer-box">🔸 Sistem Algoritm Automat PariuriGO — '
+        'Toate procentele sunt calculate pe baza istoricului de meciuri din data de ' + data_azi + '</div>',
+        unsafe_allow_html=True
+    )
+
+    st.markdown('</div>', unsafe_allow_html=True)  # inchide glass-box-container
+
+# 4. SECȚIUNE ABONAMENTE VIP
+with col_abonamente:
+    st.subheader("🏆 Toate Abonamentele VIP")
+    link_telegram_afacere = "https://t.me/numele_canalului_vostru"
+
+    # 1. LOW
+    st.markdown('<div class="vip-card-box">', unsafe_allow_html=True)
+    st.markdown("<h3>🟢 PACHET LOW</h3>", unsafe_allow_html=True)
+    st.markdown("<span class='green-badge'>40 RON / lună</span>", unsafe_allow_html=True)
+    st.write("📋 Beneficii incluse:")
+    st.write("• 3 Bilete analizate pe săptămână")
+    st.write("• Selecții din ligile mari")
+    st.write("• Acces grup comunitate chat")
+    st.write("")
+    st.link_button("Abonare LOW 🚀", link_telegram_afacere, use_container_width=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    # 2. MEDIUM
+    st.markdown('<div class="vip-card-box">', unsafe_allow_html=True)
+    st.markdown("<h3>🟡 PACHET MEDIUM</h3>", unsafe_allow_html=True)
+    st.markdown("<span class='green-badge'>70 RON / lună</span>", unsafe_allow_html=True)
+    st.write("📋 Beneficii incluse:")
+    st.write("• 1 Bilet Premium în fiecare zi")
+    st.write("• Procente și probabilități avansate")
+    st.write("• Notificări instant pe Telegram")
+    st.write("")
+    st.link_button("Abonare MEDIUM 🟡", link_telegram_afacere, use_container_width=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    # 3. HIGH
+    st.markdown('<div class="vip-card-box">', unsafe_allow_html=True)
+    st.markdown("<h3>🔥 HIGH VIP ELITE</h3>", unsafe_allow_html=True)
+    st.markdown("<span class='green-badge'>120 RON / lună</span>", unsafe_allow_html=True)
+    st.write("📋 Beneficii incluse:")
+    st.write("• Selecție zilnică + variantă dublare")
+    st.write("• Acces total la toate sistemele")
+    st.write("• Suport privat 1-la-1 cu analistul")
+    st.write("")
+    st.link_button("Deblochează HIGH 🔥", link_telegram_afacere, use_container_width=True)
+    st.markdown('</div>', unsafe_allow_html=True)
