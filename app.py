@@ -86,7 +86,7 @@ st.write("---")
 # Împărțirea ecranului (Fluxul în Stânga, Abonamente în Dreapta)
 col_meciuri, col_abonamente = st.columns([1.3, 0.7], gap="large")
 
-# BAZA DE DATE REPARATĂ TOTAL (Toate cheile sunt acum identice la fiecare meci)
+# BAZA DE DATE REPARATĂ TOTAL
 meciuri_date = {
     "FCSB vs Rapid București": {
         "liga": "ROMÂNIA SUPERLIGA",
@@ -205,7 +205,7 @@ with col_meciuri:
             st.write("---")
             st.info(f"🔸 **Sistem Algoritm Automat PariuriGO** &bull; Arbitru delegat: {m['arbitru']}")
 
-# 4. SECȚIUNE ABONAMENTE VIP REPARATĂ COMPLET (Dreapta)
+# 4. SECȚIUNE ABONAMENTE VIP REPARATĂ TOTAL (Dreapta)
 with col_abonamente:
     st.subheader("🏆 Abonamente VIP")
     
