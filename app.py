@@ -60,7 +60,6 @@ st.markdown(f"""
         margin-bottom: 20px !important;
     }}
 
-    /* DESIGN INTEGRAT ÎN TENTĂ VERDE PENTRU GRAFIC */
     .stat-container {{
         width: 100%;
         margin: 0 auto;
@@ -74,15 +73,7 @@ st.markdown(f"""
         text-align: center;
     }}
     
-    .stat-left-val {{
-        width: 20%;
-        font-size: 22px;
-        font-weight: 800;
-        color: #ffffff;
-        text-align: center;
-    }}
-    
-    .stat-right-val {{
+    .stat-left-val, .stat-right-val {{
         width: 20%;
         font-size: 22px;
         font-weight: 800;
@@ -99,7 +90,6 @@ st.markdown(f"""
         letter-spacing: 0.5px;
     }}
     
-    /* MODIFICAT: Insigne verzi neon cu procente */
     .green-badge {{
         background: linear-gradient(135deg, #00ff66 0%, #00bc43 100%);
         color: #000000 !important;
@@ -111,7 +101,6 @@ st.markdown(f"""
         box-shadow: 0 2px 10px rgba(0, 255, 102, 0.25);
     }}
     
-    /* Structură pentru barele mari din a doua parte a pozei */
     .bar-wrapper {{
         display: flex;
         align-items: center;
@@ -135,7 +124,6 @@ st.markdown(f"""
         border: 1px solid rgba(255,255,255,0.05);
     }}
     
-    /* MODIFICAT: Degraduri de verde intens pentru bare */
     .bar-fill-intense-green {{
         height: 100%;
         background: linear-gradient(90deg, #008f33 0%, #00ff66 100%);
@@ -162,7 +150,6 @@ st.markdown(f"""
         color: #ffffff;
     }}
     
-    /* MODIFICAT: Căsuța de jos în nuanță verde sticlă */
     .green-footer-box {{
         background: rgba(0, 255, 102, 0.05);
         border: 1px solid rgba(0, 255, 102, 0.18);
@@ -178,14 +165,11 @@ st.markdown(f"""
 
 # 2. Header-ul principal al aplicației cu Logo
 if logo_base64:
-    st.markdown(
-        f"""
+    st.markdown(f"""
         <div style="text-align: center; margin-bottom: 15px;">
             <img src="data:image/png;base64,{logo_base64}" width="280">
         </div>
-        """, 
-        unsafe_allow_html=True
-    )
+    """, unsafe_allow_html=True)
 else:
     st.markdown("<h1 style='text-align: center; color: #00ff66;'>⚽ PARIURIGO &bull; DASHBOARD</h1>", unsafe_allow_html=True)
 
@@ -203,7 +187,6 @@ with col_grafic:
         st.markdown("<h2 style='text-align:center; color:#00ff66; margin: 5px 0;'>BAȘAKȘEHIR vs KOCAELISPOR</h2>", unsafe_allow_html=True)
         st.write("---")
         
-        # PARTEA 1 A GRAFICULUI: Simetrie cu etichete centrale și insigne verzi
         st.markdown("""
         <div class="stat-container">
             <div class="stat-row">
@@ -261,7 +244,6 @@ with col_grafic:
         <hr style="border-color: rgba(255,255,255,0.05); margin: 20px 0;">
         """, unsafe_allow_html=True)
         
-        # PARTEA 2 A GRAFICULUI: Barele orizontale în nuanțe de verde
         st.write("**📈 EVOLUȚIE PROBABILITĂȚI GENERALE GLOBAL:**")
         
         st.markdown("""
@@ -275,3 +257,15 @@ with col_grafic:
         </div>
         <div class="bar-wrapper">
             <div class="bar-label">Peste 0.5 R1:</div>
+            <div class="bar-container"><div class="bar-fill-intense-green" style="width: 64.29%;">64.29%</div></div>
+        </div>
+        <div class="bar-wrapper">
+            <div class="bar-label">Peste 0.5 R2:</div>
+            <div class="bar-container"><div class="bar-fill-intense-green" style="width: 64.29%;">64.29%</div></div>
+        </div>
+        <div class="bar-wrapper">
+            <div class="bar-label">Ambele marchează:</div>
+            <div class="bar-container"><div class="bar-fill-intense-green" style="width: 50.00%;">50.00%</div></div>
+        </div>
+        <div class="bar-wrapper">
+            <div class="bar-label">+ 3.5 Cartonașe:</div>
