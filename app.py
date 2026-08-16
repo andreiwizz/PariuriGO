@@ -153,7 +153,7 @@ with col_meciuri:
         st.write("**🧠 PRONOSTIC TIPSTER PREMIUM:**")
         st.warning("⭐️ **Pont final: Victorie CFR Cluj (2) sau Egal** &nbsp;|&nbsp; **Cotă: 1.40**")
 
-# 4. SECȚIUNE ABONAMENTE LUNARE VIP (Dreapta)
+# 4. SECȚIUNE ABONAMENTE CORECTATĂ (Dreapta)
 with col_abonamente:
     st.subheader("🏆 Abonamente VIP")
     
@@ -162,20 +162,23 @@ with col_abonamente:
     with tab_low:
         with st.container(border=True):
             st.markdown("<h4 style='color:#22c55e; text-align:center;'>PACHET LOW</h4>", unsafe_allow_html=True)
-            st.markdown("<h3 style='text-align:center;'>19 RON <span style='font-size:14px; color:#94a3b8;'>/ lună</span></h3>", unsafe_allow_html=True)
+            # CORECTAT: 40 lei
+            st.markdown("<h3 style='text-align:center;'>40 RON <span style='font-size:14px; color:#94a3b8;'>/ lună</span></h3>", unsafe_allow_html=True)
             st.write("✅ 3 Bilete analizate / săptămână")
             st.button("Abonare LOW", key="b_low", use_container_width=True)
 
     with tab_med:
         with st.container(border=True):
             st.markdown("<h4 style='color:#eab308; text-align:center;'>PACHET MEDIUM</h4>", unsafe_allow_html=True)
-            st.markdown("<h3 style='text-align:center;'>49 RON <span style='font-size:14px; color:#94a3b8;'>/ lună</span></h3>", unsafe_allow_html=True)
+            # CORECTAT: 70 lei
+            st.markdown("<h3 style='text-align:center;'>70 RON <span style='font-size:14px; color:#94a3b8;'>/ lună</span></h3>", unsafe_allow_html=True)
             st.write("✅ 1 Bilet Premium în fiecare zi")
             st.button("Abonare MEDIUM", key="b_med", use_container_width=True)
 
     with tab_high:
         with st.container(border=True):
             st.markdown("<h4 style='color:#ef4444; text-align:center;'>HIGH VIP ELITE</h4>", unsafe_allow_html=True)
-            st.markdown("<h3 style='text-align:center;'>99 RON <span style='font-size:14px; color:#94a3b8;'>/ lună</span></h3>", unsafe_allow_html=True)
+            # CORECTAT: 120 lei
+            st.markdown("<h3 style='text-align:center;'>120 RON <span style='font-size:14px; color:#94a3b8;'>/ lună</span></h3>", unsafe_allow_html=True)
             st.write("✅ Cota 2 VIP zilnică asigurată")
             st.button("Deblochează VIP ELITE", key="b_high", use_container_width=True)
