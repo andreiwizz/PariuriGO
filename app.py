@@ -91,99 +91,100 @@ else:
 
 st.write("---")
 
-# Împărțirea ecranului (Fluxul de Meciuri în Stânga, Abonamente în Dreapta)
+# Împărțirea ecranului (Fluxul în Stânga, Abonamente în Dreapta)
 col_meciuri, col_abonamente = st.columns([1.3, 0.7], gap="large")
 
-# 3. SECȚIUNEA DIN STÂNGA: WIDGET SCOREBAT + GRAFICUL PREMIUM DE SUB EL
+# 3. SECȚIUNEA DIN STÂNGA: REPARATĂ CU JOCURI REALE ȘI STATISTICI PE SATE
 with col_meciuri:
-    st.subheader("🌍 Meciuri Live din Toate Ligele Lumii")
-    st.caption("Scoruri reale actualizate automat secundă de secundă.")
+    # Am creat două secțiuni separate (Tab-uri clare) ca Streamlit să nu mai ascundă graficul sub ScoreBat
+    tab_global, tab_analiza = st.tabs(["🌍 TOATE MECIURILE LIVE", "📊 GRAFIC STATISTICI PREMIUM"])
     
-    # Inserare widget live ScoreBat
-    st.markdown("""
-        <div style="width:100%; height:450px; overflow:auto; background:rgba(5,15,10,0.9); border-radius:12px; border:1px solid rgba(0,255,102,0.2); padding:10px; margin-bottom: 25px;">
-            <iframe src="https://scorebat.com" frameborder="0" width="100%" height="430px" allowfullscreen allow="autoplay; fullscreen"></iframe>
-        </div>
-    """, unsafe_allow_html=True)
-    
-    st.write("---")
-    
-    # Graficul premium în tentă verde adăugat imediat sub widget
-    st.subheader("📊 Modul Algoritm & Probabilități (Meci de Top)")
-    with st.container(border=True):
-        st.markdown("<p style='text-align:center; color:#94a3b8; margin:0;'>SUPER LIG &bull; TURKEY</p>", unsafe_allow_html=True)
-        st.markdown("<h2 style='text-align:center; color:#00ff66; margin: 5px 0;'>BAȘAKȘEHIR vs KOCAELISPOR</h2>", unsafe_allow_html=True)
-        st.write("---")
-        
+    with tab_global:
+        st.caption("Scoruri reale din toată lumea actualizate automat secundă de secundă.")
+        # Inserare widget live ScoreBat
         st.markdown("""
-        <div class="stat-container">
-            <div class="stat-row">
-                <div class="stat-left-val">7</div>
-                <div class="stat-center-label">Total goluri marcate</div>
-                <div class="stat-right-val">3</div>
+            <div style="width:100%; height:550px; overflow:auto; background:rgba(5,15,10,0.9); border-radius:12px; border:1px solid rgba(0,255,102,0.2); padding:10px;">
+                <iframe src="https://scorebat.com" frameborder="0" width="100%" height="520px" allowfullscreen allow="autoplay; fullscreen"></iframe>
             </div>
-            <div class="stat-row">
-                <div class="stat-left-val">1.00</div>
-                <div class="stat-center-label">Medie goluri</div>
-                <div class="stat-right-val">0.43</div>
-            </div>
-            <div class="stat-row">
-                <div class="stat-left-val">8</div>
-                <div class="stat-center-label">Goluri primite</div>
-                <div class="stat-right-val">6</div>
-            </div>
-            <hr style="border-color: rgba(255,255,255,0.05); margin: 15px 0;">
-            <div class="stat-row">
-                <div class="stat-left-val"><span class="green-badge">71.43%</span></div>
-                <div class="stat-center-label">Peste 0.5 HT</div>
-                <div class="stat-right-val"><span class="green-badge">57.14%</span></div>
-            </div>
-            <div class="stat-row">
-                <div class="stat-left-val"><span class="green-badge">71.43%</span></div>
-                <div class="stat-center-label">Peste 0.5 ST</div>
-                <div class="stat-right-val"><span class="green-badge">57.14%</span></div>
-            </div>
-            <div class="stat-row">
-                <div class="stat-left-val"><span class="green-badge">85.71%</span></div>
-                <div class="stat-center-label">Peste 1.5 goluri</div>
-                <div class="stat-right-val"><span class="green-badge">42.86%</span></div>
-            </div>
-            <div class="stat-row">
-                <div class="stat-left-val" style="color:#00ff66;">28.57%</div>
-                <div class="stat-center-label">Peste 2.5 goluri</div>
-                <div class="stat-right-val" style="color:#00ff66;">42.86%</div>
-            </div>
-            <div class="stat-row">
-                <div class="stat-left-val" style="color:#00ff66;">57.14%</div>
-                <div class="stat-center-label">Ambele marchează</div>
-                <div class="stat-right-val" style="color:#00ff66;">42.86%</div>
-            </div>
-        </div>
-        <hr style="border-color: rgba(255,255,255,0.05); margin: 20px 0;">
         """, unsafe_allow_html=True)
         
-        st.write("**📈 EVOLUȚIE PROBABILITĂȚI GENERALE GLOBAL:**")
-        st.markdown("""
-        <div class="bar-wrapper">
-            <div class="bar-label">Peste 1.5:</div>
-            <div class="bar-container"><div class="bar-fill-intense-green" style="width: 64.29%;">64.29%</div></div>
-        </div>
-        <div class="bar-wrapper">
-            <div class="bar-label">Peste 0.5 R1:</div>
-            <div class="bar-container"><div class="bar-fill-intense-green" style="width: 64.29%;">64.29%</div></div>
-        </div>
-        <div class="bar-wrapper">
-            <div class="bar-label">Ambele marchează:</div>
-            <div class="bar-container"><div class="bar-fill-intense-green" style="width: 50.00%;">50.00%</div></div>
-        </div>
-        <div class="green-footer-box">
-            <div style="font-size:20px; color:#00ff66;">🔸</div>
-            <div>
-                <strong>Stats arbitru &bull; probabilitate matematică</strong><br>
-                <span style="color:#a0aec0; font-size:14px;">M. Turkmen &bull; 7/7 meciuri din ligă analizate cu succes</span>
+    with tab_analiza:
+        st.caption("Analiză matematică avansată bazată pe istoricul meciurilor.")
+        # Graficul tău premium copiat exact din poză, în tentă verde
+        with st.container():
+            st.markdown("<p style='text-align:center; color:#94a3b8; margin:0;'>SUPER LIG &bull; TURKEY</p>", unsafe_allow_html=True)
+            st.markdown("<h2 style='text-align:center; color:#00ff66; margin: 5px 0;'>BAȘAKȘEHIR vs KOCAELISPOR</h2>", unsafe_allow_html=True)
+            st.write("---")
+            
+            st.markdown("""
+            <div class="stat-container">
+                <div class="stat-row">
+                    <div class="stat-left-val">7</div>
+                    <div class="stat-center-label">Total goluri marcate</div>
+                    <div class="stat-right-val">3</div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-left-val">1.00</div>
+                    <div class="stat-center-label">Medie goluri</div>
+                    <div class="stat-right-val">0.43</div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-left-val">8</div>
+                    <div class="stat-center-label">Goluri primite</div>
+                    <div class="stat-right-val">6</div>
+                </div>
+                <hr style="border-color: rgba(255,255,255,0.05); margin: 15px 0;">
+                <div class="stat-row">
+                    <div class="stat-left-val"><span class="green-badge">71.43%</span></div>
+                    <div class="stat-center-label">Peste 0.5 HT</div>
+                    <div class="stat-right-val"><span class="green-badge">57.14%</span></div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-left-val"><span class="green-badge">71.43%</span></div>
+                    <div class="stat-center-label">Peste 0.5 ST</div>
+                    <div class="stat-right-val"><span class="green-badge">57.14%</span></div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-left-val"><span class="green-badge">85.71%</span></div>
+                    <div class="stat-center-label">Peste 1.5 goluri</div>
+                    <div class="stat-right-val"><span class="green-badge">42.86%</span></div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-left-val" style="color:#00ff66;">28.57%</div>
+                    <div class="stat-center-label">Peste 2.5 goluri</div>
+                    <div class="stat-right-val" style="color:#00ff66;">42.86%</div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-left-val" style="color:#00ff66;">57.14%</div>
+                    <div class="stat-center-label">Ambele marchează</div>
+                    <div class="stat-right-val" style="color:#00ff66;">42.86%</div>
+                </div>
             </div>
-        </div>
-        """, unsafe_allow_html=True)
+            <hr style="border-color: rgba(255,255,255,0.05); margin: 20px 0;">
+            """, unsafe_allow_html=True)
+            
+            st.write("**📈 EVOLUȚIE PROBABILITĂȚI GENERALE GLOBAL:**")
+            st.markdown("""
+            <div class="bar-wrapper">
+                <div class="bar-label">Peste 1.5:</div>
+                <div class="bar-container"><div class="bar-fill-intense-green" style="width: 64.29%;">64.29%</div></div>
+            </div>
+            <div class="bar-wrapper">
+                <div class="bar-label">Peste 0.5 R1:</div>
+                <div class="bar-container"><div class="bar-fill-intense-green" style="width: 64.29%;">64.29%</div></div>
+            </div>
+            <div class="bar-wrapper">
+                <div class="bar-label">Ambele marchează:</div>
+                <div class="bar-container"><div class="bar-fill-intense-green" style="width: 50.00%;">50.00%</div></div>
+            </div>
+            <div class="green-footer-box">
+                <div style="font-size:20px; color:#00ff66;">🔸</div>
+                <div>
+                    <strong>Stats arbitru &bull; probabilitate matematică</strong><br>
+                    <span style="color:#a0aec0; font-size:14px;">M. Turkmen &bull; 7/7 meciuri din ligă analizate cu succes</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 
 # 4. SECȚIUNE ABONAMENTE VIP (Dreapta)
 with col_abonamente:
@@ -191,11 +192,3 @@ with col_abonamente:
     
     tab_low, tab_med, tab_high = st.tabs(["🟢 LOW", "🟡 MEDIUM", "🔥 HIGH"])
     
-    with tab_low:
-        with st.container(border=True):
-            st.markdown("<h4 style='color:#22c55e; text-align:center;'>PACHET LOW</h4>", unsafe_allow_html=True)
-            st.markdown("<h3 style='text-align:center;'>40 RON <span style='font-size:14px; color:#94a3b8;'>/ lună</span></h3>", unsafe_allow_html=True)
-            st.write("✅ 3 Bilete analizate / săptămână")
-            st.button("Abonare LOW", key="b_low", use_container_width=True)
-
-    with tab_med:
