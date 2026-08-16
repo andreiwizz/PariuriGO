@@ -9,54 +9,26 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Funcție securizată pentru citirea imaginii de fundal (teren.png) de pe GitHub
-def incarc_teren_fotbal(cale_imagine):
-    try:
-        with open(cale_imagine, "rb") as f:
-            return base64.b64encode(f.read()).decode()
-    except:
-        return ""
+# Imaginea exactă cu mingea lucioasă 3D extrasă din poza ta pentru fundal central
+url_minge_premium = "https://postimg.cc"
 
-img_data = incarc_teren_fotbal("teren.png")
-
-# Link securizat către o insignă albă, curată cu o minge de fotbal (folosită ca watermark)
-insigna_minge_url = "https://flaticon.com"
-
-# Aplicare design verde cu terenul tău + insigna mare cu minge în centrul fundalului
-if img_data:
-    # Combinăm imaginea terenului de fotbal (teren.png) cu insigna mare cu minge poziționată pe centru
-    bg_style = f"""
-        background-image: 
-            linear-gradient(rgba(10, 24, 15, 0.92), rgba(10, 24, 15, 0.92)), 
-            url('{insigna_minge_url}'), 
-            url('data:image/png;base64,{img_data}') !important;
-        background-blend-mode: normal, overlay, normal !important;
-        background-size: cover, 400px, cover !important; /* Dimensiunea insignei este de 400px în centru */
-        background-position: center, center, center !important;
-        background-repeat: no-repeat, no-repeat, no-repeat !important;
-        background-attachment: fixed !important;
-    """
-else:
-    # Soluție de rezervă în caz că teren.png lipsește temporar din folder
-    bg_style = f"""
-        background-image: 
-            linear-gradient(rgba(10, 24, 15, 0.95), rgba(10, 24, 15, 0.95)), 
-            url('{insigna_minge_url}') !important;
-        background-size: cover, 450px !important;
-        background-position: center, center !important;
-        background-repeat: no-repeat, no-repeat !important;
-        background-color: #06110b !important;
-    """
-
+# Injectare stiluri CSS cu fundalul verde combinat cu mingea uriașă 3D pe centru
 st.markdown(f"""
 <style>
     @import url('https://googleapis.com');
     
     .stApp {{
-        {bg_style}
+        background-image: 
+            linear-gradient(rgba(5, 20, 13, 0.93), rgba(3, 12, 8, 0.96)), 
+            url('{url_minge_premium}') !important;
+        background-size: cover, 750px !important; /* Dimensiune mare pentru mingea din fundal */
+        background-position: center, center !important;
+        background-repeat: no-repeat, no-repeat !important;
+        background-attachment: fixed !important;
         color: #ffffff !important;
         font-family: 'Rajdhani', sans-serif !important;
     }}
+    
     h1, h2, h3, h4, p, span, label, .stTabs button {{
         font-family: 'Rajdhani', sans-serif !important;
         font-weight: 700 !important;
@@ -64,9 +36,9 @@ st.markdown(f"""
     
     /* Carduri tip sticlă mată în nuanțe verzi, perfect luminate din spate de fundal */
     div[data-testid="stVerticalBlockBorder"] {{
-        background: rgba(13, 31, 23, 0.72) !important;
+        background: rgba(10, 26, 18, 0.75) !important;
         backdrop-filter: blur(16px) !important;
-        border: 1px solid rgba(0, 255, 102, 0.2) !important;
+        border: 1px solid rgba(0, 255, 102, 0.18) !important;
         border-radius: 16px !important;
         padding: 22px !important;
         box-shadow: 0 10px 40px 0 rgba(0,0,0,0.6) !important;
@@ -81,7 +53,7 @@ st.markdown(f"""
 
 # 2. Header-ul principal al aplicației
 st.title("⚽ PARIURIGO &bull; LIVE CENTER")
-st.caption("Meciurile Reale de Astăzi &bull; Interfață Premium Stadium Glass cu Watermark")
+st.caption("Meciurile Reale de Astăzi &bull; Design Premium Stadium Watermark")
 st.write("---")
 
 # Împărțirea ecranului în două secțiuni: Meciuri (Stânga) și Abonamente (Dreapta)
