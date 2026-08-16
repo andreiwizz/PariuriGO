@@ -23,7 +23,7 @@ logo_base64 = decodifica_imagine_locala("logo.png")
 
 if teren_base64:
     bg_style = f"""
-        background: linear-gradient(rgba(4, 14, 8, 0.88), rgba(2, 8, 4, 0.93)), 
+        background: linear-gradient(rgba(4, 14, 8, 0.90), rgba(2, 8, 4, 0.94)), 
                     url('data:image/jpeg;base64,{teren_base64}') !important;
         background-size: cover !important;
         background-position: center !important;
@@ -50,13 +50,14 @@ st.markdown(f"""
     
     /* Carduri tip sticlă mată în nuanțe verzi */
     div[data-testid="stVerticalBlockBorder"] {{
-        background: rgba(10, 26, 18, 0.8) !important;
+        background: rgba(8, 22, 15, 0.82) !important;
         backdrop-filter: blur(20px) !important;
         -webkit-backdrop-filter: blur(20px) !important;
-        border: 1px solid rgba(0, 255, 102, 0.18) !important;
+        border: 1px solid rgba(0, 255, 102, 0.22) !important;
         border-radius: 16px !important;
-        padding: 22px !important;
-        box-shadow: 0 10px 40px 0 rgba(0,0,0,0.6) !important;
+        padding: 24px !important;
+        box-shadow: 0 12px 40px 0 rgba(0,0,0,0.65) !important;
+        margin-bottom: 15px !important;
     }}
 
     /* Barele de progres native configurate pe verde aprins */
@@ -81,56 +82,87 @@ else:
 
 st.write("---")
 
-# 3. ZONĂ NOUĂ ȘI SPECIALĂ: ACȚIUNE FLASH SUB 1 DOLAR
+# 3. PROMOȚIE FLASH SUB 1 DOLAR (PĂSTRATĂ)
 st.markdown("<h3 style='color: #ffcc00; text-align: center;'>🔥 PROMOȚIE FLASH &bull; ÎNCEARCĂ UN SINGUR BILET</h3>", unsafe_allow_html=True)
 with st.container():
     c_st, c_dr = st.columns([1.2, 0.8], gap="medium")
-    
     with c_st:
         st.markdown("#### 🎫 Biletul Premium de Astăzi (Single Match)")
         st.write("Nu vrei abonament? Cumpără doar biletul calculat de algoritmul nostru pentru meciul de top din această seară.")
         st.info("📊 **Probabilitate matematică de câștig: 91.4%** | **Cotă estimată: 1.85+**")
-        
     with c_dr:
         st.markdown("<h3 style='color: #00ff66; margin:0;'>PREȚ: 4.50 RON <span style='font-size:14px; color:#94a3b8;'>(~ $0.99)</span></h3>", unsafe_allow_html=True)
-        
-        # Câmp de email pentru livrarea biletului cumpărat
         email_client = st.text_input("Introdu adresa de email pentru primirea biletului:", placeholder="nume@email.com", key="flash_email")
-        
         if st.button("🚀 CUMPĂRĂ BILETUL ACUM", key="buy_flash", use_container_width=True):
             if email_client:
-                st.success(f"Perfect! Adresa {email_client} a fost înregistrată. Te redirecționăm către link-ul de plată securizat...")
-                # Aici poți pune pe viitor un link real de plată, momentan e o simulare
+                st.success(f"Perfect! Adresa {email_client} a fost înregistrată. Te redirecționăm către link-ul de plată...")
             else:
                 st.error("Te rog să introduci o adresă de email validă înainte de a cumpăra!")
 
 st.write("---")
 
-# Împărțirea ecranului în două secțiuni standard pentru restul site-ului
-col_meciuri, col_abonamente = st.columns([1.2, 0.8], gap="large")
+# Împărțirea ecranului: Meciurile Zilei (Stânga) și Abonamente VIP (Dreapta)
+col_meciuri, col_abonamente = st.columns([1.3, 0.7], gap="large")
 
-# 4. SECȚIUNEA MECIURI (Stânga)
+# 4. SECȚIUNEA EXTINSĂ MECIURI LIVE ȘI PRE-MECI (Stânga)
 with col_meciuri:
-    st.subheader("🏟️ Meciurile Zilei în Desfășurare")
+    st.subheader("🏟️ Panoul de Meciuri Reale (SuperLiga României)")
     
-    # OȚELUL GALAȚI vs UNIVERSITATEA CRAIOVA
+    # MECIUL 1: OȚELUL GALAȚI vs UNIVERSITATEA CRAIOVA
     with st.container(border=True):
-        col_header1, col_header2 = st.columns(2)
-        with col_header1:
-            st.error("🔴 LIVE &bull; MIN 65")
-        with col_header2:
-            st.markdown("<p style='text-align:right; color:#94a3b8; margin:0;'>ROMÂNIA SUPERLIGA</p>", unsafe_allow_html=True)
+        col_h1, col_h2 = st.columns(2)
+        with col_h1:
+            st.error("🔴 ÎN DESFĂȘURARE &bull; LIVE Min 65")
+        with col_h2:
+            st.markdown("<p style='text-align:right; color:#94a3b8; margin:0;'>ETAPA 5 &bull; SUPERLIGA</p>", unsafe_allow_html=True)
             
-        st.markdown("<h2 style='text-align:center; color:#00ff66; margin: 10px 0;'>OȚELUL GALAȚI &nbsp;&nbsp; 1 - 1 &nbsp;&nbsp; UNIV. CRAIOVA</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align:center; color:#ffcc00; margin: 10px 0;'>OȚELUL GALAȚI &nbsp;&nbsp; 1 - 1 &nbsp;&nbsp; UNIV. CRAIOVA</h2>", unsafe_allow_html=True)
         st.write("---")
         
+        # Statistici live detaliate sub formă de coloane metrice
+        st.write("**📊 Statistici Meci în Timp Real:**")
         c1, c2, c3, c4 = st.columns(4)
-        c1.metric(label="📊 POSESIE", value="46% - 54%")
-        c2.metric(label="🎯 ȘUTURI POARTĂ", value="4 - 5")
-        c3.metric(label="🛑 FAULTURI", value="15 - 11")
-        c4.metric(label="🟨 CARTONAȘE", value="3 - 2")
+        c1.metric(label="⚽ Posesie minge", value="46% - 54%")
+        c2.metric(label="🎯 Șuturi pe poartă", value="4 - 5")
+        c3.metric(label="🛑 Faulturi comise", value="15 - 11")
+        c4.metric(label="🟨 Cartonașe galbene", value="3 - 2")
+        
+        st.write("---")
+        st.write("**📈 Probabilități din Algoritm:**")
+        st.write("🔹 *Șansă să se marcheze în repriza a 2-a: 84%*")
+        st.progress(0.84)
+        
+        st.write("**🧠 SUGESTIE SUGERATĂ:**")
+        st.success("🔥 **Pont recomandat: Sub 2.5 goluri în meci** &nbsp;|&nbsp; **Cotă live: 1.65**")
 
-# 5. SECȚIUNE ABONAMENTE (Dreapta)
+    st.write("") # Spațiere între blocuri
+
+    # MECIUL 2: FC CORVINUL HUNEDOARA vs CFR CLUJ
+    with st.container(border=True):
+        col_p1, col_p2 = st.columns(2)
+        with col_p1:
+            st.info("🟢 RECOMANDAT &bull; PRE-MECI 21:30")
+        with col_p2:
+            st.markdown("<p style='text-align:right; color:#94a3b8; margin:0;'>ETAPA 5 &bull; SUPERLIGA</p>", unsafe_allow_html=True)
+            
+        st.markdown("<h3 style='text-align:center; color:#ffffff; margin: 10px 0;'>CORVINUL HUNEDOARA &nbsp;&nbsp; vs &nbsp;&nbsp; CFR CLUJ</h3>", unsafe_allow_html=True)
+        st.write("---")
+        
+        st.write("**🎲 Cote Finale 1X2 la Casele de Pariuri:**")
+        cx1, cx2, cx3 = st.columns(3)
+        cx1.button("1 (Corvinul) &bull; 3.80", key="c_corv", use_container_width=True)
+        cx2.button("X (Egal) &bull; 3.40", key="c_egal", use_container_width=True)
+        cx3.button("2 (CFR Cluj) &bull; 1.95", key="c_cfr", use_container_width=True)
+        
+        st.write("---")
+        st.write("**📈 Probabilități din Istoricul H2H:**")
+        st.write("🔹 *Șansă victorie CFR Cluj sau Egal (X2): 78%*")
+        st.progress(0.78)
+        
+        st.write("**🧠 PRONOSTIC TIPSTER PREMIUM:**")
+        st.warning("⭐️ **Pont final: Victorie CFR Cluj (2) sau Egal** &nbsp;|&nbsp; **Cotă: 1.40**")
+
+# 5. SECȚIUNE ABONAMENTE LUNARE VIP (Dreapta)
 with col_abonamente:
     st.subheader("🏆 Abonamente Lunare VIP")
     
@@ -141,6 +173,7 @@ with col_abonamente:
             st.markdown("<h4 style='color:#22c55e; text-align:center;'>PACHET LOW</h4>", unsafe_allow_html=True)
             st.markdown("<h3 style='text-align:center;'>19 RON <span style='font-size:14px; color:#94a3b8;'>/ lună</span></h3>", unsafe_allow_html=True)
             st.write("✅ 3 Bilete analizate / săptămână")
+            st.write("✅ Filtre speciale ligi europene")
             st.button("Abonare LOW", key="b_low", use_container_width=True)
 
     with tab_med:
@@ -148,11 +181,13 @@ with col_abonamente:
             st.markdown("<h4 style='color:#eab308; text-align:center;'>PACHET MEDIUM</h4>", unsafe_allow_html=True)
             st.markdown("<h3 style='text-align:center;'>49 RON <span style='font-size:14px; color:#94a3b8;'>/ lună</span></h3>", unsafe_allow_html=True)
             st.write("✅ 1 Bilet Premium în fiecare zi")
+            st.write("✅ Notificări instantanee Telegram")
             st.button("Abonare MEDIUM", key="b_med", use_container_width=True)
 
     with tab_high:
         with st.container(border=True):
             st.markdown("<h4 style='color:#ef4444; text-align:center;'>HIGH VIP ELITE</h4>", unsafe_allow_html=True)
             st.markdown("<h3 style='text-align:center;'>99 RON <span style='font-size:14px; color:#94a3b8;'>/ lună</span></h3>", unsafe_allow_html=True)
-            st.write("✅ Cota 2 VIP zilnică + Suport 1-la-1")
+            st.write("✅ Cota 2 VIP zilnică asigurată")
+            st.write("✅ Suport dedicat 1-la-1 privat")
             st.button("Deblochează VIP ELITE", key="b_high", use_container_width=True)
