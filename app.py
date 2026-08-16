@@ -86,7 +86,7 @@ st.write("---")
 # Împărțirea ecranului (Fluxul în Stânga, Abonamente în Dreapta)
 col_meciuri, col_abonamente = st.columns([1.3, 0.7], gap="large")
 
-# BAZA DE DATE REPARATĂ TOTAL
+# BAZA DE DATE INTEGRALĂ ȘI REPARATĂ CHIEIE CU CHEIE
 meciuri_date = {
     "FCSB vs Rapid București": {
         "liga": "ROMÂNIA SUPERLIGA",
@@ -142,7 +142,7 @@ meciuri_date = {
     }
 }
 
-# 3. SECȚIUNEA DIN STÂNGA: WIDGET REALE + STATISTICI AUTOMATE PE ZILE
+# 3. SECȚIUNEA DIN STÂNGA: CELE DOUĂ TABURI REALE CARE MERGEAU BRICI
 with col_meciuri:
     tab_global, tab_analiza = st.tabs(["🌍 TOATE MECIURILE LIVE", "📊 GRAFIC STATISTICI PREMIUM"])
     
@@ -156,7 +156,7 @@ with col_meciuri:
         
     with tab_analiza:
         st.write("")
-        meci_ales = st.selectbox("🎯 ALEGE MECIUL PENTRU AFIȘAREA ANALIZEI:", list(meciuri_date.keys()))
+        meci_ales = st.selectbox("🎯 ALEGE MECIUL PENTRU ANALIZĂ:", list(meciuri_date.keys()))
         m = meciuri_date[meci_ales]
         
         with st.container():
@@ -178,7 +178,7 @@ with col_meciuri:
             c7, c8, c9 = st.columns(3)
             c7.metric(label="🛡️ GOLURI PRIMITE (Gazde)", value=m["gp_gazde"])
             c8.markdown("<p style='text-align:center; color:#a0aec0; margin-top:25px;'>GOLURI PRIMITE</p>", unsafe_allow_html=True)
-            c9.metric(label="🛡️ GOLURI PRIMITE (Oaspeți)", value=m["gp_oaspeti"])
+            c9.metric(label="🛡️ GOL безу GOLURI PRIMITE (Oaspeți)", value=m["gp_oaspeti"])
             
             st.write("---")
             st.markdown("<p style='color:#00ff66; font-size:18px;'>📋 PROCENTE ȘI PROBABILITĂȚI:</p>", unsafe_allow_html=True)
@@ -205,7 +205,7 @@ with col_meciuri:
             st.write("---")
             st.info(f"🔸 **Sistem Algoritm Automat PariuriGO** &bull; Arbitru delegat: {m['arbitru']}")
 
-# 4. SECȚIUNE ABONAMENTE VIP REPARATĂ TOTAL (Dreapta)
+# 4. SECȚIUNE ABONAMENTE VIP STRUCTURATĂ PE TABURI (Exact cum funcționa înainte)
 with col_abonamente:
     st.subheader("🏆 Abonamente VIP")
     
@@ -214,6 +214,11 @@ with col_abonamente:
     link_telegram_afacere = "https://t.me"
     
     with tab_low:
-        with st.container(border=True):
-            st.markdown("<h3 style='color:#00ff66; margin:0;'>PACHET LOW</h3>", unsafe_allow_html=True)
-            st.markdown("<h2 style='margin:5px 0;'>40 RON <span style='font-size:14px; color:#94a3b8;'>/ lună</span></h2>", unsafe_allow_html=True)
+        st.write("")
+        st.write("### PACHET LOW")
+        st.write("## 40 RON / lună")
+        st.write("---")
+        st.write("✅ 3 Bilete gata analizate pe săptămână")
+        st.write("✅ Cote sigure selectate din ligile mari")
+        st.write("✅ Acces grup comunitate chat")
+        st.write("")
