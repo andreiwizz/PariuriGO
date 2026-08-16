@@ -198,3 +198,167 @@ with col_dreapta:
         if st.button("Abonare HIGH VIP", key="btn_high", use_container_width=True):
             st.success("Redirecționare securizată către plata Pachetului High VIP...")
 
+import streamlit as st
+
+# 1. Configurare Pagină principală
+st.set_page_config(
+    page_title="PariuriGO - Premium Glass UI",
+    page_icon="⚽",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
+
+# Inițializare stare pentru temă (implicit "dark")
+if "tema" not in st.session_state:
+    st.session_state.tema = "dark"
+
+# Zona superioară pentru butonul de control al temei
+col_logo, col_theme = st.columns([6, 1])
+
+with col_theme:
+    # Buton stilizat tip Glassmorphism pentru comutarea temei (Luminos/Întunecat)
+    if st.button("🌓 Schimbă Tema", key="toggle_theme", use_container_width=True):
+        st.session_state.tema = "light" if st.session_state.tema == "dark" else "dark"
+        st.rerun()
+
+# Stabilirea variabilelor de design în funcție de starea curentă
+if st.session_state.tema == "dark":
+    bg_app = "linear-gradient(135deg, #091711 0%, #050b08 100%)"
+    text_principal = "#ffffff"
+    text_secundar = "#94a3b8"
+    glass_bg = "rgba(22, 46, 36, 0.4)"
+    glass_border = "rgba(0, 255, 102, 0.2)"
+    glass_shadow = "rgba(0, 0, 0, 0.5)"
+else:
+    bg_app = "linear-gradient(135deg, #f0fdf4 0%, #e2e8f0 100%)"
+    text_principal = "#0f172a"
+    text_secundar = "#475569"
+    glass_bg = "rgba(255, 255, 255, 0.4)"
+    glass_border = "rgba(32, 77, 58, 0.15)"
+    glass_shadow = "rgba(0, 0, 0, 0.08)"
+
+# Injectare stiluri CSS dinamice pentru temă și stilul de sticlă (Glassmorphism)
+st.markdown(f"""
+<style>
+    /* Aplicarea fundalului general */
+    .stApp {{
+        background: {bg_app} !important;
+        color: {text_principal} !important;
+        transition: background 0.3s ease;
+    }}
+    
+    /* Carduri și panouri cu efect de sticlă (Glassmorphism) */
+    .glass-card {{
+        background: {glass_bg};
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid {glass_border};
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 20px;
+        box-shadow: 0 8px 32px 0 {glass_shadow};
+    }}
+    
+    /* Suprascrierea butoanelor native Streamlit pentru a avea aspect de sticlă */
+    .stButton > button {{
+        background: {glass_bg} !important;
+        color: {text_principal} !important;
+        border: 1px solid {glass_border} !important;
+        backdrop-filter: blur(8px) !important;
+        border-radius: 10px !important;
+        padding: 10px 20px !important;
+        font-weight: 600 !important;
+        transition: all 0.2s ease-in-out !important;
+    }}
+    
+    .stButton > button:hover {{
+        background: rgba(0, 255, 102, 0.2) !important;
+        border-color: #00ff66 !important;
+        box-shadow: 0 0 12px rgba(0, 255, 102, 0.4) !important;
+        transform: translateY(-2px);
+    }}
+
+    .meci-titlu {{
+        font-size: 19px !important;
+        font-weight: bold;
+        color: {text_principal};
+    }}
+    .pachet-titlu {{
+        font-size: 22px !important;
+        font-weight: 800;
+        text-align: center;
+        text-transform: uppercase;
+    }}
+</style>
+""", unsafe_allow_html=True)
+
+# 2. Header Aplicație
+with col_logo:
+    st.markdown("<h1 style='margin:0; color: #00ff66;'>⚽ PariuriGO</h1>", unsafe_allow_html=True)
+st.markdown(f"<p style='color: {text_secundar}; font-size: 16px;'>Interfață Premium cu design ajustabil. Mod curent: {st.session_state.tema.upper()}</p>", unsafe_allow_html=True)
+st.markdown("---")
+
+col_meciuri, col_pachete = st.columns([1, 1])
+
+# 3. Secțiune Meciuri
+with col_meciuri:
+    st.markdown(f"### 📅 Evenimente Active ({st.session_state.tema})")
+    
+    st.markdown(f"""
+    <div class="glass-card">
+        <span style="background-color: #ef4444; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold;">LIVE • Min 72</span>
+        <p class="meci-titlu" style="margin-top:10px;">Real Madrid 🆚 Barcelona</p>
+        <p style="color: {text_secundar};">Pont selectat: Ambele marchează (GG)</p>
+        <h4 style="color: #00ff66; margin:0;">Cotă: 1.65</h4>
+    </div>
+    <div class="glass-card">
+        <span style="background-color: #22c55e; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold;">PRE-MECI</span>
+        <p class="meci-titlu" style="margin-top:10px;">Manchester City 🆚 Liverpool</p>
+        <p style="color: {text_secundar};">Pont selectat: Peste 2.5 Goluri</p>
+        <h4 style="color: #00ff66; margin:0;">Cotă: 1.80</h4>
+    </div>
+    """, unsafe_allow_html=True)
+
+# 4. Secțiune Pachete
+with col_pachete:
+    st.markdown("### 🏆 Niveluri de Abonament")
+    
+    tab_low, tab_med, tab_high = st.tabs(["🟢 LOW", "🟡 MEDIUM", "🔥 HIGH"])
+    
+    with tab_low:
+        st.markdown(f"""
+        <div class="glass-card">
+            <p class="pachet-titlu" style="color: #22c55e;">Pachet LOW</p>
+            <h2 style="text-align: center; margin:0; color: {text_principal};">19 RON <span style='font-size:14px; color:{text_secundar};'>/ lună</span></h2>
+            <hr style="border-color:{glass_border};">
+            <p>✅ 3 Bilete analizate / săptămână</p>
+            <p>✅ Suport comunitate</p>
+        </div>
+        """, unsafe_allow_html=True)
+        st.button("Abonare Rapidă LOW", key="click_low", use_container_width=True)
+
+    with tab_med:
+        st.markdown(f"""
+        <div class="glass-card">
+            <p class="pachet-titlu" style="color: #eab308;">Pachet MEDIUM</p>
+            <h2 style="text-align: center; margin:0; color: {text_principal};">49 RON <span style='font-size:14px; color:{text_secundar};'>/ lună</span></h2>
+            <hr style="border-color:{glass_border};">
+            <p>✅ 1 Bilet premium în fiecare zi</p>
+            <p>✅ Notificări rapide prin Telegram</p>
+        </div>
+        """, unsafe_allow_html=True)
+        st.button("Abonare Rapidă MEDIUM", key="click_med", use_container_width=True)
+
+    with tab_high:
+        st.markdown(f"""
+        <div class="glass-card">
+            <p class="pachet-titlu" style="color: #ef4444;">Pachet HIGH (VIP)</p>
+            <h2 style="text-align: center; margin:0; color: {text_principal};">99 RON <span style='font-size:14px; color:{text_secundar};'>/ lună</span></h2>
+            <hr style="border-color:{glass_border};">
+            <p>✅ Toate sistemele incluse + Cota 2 VIP</p>
+            <p>✅ Consiliere și suport direct 1-la-1</p>
+        </div>
+        """, unsafe_allow_html=True)
+        st.button("Abonare Rapidă HIGH VIP", key="click_high", use_container_width=True)
+
+
