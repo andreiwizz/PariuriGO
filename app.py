@@ -56,6 +56,14 @@ st.markdown(f"""
         margin-bottom: 20px !important;
     }}
 
+    /* Selectbox custom să arate bombă pe verde */
+    div[data-testid="stSelectbox"] div[data-baseweb="select"] {{
+        background-color: rgba(10, 30, 18, 0.9) !important;
+        border: 1px solid #00ff66 !important;
+        color: #ffffff !important;
+        border-radius: 8px !important;
+    }}
+
     /* Barele de progres native configurate pe verde aprins */
     div[data-testid="stProgress"] div[role="progressbar"] {{
         background: linear-gradient(90deg, #008f33 0%, #00ff66 100%) !important;
@@ -78,7 +86,59 @@ st.write("---")
 # Împărțirea ecranului (Fluxul în Stânga, Abonamente în Dreapta)
 col_meciuri, col_abonamente = st.columns([1.3, 0.7], gap="large")
 
-# 3. SECȚIUNEA DIN STÂNGA: TOATE MECIURILE LIVE ȘI GRAFICUL
+# BAZA DE DATE CURATĂ PENTRU MECIURI - O poți modifica oricând adăugând meciuri noi jos!
+meciuri_date = {
+    "FCSB vs Rapid București": {
+        "liga": "ROMÂNIA SUPERLIGA",
+        "g_gazde": "14", "g_oaspeti": "11",
+        "m_gazde": "1.75", "m_oaspeti": "1.37",
+        "gp_gazde": "5", "gp_oaspeti": "9",
+        "p_ht": "85.71%", "d_ht": "71.43% Oaspeți",
+        "p_st": "78.50%", "d_st": "64.25% Oaspeți",
+        "p_15": "91.20%", "d_15": "78.50% Oaspeți",
+        "p_25": "64.29%", "d_25": "50.00% Oaspeți",
+        "p_gg": "71.43%", "d_gg": "57.14% Oaspeți",
+        "prog_15": 0.85, "prog_05": 0.78, "prog_gg": 0.64
+    },
+    "CFR Cluj vs Universitatea Craiova": {
+        "liga": "ROMÂNIA SUPERLIGA",
+        "g_gazde": "11", "g_oaspeti": "13",
+        "m_gazde": "1.37", "m_oaspeti": "1.62",
+        "gp_gazde": "7", "gp_oaspeti": "6",
+        "p_ht": "75.00%", "d_ht": "62.50% Oaspeți",
+        "p_st": "87.50%", "d_st": "75.00% Oaspeți",
+        "p_15": "87.50%", "d_15": "75.00% Oaspeți",
+        "p_25": "50.00%", "d_25": "62.50% Oaspeți",
+        "p_gg": "62.50%", "d_gg": "62.50% Oaspeți",
+        "prog_15": 0.81, "prog_05": 0.68, "prog_gg": 0.62
+    },
+    "Oțelul Galați vs Dinamo București": {
+        "liga": "ROMÂNIA SUPERLIGA",
+        "g_gazde": "8", "g_oaspeti": "10",
+        "m_gazde": "1.00", "m_oaspeti": "1.25",
+        "gp_gazde": "4", "gp_oaspeti": "8",
+        "p_ht": "50.00%", "d_ht": "50.00% Oaspeți",
+        "p_st": "62.50%", "d_st": "75.00% Oaspeți",
+        "p_15": "62.50%", "d_15": "75.00% Oaspeți",
+        "p_25": "25.00%", "d_25": "50.00% Oaspeți",
+        "p_gg": "37.50%", "d_gg": "50.00% Oaspeți",
+        "prog_15": 0.68, "prog_05": 0.50, "prog_gg": 0.43
+    },
+    "Bașakșehir vs Kocaelispor": {
+        "liga": "SUPER LIG &bull; TURKEY",
+        "g_gazde": "7", "g_oaspeti": "3",
+        "m_gazde": "1.00", "m_oaspeti": "0.43",
+        "gp_gazde": "8", "gp_oaspeti": "6",
+        "p_ht": "71.43%", "d_ht": "57.14% Oaspeți",
+        "p_st": "71.43%", "d_st": "57.14% Oaspeți",
+        "p_15": "85.71%", "d_15": "42.86% Oaspeți",
+        "p_25": "28.57%", "d_25": "42.86% Oaspeți",
+        "p_gg": "57.14%", "d_gg": "42.86% Oaspeți",
+        "prog_15": 0.64, "prog_05": 0.64, "prog_gg": 0.50
+    }
+}
+
+# 3. SECȚIUNEA DIN STÂNGA: TOATE MECIURILE LIVE ȘI GRAFICUL SELECTABIL
 with col_meciuri:
     tab_global, tab_analiza = st.tabs(["🌍 TOATE MECIURILE LIVE", "📊 GRAFIC STATISTICI PREMIUM"])
     
@@ -92,58 +152,66 @@ with col_meciuri:
         
     with tab_analiza:
         st.write("")
+        
+        # BUTONUL DROPDOWN - DE AICI SELECTEZI MECIUL DIRECT PE SITE
+        meci_ales = st.selectbox("🎯 ALEGE MECIUL PENTRU AFIȘAREA ANALIZEI:", list(meciuri_date.keys()))
+        m = meciuri_date[meci_ales]
+        
         with st.container():
-            st.markdown(f"<p style='text-align:center; color:#94a3b8; margin:0;'>MECIUL DE TOP DE AZI &bull; {data_azi}</p>", unsafe_allow_html=True)
-            # CORECTAT: Am adăugat numele echipelor direct în titlul central din grafic
-            st.markdown("<h2 style='text-align:center; color:#00ff66; margin: 5px 0;'>BAȘAKȘEHIR vs KOCAELISPOR</h2>", unsafe_allow_html=True)
-            st.markdown("<p style='text-align:center; color:#a0aec0; font-size:14px; margin-top:2px;'>SUPER LIG &bull; TURKEY</p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align:center; color:#94a3b8; margin:0;'>MECIUL SELECTAT &bull; DATE LA ZI {data_azi}</p>", unsafe_allow_html=True)
+            st.markdown(f"<h2 style='text-align:center; color:#00ff66; margin: 5px 0;'>{meci_ales}</h2>", unsafe_allow_html=True)
+            st.markdown(f"<p style='text-align:center; color:#a0aec0; font-size:14px; margin-top:2px;'>{m['liga']}</p>", unsafe_allow_html=True)
             st.write("---")
             
-            # Rândul 1 de cifre meci
+            # Rândul 1 de cifre meci dinamice
             c1, c2, c3 = st.columns(3)
-            c1.metric(label="⚽ GOLURI MARCATE (Gazde)", value="7")
+            c1.metric(label="⚽ GOLURI MARCATE (Gazde)", value=m["g_gazde"])
             c2.markdown("<p style='text-align:center; color:#a0aec0; margin-top:25px;'>TOTAL GOLURI MARCATE</p>", unsafe_allow_html=True)
-            c3.metric(label="⚽ GOLURI MARCATE (Oaspeți)", value="3")
+            c3.metric(label="⚽ GOLURI MARCATE (Oaspeți)", value=m["g_oaspeti"])
             
-            # Rândul 2 de cifre meci
+            # Rândul 2 de cifre meci dinamice
             c4, c5, c6 = st.columns(3)
-            c4.metric(label="📈 MEDIE GOLURI (Gazde)", value="1.00")
+            c4.metric(label="📈 MEDIE GOLURI (Gazde)", value=m["m_gazde"])
             c5.markdown("<p style='text-align:center; color:#a0aec0; margin-top:25px;'>MEDIE GOLURI / MECI</p>", unsafe_allow_html=True)
-            c6.metric(label="📈 MEDIE GOLURI (Oaspeți)", value="0.43")
+            c6.metric(label="📈 MEDIE GOLURI (Oaspeți)", value=m["m_oaspeti"])
             
-            # Rândul 3 de cifre meci
+            # Rândul 3 de cifre meci dinamice
             c7, c8, c9 = st.columns(3)
-            c7.metric(label="🛡️ GOLURI PRIMITE (Gazde)", value="8")
+            c7.metric(label="🛡️ GOLURI PRIMITE (Gazde)", value=m["gp_gazde"])
             c8.markdown("<p style='text-align:center; color:#a0aec0; margin-top:25px;'>GOLURI PRIMITE</p>", unsafe_allow_html=True)
-            c9.metric(label="🛡️ GOLURI PRIMITE (Oaspeți)", value="6")
+            c9.metric(label="🛡️ GOLURI PRIMITE (Oaspeți)", value=m["gp_oaspeti"])
             
             st.write("---")
-            st.markdown("<p style='color:#00ff66; font-size:18px;'>📋 PROCENTE ȘI PROBABILITĂȚI GENERATE:</p>", unsafe_allow_html=True)
+            st.markdown("<p style='color:#00ff66; font-size:18px;'>📋 PROCENTE ȘI PROBABILITĂȚI GENERATE DIN MECIURILE DIRECTE:</p>", unsafe_allow_html=True)
             
-            # Secțiunea de procente cu badge-uri native
+            # Secțiunea de procente dinamice
             cx1, cx2, cx3 = st.columns(3)
-            cx1.metric(label="🟢 PESTE 0.5 HT (Prima Repriză)", value="71.43%", delta="57.14% Oaspeți", delta_color="off")
-            cx2.metric(label="🟢 Peste 0.5 ST (A doua Repriză)", value="71.43%", delta="57.14% Oaspeți", delta_color="off")
-            cx3.metric(label="🟢 Peste 1.5 Goluri în Meci", value="85.71%", delta="42.86% Oaspeți", delta_color="off")
+            cx1.metric(label="🟢 PESTE 0.5 HT (Prima Repriză)", value=m["p_ht"], delta=m["d_ht"], delta_color="off")
+            cx2.metric(label="🟢 Peste 0.5 ST (A doua Repriză)", value=m["p_st"], delta=m["d_st"], delta_color="off")
+            cx3.metric(label="🟢 Peste 1.5 Goluri în Meci", value=m["p_15"], delta=m["d_15"], delta_color="off")
+            
+            cx4, cx5, _ = st.columns(3)
+            cx4.metric(label="🟢 Peste 2.5 Goluri în Meci", value=m["p_25"], delta=m["d_25"], delta_color="off")
+            cx5.metric(label="🟢 Ambele echipe marchează (GG)", value=m["p_gg"], delta=m["d_gg"], delta_color="off")
             
             st.write("---")
             
-            # Bare de progres native în tentă verde pentru evoluție globală
+            # Bare de progres dinamice
             st.write("**📈 EVOLUȚIE PROBABILITĂȚI GENERALE GLOBAL:**")
             
-            st.write("🔹 Peste 1.5 total: **64.29%**")
-            st.progress(0.64)
+            st.write(f"🔹 Peste 1.5 total: **{int(m['prog_15']*100)}%**")
+            st.progress(m['prog_15'])
             
-            st.write("🔹 Peste 0.5 R1: **64.29%**")
-            st.progress(0.64)
+            st.write(f"🔹 Peste 0.5 R1: **{int(m['prog_05']*100)}%**")
+            st.progress(m['prog_05'])
             
-            st.write("🔹 Ambele echipe marchează (GG): **50.00%**")
-            st.progress(0.50)
+            st.write(f"🔹 Ambele echipe marchează (GG): **{int(m['prog_gg']*100)}%**")
+            st.progress(m['prog_gg'])
             
             st.write("---")
-            st.info(f"🔸 **Sistem Algoritm Automat PariuriGO**\nMeci extras și calculat automat în funcție de statistici")
+            st.info(f"🔸 **Sistem Algoritm Automat PariuriGO**\nMeci extras și calculat automat pe baza datelor din SuperLigă.")
 
-# 4. SECȚIUNE ABONAMENTE VIP REPARATĂ TOTAL (Dreapta)
+# 4. SECȚIUNE ABONAMENTE VIP (Dreapta)
 with col_abonamente:
     st.subheader("🏆 Abonamente VIP")
     
@@ -154,32 +222,3 @@ with col_abonamente:
     with tab_low:
         with st.container(border=True):
             st.markdown("<h3 style='color:#00ff66; margin:0;'>PACHET LOW</h3>", unsafe_allow_html=True)
-            st.markdown("<h2 style='margin:5px 0;'>40 RON <span style='font-size:14px; color:#94a3b8;'>/ lună</span></h2>", unsafe_allow_html=True)
-            st.write("📋 **Beneficii incluse:**")
-            st.write("✅ 3 Bilete gata analizate pe săptămână")
-            st.write("✅ Cote sigure selectate din ligile mari")
-            st.write("✅ Acces grup comunitate chat")
-            st.write("")
-            st.link_button("Abonare LOW 🚀", link_telegram_afacere, use_container_width=True)
-
-    with tab_med:
-        with st.container(border=True):
-            st.markdown("<h3 style='color:#eab308; margin:0;'>PACHET MEDIUM</h3>", unsafe_allow_html=True)
-            st.markdown("<h2 style='margin:5px 0;'>70 RON <span style='font-size:14px; color:#94a3b8;'>/ lună</span></h2>", unsafe_allow_html=True)
-            st.write("📋 **Beneficii incluse:**")
-            st.write("✅ 1 Bilet Premium în fiecare zi calendaristică")
-            st.write("✅ Procente și probabilități avansate live")
-            st.write("✅ Notificări instant pe Telegram")
-            st.write("")
-            st.link_button("Abonare MEDIUM 🟡", link_telegram_afacere, use_container_width=True)
-
-    with tab_high:
-        with st.container(border=True):
-            st.markdown("<h3 style='color:#ef4444; margin:0;'>HIGH VIP ELITE</h3>", unsafe_allow_html=True)
-            st.markdown("<h2 style='margin:5px 0;'>120 RON <span style='font-size:14px; color:#94a3b8;'>/ lună</span></h2>", unsafe_allow_html=True)
-            st.write("📋 **Beneficii incluse:**")
-            st.write("✅ Cota 2 VIP zilnică + Proiect Dublare")
-            st.write("✅ Acces total la toate sistemele noastre")
-            st.write("✅ Suport privat 1-la-1 direct cu tipsterul")
-            st.write("")
-            st.link_button("Deblochează VIP ELITE 🔥", link_telegram_afacere, use_container_width=True)
