@@ -185,34 +185,4 @@ with col_meciuri:
             
             cx1, cx2, cx3 = st.columns(3)
             cx1.metric(label="🟢 PESTE 0.5 HT (Prima Repriză)", value=m["p_ht"], delta=m["d_ht"], delta_color="off")
-            cx2.metric(label="🟢 Peste 0.5 ST (A doua Repriză)", value=m["p_st"], delta=m["d_st"], delta_color="off")
-            cx3.metric(label="🟢 Peste 1.5 Goluri în Meci", value=m["p_15"], delta=m["d_15"], delta_color="off")
-            
-            cx4, cx5, _ = st.columns(3)
-            cx4.metric(label="🟢 Peste 2.5 Goluri în Meci", value=m["p_25"], delta=m["d_25"], delta_color="off")
-            cx5.metric(label="🟢 Ambele echipe marchează (GG)", value=m["p_gg"], delta=m["d_gg"], delta_color="off")
-            
-            st.write("---")
-            st.write("**📈 EVOLUȚIE PROBABILITĂȚI GENERALE GLOBAL:**")
-            
-            st.write(f"🔹 Peste 1.5 total: **{int(m['prog_15']*100)}%**")
-            st.progress(m['prog_15'])
-            st.write(f"🔹 Peste 0.5 R1: **{int(m['prog_05']*100)}%**")
-            st.progress(m['prog_05'])
-            st.write(f"🔹 Ambele echipe marchează (GG): **{int(m['prog_gg']*100)}%**")
-            st.progress(m['prog_gg'])
-            
-            st.write("---")
-            st.info(f"🔸 **Sistem Algoritm Automat PariuriGO** &bull; Arbitru: {m['arbitru']}")
-
-# 4. SECȚIUNE ABONAMENTE VIP STRUCTURATĂ PERFECT PE LINII SEPARATE
-with col_abonamente:
-    st.subheader("🏆 Abonamente VIP")
-    
-    tab_low, tab_med, tab_high = st.tabs(["🟢 LOW", "🟡 MEDIUM", "🔥 HIGH"])
-    link_telegram_afacere = "https://t.me"
-    
-    with tab_low:
-        with st.container(border=True):
-            st.markdown("<h3 style='color:#00ff66; margin:0;'>PACHET LOW</h3>", unsafe_allow_html=True)
-            st.markdown("<h2 style='margin:5px 0; color:#ffffff;'>40 RON <span style='font-size:14px; color:#94a3b8;'>/ lună</span></h2>", unsafe_allow_html=True)
+            cx2.metric(
