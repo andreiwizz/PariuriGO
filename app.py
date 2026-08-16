@@ -9,22 +9,37 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Imaginea exactă cu mingea lucioasă 3D extrasă din poza ta pentru fundal central
-url_minge_premium = "https://postimg.cc"
+# Funcție pentru citirea imaginii locale JPG de pe GitHub și transformarea ei în fundal
+def decodifica_imagine_locala(cale_imagine):
+    try:
+        with open(cale_imagine, "rb") as f:
+            return base64.b64encode(f.read()).decode()
+    except:
+        return ""
 
-# Injectare stiluri CSS cu fundalul verde combinat cu mingea uriașă 3D pe centru
+# REPARAT: Citim fișierul tău exact cu extensia .jpg
+teren_base64 = decodifica_imagine_locala("teren.jpg")
+logo_base64 = decodifica_imagine_locala("logo.png")
+
+# Reglați fundalul: dăm prioritate imaginii teren.jpg
+if teren_base64:
+    bg_style = f"""
+        background: linear-gradient(rgba(6, 22, 13, 0.85), rgba(4, 14, 8, 0.88)), 
+                    url('data:image/jpeg;base64,{teren_base64}') !important;
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+        background-attachment: fixed !important;
+    """
+else:
+    bg_style = "background: radial-gradient(circle at center, #0a1f14 0%, #030c08 100%) !important;"
+
 st.markdown(f"""
 <style>
     @import url('https://googleapis.com');
     
     .stApp {{
-        background-image: 
-            linear-gradient(rgba(5, 20, 13, 0.93), rgba(3, 12, 8, 0.96)), 
-            url('{url_minge_premium}') !important;
-        background-size: cover, 750px !important; /* Dimensiune mare pentru mingea din fundal */
-        background-position: center, center !important;
-        background-repeat: no-repeat, no-repeat !important;
-        background-attachment: fixed !important;
+        {bg_style}
         color: #ffffff !important;
         font-family: 'Rajdhani', sans-serif !important;
     }}
@@ -34,26 +49,37 @@ st.markdown(f"""
         font-weight: 700 !important;
     }}
     
-    /* Carduri tip sticlă mată în nuanțe verzi, perfect luminate din spate de fundal */
+    /* Carduri tip sticlă mată în nuanțe verzi, perfect transparente peste gazon */
     div[data-testid="stVerticalBlockBorder"] {{
         background: rgba(10, 26, 18, 0.75) !important;
-        backdrop-filter: blur(16px) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
         border: 1px solid rgba(0, 255, 102, 0.18) !important;
         border-radius: 16px !important;
         padding: 22px !important;
         box-shadow: 0 10px 40px 0 rgba(0,0,0,0.6) !important;
     }}
 
-    /* Barele de progres native configurate pe verde aprins asortat cu tema */
+    /* Barele de progres native configurate pe verde aprins */
     div[data-testid="stProgress"] div[role="progressbar"] {{
         background: linear-gradient(90deg, #00ea53 0%, #00ff66 100%) !important;
     }}
 </style>
 """, unsafe_allow_html=True)
 
-# 2. Header-ul principal al aplicației
-st.title("⚽ PARIURIGO &bull; LIVE CENTER")
-st.caption("Meciurile Reale de Astăzi &bull; Design Premium Stadium Watermark")
+# 2. Header-ul principal al aplicației cu noul tău Logo
+if logo_base64:
+    st.markdown(
+        f"""
+        <div style="text-align: center; margin-bottom: 10px;">
+            <img src="data:image/png;base64,{logo_base64}" width="280">
+        </div>
+        """, 
+        unsafe_allow_html=True
+    )
+else:
+    st.markdown("<h1 style='text-align: center; color: #00ff66;'>⚽ PARIURIGO &bull; LIVE CENTER</h1>", unsafe_allow_html=True)
+
 st.write("---")
 
 # Împărțirea ecranului în două secțiuni: Meciuri (Stânga) și Abonamente (Dreapta)
@@ -88,7 +114,7 @@ with col_meciuri:
         st.write("**🧠 SUGESTIE ALGORITM INTELIGENȚĂ ARTIFICIALĂ:**")
         st.success("🔥 **Pont: Sub 2.5 goluri în meci** &nbsp;|&nbsp; **Cotă live: 1.65**")
         
-    st.write("") # Spațiere între meciuri
+    st.write("") # Spațiere
     
     # CORVINUL HUNEDOARA vs CFR CLUJ
     with st.container(border=True):
