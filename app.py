@@ -111,12 +111,18 @@ st.markdown(f"""
         font-size: 16px !important;
         border: none !important;
         border-radius: 8px !important;
-        padding: 10px 20px !important;
+        padding: 12px 20px !important;
         display: block !important;
         text-align: center !important;
         width: 100% !important;
         text-decoration: none !important;
-        box-shadow: 0 4px 15px rgba(0, 255, 102, 0.3) !important;
+        box-shadow: 0 0 12px rgba(0, 255, 102, 0.4) !important;
+        animation: pulsareGlow 1.8s infinite ease-in-out !important;
+    }}
+    @keyframes pulsareGlow {{
+        0% {{ transform: scale(1); box-shadow: 0 0 12px rgba(0, 255, 102, 0.4); }}
+        50% {{ transform: scale(1.02); box-shadow: 0 0 25px rgba(0, 255, 102, 0.7); }}
+        100% {{ transform: scale(1); box-shadow: 0 0 12px rgba(0, 255, 102, 0.4); }}
     }}
 </style>
 """, unsafe_allow_html=True)
@@ -159,7 +165,6 @@ meciuri_date = {
     }
 }
 
-# 3. SECȚIUNEA DIN STÂNGA: WIDGET SCOREBAT + GRAFIC PROBABILITĂȚI
 with col_meciuri:
     st.subheader("🌍 Meciuri Live din Toate Ligile Lumii")
 
@@ -176,7 +181,7 @@ with col_meciuri:
     m = meciuri_date[meci_ales]
 
     st.markdown('<div class="glass-box-container">', unsafe_allow_html=True)
-    st.markdown("<p style='text-align:center; color:#94a3b8; margin:0;'>MECI RECOMANDAT &bull; DATE LA Z " + data_azi + "</p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align:center; color:#94a3b8; margin:0;'>MECI RECOMANDAT &bull; DATE LA ZI " + data_azi + "</p>", unsafe_allow_html=True)
     st.markdown("<h2 style='text-align:center; color:#00ff66; margin: 5px 0;'>" + meci_ales + "</h2>", unsafe_allow_html=True)
     st.markdown("<p style='text-align:center; color:#94a3b8; font-size:14px; margin-top:2px;'>" + m['liga'] + "</p>", unsafe_allow_html=True)
     st.markdown('<hr style="border-color: rgba(255,255,255,0.05); margin: 15px 0;">', unsafe_allow_html=True)
@@ -226,21 +231,27 @@ with col_meciuri:
 
     st.markdown('</div>', unsafe_allow_html=True)  # inchide glass-box-container
 
-# 4. SECȚIUNE ABONAMENTE VIP
+# 4. SECȚIUNE ABONAMENTE VIP — INTEGRAT LINK-UL STRIPE DE TEST
 with col_abonamente:
     st.subheader("🏆 Toate Abonamentele VIP")
-    link_telegram_afacere = "https://t.me/numele_canalului_vostru"
+
+    # Linkul oficial generat de tine în Stripe Sandbox (mod test)
+    link_stripe_test_low = "https://buy.stripe.com/test_5kQfZjgBrakW0YLbVMfjG00"
+    # Momentan MEDIUM si HIGH sunt pe acelasi link de test.
+    # Inlocuieste-le cu linkurile lor proprii cand le generezi in Stripe.
+    link_stripe_test_medium = link_stripe_test_low
+    link_stripe_test_high = link_stripe_test_low
 
     # 1. LOW
     st.markdown('<div class="vip-card-box">', unsafe_allow_html=True)
     st.markdown("<h3>🟢 PACHET LOW</h3>", unsafe_allow_html=True)
     st.markdown("<span class='green-badge'>40 RON / lună</span>", unsafe_allow_html=True)
     st.write("📋 Beneficii incluse:")
-    st.write("• 3 Bilete analizate pe săptămână")
-    st.write("• Selecții din ligile mari")
+    st.write("• 3 Bilete gata analizate pe săptămână")
+    st.write("• Cote sigure selectate din ligile mari")
     st.write("• Acces grup comunitate chat")
     st.write("")
-    st.link_button("Abonare LOW 🚀", link_telegram_afacere, use_container_width=True)
+    st.link_button("Abonare LOW 🚀", link_stripe_test_low, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
     # 2. MEDIUM
@@ -249,10 +260,10 @@ with col_abonamente:
     st.markdown("<span class='green-badge'>70 RON / lună</span>", unsafe_allow_html=True)
     st.write("📋 Beneficii incluse:")
     st.write("• 1 Bilet Premium în fiecare zi")
-    st.write("• Procente și probabilități avansate")
+    st.write("• Procente și probabilități avansate live")
     st.write("• Notificări instant pe Telegram")
     st.write("")
-    st.link_button("Abonare MEDIUM 🟡", link_telegram_afacere, use_container_width=True)
+    st.link_button("Abonare MEDIUM 🟡", link_stripe_test_medium, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
     # 3. HIGH
@@ -260,9 +271,9 @@ with col_abonamente:
     st.markdown("<h3>🔥 HIGH VIP ELITE</h3>", unsafe_allow_html=True)
     st.markdown("<span class='green-badge'>120 RON / lună</span>", unsafe_allow_html=True)
     st.write("📋 Beneficii incluse:")
-    st.write("• Selecție zilnică + variantă dublare")
-    st.write("• Acces total la toate sistemele")
-    st.write("• Suport privat 1-la-1 cu analistul")
+    st.write("• Cota 2 VIP zilnică + Proiect Dublare")
+    st.write("• Acces total la toate sistemele noastre")
+    st.write("• Suport privat 1-la-1 direct cu tipsterul")
     st.write("")
-    st.link_button("Deblochează HIGH 🔥", link_telegram_afacere, use_container_width=True)
+    st.link_button("Deblochează HIGH 🔥", link_stripe_test_high, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
