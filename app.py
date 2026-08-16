@@ -1,271 +1,118 @@
 import streamlit as st
 import base64
 
-# 1. Configurare Pagină principală (MANDATORIU PRIMA LINIE)
+# 1. Configurare Pagină (MANDATORIU PRIMA LINIE)
 st.set_page_config(
-    page_title="PariuriGO Live Dashboard",
+    page_title="PariuriGO Dashboard",
     page_icon="⚽",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
-# Funcție pentru citirea imaginii locale JPG de pe GitHub și transformarea ei în fundal
-def decodifica_imagine_locala(cale_imagine):
+# Funcție simplă pentru citirea imaginii de fundal
+def incarc_imagine(cale):
     try:
-        with open(cale_imagine, "rb") as f:
+        with open(cale, "rb") as f:
             return base64.b64encode(f.read()).decode()
     except:
         return ""
 
-# Citim terenul de fotbal și logo-ul din proiectul tău GitHub
-teren_base64 = decodifica_imagine_locala("teren.jpg")
-logo_base64 = decodifica_imagine_locala("logo.png")
+teren_base64 = incarc_imagine("teren.jpg")
+logo_base64 = incarc_imagine("logo.png")
 
+# Aplicare fundal și font sportiv
+bg_style = ""
 if teren_base64:
-    bg_style = f"""
-        background: linear-gradient(rgba(4, 12, 8, 0.94), rgba(2, 6, 4, 0.96)), 
-                    url('data:image/jpeg;base64,{teren_base64}') !important;
-        background-size: cover !important;
-        background-position: center !important;
-        background-repeat: no-repeat !important;
-        background-attachment: fixed !important;
-    """
+    bg_style = f"background: linear-gradient(rgba(4, 12, 8, 0.94), rgba(2, 6, 4, 0.96)), url('data:image/jpeg;base64,{teren_base64}') !important; background-size: cover !important; background-attachment: fixed !important;"
 else:
-    bg_style = "background: radial-gradient(circle at center, #06140d 0%, #020805 100%) !important;"
+    bg_style = "background-color: #06140d !important;"
 
 st.markdown(f"""
 <style>
     @import url('https://googleapis.com');
-    
-    .stApp {{
-        {bg_style}
-        color: #ffffff !important;
-        font-family: 'Rajdhani', sans-serif !important;
-    }}
-    
-    h1, h2, h3, h4, p, span, label, .stTabs button {{
-        font-family: 'Rajdhani', sans-serif !important;
-        font-weight: 700 !important;
-    }}
-    
-    /* Carduri tip sticlă mată în nuanțe verzi închise */
-    div[data-testid="stVerticalBlockBorder"] {{
-        background: rgba(8, 20, 14, 0.88) !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        border: 1px solid rgba(0, 255, 102, 0.2) !important;
-        border-radius: 16px !important;
-        padding: 24px !important;
-        box-shadow: 0 12px 40px 0 rgba(0,0,0,0.7) !important;
-        margin-bottom: 20px !important;
-    }}
-
-    .stat-container {{
-        width: 100%;
-        margin: 0 auto;
-    }}
-    
-    .stat-row {{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 10px 0;
-        text-align: center;
-    }}
-    
-    .stat-left-val, .stat-right-val {{
-        width: 20%;
-        font-size: 22px;
-        font-weight: 800;
-        color: #ffffff;
-        text-align: center;
-    }}
-    
-    .stat-center-label {{
-        width: 60%;
-        font-size: 16px;
-        font-weight: 700;
-        color: #a0aec0;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }}
-    
-    .green-badge {{
-        background: linear-gradient(135deg, #00ff66 0%, #00bc43 100%);
-        color: #000000 !important;
-        padding: 4px 15px;
-        border-radius: 6px;
-        font-size: 16px;
-        font-weight: 800;
-        display: inline-block;
-        box-shadow: 0 2px 10px rgba(0, 255, 102, 0.25);
-    }}
-    
-    .bar-wrapper {{
-        display: flex;
-        align-items: center;
-        margin: 12px 0;
-    }}
-    
-    .bar-label {{
-        width: 25%;
-        font-size: 16px;
-        font-weight: 700;
-        color: #ffffff;
-    }}
-    
-    .bar-container {{
-        width: 75%;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 8px;
-        overflow: hidden;
-        height: 24px;
-        position: relative;
-        border: 1px solid rgba(255,255,255,0.05);
-    }}
-    
-    .bar-fill-intense-green {{
-        height: 100%;
-        background: linear-gradient(90deg, #008f33 0%, #00ff66 100%);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        padding-right: 10px;
-        font-size: 13px;
-        font-weight: 800;
-        color: #000000;
-    }}
-    
-    .bar-fill-soft-green {{
-        height: 100%;
-        background: linear-gradient(90deg, #024c1c 0%, #00bc43 100%);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        padding-right: 10px;
-        font-size: 13px;
-        font-weight: 800;
-        color: #ffffff;
-    }}
-    
-    .green-footer-box {{
-        background: rgba(0, 255, 102, 0.05);
-        border: 1px solid rgba(0, 255, 102, 0.18);
-        border-radius: 10px;
-        padding: 12px 20px;
-        margin-top: 20px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }}
+    .stApp {{ {bg_style} color: #ffffff !important; font-family: 'Rajdhani', sans-serif !important; }}
+    h1, h2, h3, h4, p, span, label, button {{ font-family: 'Rajdhani', sans-serif !important; font-weight: 700 !important; }}
+    div[data-testid="stVerticalBlockBorder"] {{ background: rgba(8, 20, 14, 0.88) !important; border: 1px solid rgba(0, 255, 102, 0.2) !important; border-radius: 16px !important; padding: 20px !important; }}
+    div[data-testid="stProgress"] div[role="progressbar"] {{ background: linear-gradient(90deg, #008f33 0%, #00ff66 100%) !important; }}
 </style>
 """, unsafe_allow_html=True)
 
-# 2. Header-ul principal al aplicației cu Logo
+# Afișare Logo sau Titlu
 if logo_base64:
-    st.markdown(f"""
-        <div style="text-align: center; margin-bottom: 15px;">
-            <img src="data:image/png;base64,{logo_base64}" width="280">
-        </div>
-    """, unsafe_allow_html=True)
+    st.image(f"data:image/png;base64,{logo_base64}", width=280)
 else:
-    st.markdown("<h1 style='text-align: center; color: #00ff66;'>⚽ PARIURIGO &bull; DASHBOARD</h1>", unsafe_allow_html=True)
+    st.title("⚽ PARIURIGO &bull; DASHBOARD")
 
 st.write("---")
 
-# Împărțirea ecranului: Graficul cu Statistici (Stânga) și Abonamente VIP (Dreapta)
+# Împărțire ecran în două coloane
 col_grafic, col_abonamente = st.columns([1.3, 0.7], gap="large")
 
-# 3. SECȚIUNEA DIN STÂNGA: GRAFICUL VIZUAL ÎN TENTĂ VERDE
 with col_grafic:
     st.subheader("📊 Modul Algoritm & Probabilități")
     
     with st.container(border=True):
-        st.markdown("<p style='text-align:center; color:#94a3b8; margin:0;'>SUPER LIG &bull; TURKEY</p>", unsafe_allow_html=True)
-        st.markdown("<h2 style='text-align:center; color:#00ff66; margin: 5px 0;'>BAȘAKȘEHIR vs KOCAELISPOR</h2>", unsafe_allow_html=True)
+        st.caption("SUPER LIG &bull; TURKEY")
+        st.markdown("<h2 style='color:#00ff66;'>BAȘAKȘEHIR vs KOCAELISPOR</h2>", unsafe_allow_html=True)
         st.write("---")
         
-        st.markdown("""
-        <div class="stat-container">
-            <div class="stat-row">
-                <div class="stat-left-val">7</div>
-                <div class="stat-center-label">Total goluri marcate</div>
-                <div class="stat-right-val">3</div>
-            </div>
-            <div class="stat-row">
-                <div class="stat-left-val">1.00</div>
-                <div class="stat-center-label">Medie goluri</div>
-                <div class="stat-right-val">0.43</div>
-            </div>
-            <div class="stat-row">
-                <div class="stat-left-val">8</div>
-                <div class="stat-center-label">Goluri primite</div>
-                <div class="stat-right-val">6</div>
-            </div>
-            <hr style="border-color: rgba(255,255,255,0.05); margin: 15px 0;">
-            <div class="stat-row">
-                <div class="stat-left-val"><span class="green-badge">71.43%</span></div>
-                <div class="stat-center-label">Peste 0.5 HT</div>
-                <div class="stat-right-val"><span class="green-badge">57.14%</span></div>
-            </div>
-            <div class="stat-row">
-                <div class="stat-left-val"><span class="green-badge">71.43%</span></div>
-                <div class="stat-center-label">Peste 0.5 ST</div>
-                <div class="stat-right-val"><span class="green-badge">57.14%</span></div>
-            </div>
-            <div class="stat-row">
-                <div class="stat-left-val"><span class="green-badge">85.71%</span></div>
-                <div class="stat-center-label">Peste 1.5 goluri</div>
-                <div class="stat-right-val"><span class="green-badge">42.86%</span></div>
-            </div>
-            <div class="stat-row">
-                <div class="stat-left-val" style="color:#00ff66;">28.57%</div>
-                <div class="stat-center-label">Peste 2.5 goluri</div>
-                <div class="stat-right-val" style="color:#00ff66;">42.86%</div>
-            </div>
-            <div class="stat-row">
-                <div class="stat-left-val" style="color:#00ff66;">57.14%</div>
-                <div class="stat-center-label">Ambele marchează</div>
-                <div class="stat-right-val" style="color:#00ff66;">42.86%</div>
-            </div>
-            <div class="stat-row">
-                <div class="stat-left-val" style="font-size:14px; color:#a0aec0;">14.29%</div>
-                <div class="stat-center-label">Peste 3.5 cartonașe</div>
-                <div class="stat-right-val" style="font-size:14px; color:#a0aec0;">28.57%</div>
-            </div>
-            <div class="stat-row">
-                <div class="stat-left-val" style="font-size:12px; color:#a0aec0;">-</div>
-                <div class="stat-center-label">Peste 9.5 cornere</div>
-                <div class="stat-right-val" style="font-size:14px; color:#00ff66;">14.29%</div>
-            </div>
-        </div>
-        <hr style="border-color: rgba(255,255,255,0.05); margin: 20px 0;">
-        """, unsafe_allow_html=True)
+        # Partea 1: Cifre simple meci
+        c1, c2, c3 = st.columns(3)
+        c1.metric(label="⚽ GOLURI MARCATE (Gazde - Oaspeți)", value="7 - 3")
+        c2.metric(label="📈 MEDIE GOLURI", value="1.00 - 0.43")
+        c3.metric(label="🛡️ GOLURI PRIMITE", value="8 - 6")
         
+        st.write("---")
+        
+        # Partea 2: Procente tip tabel cu metrici native
+        st.write("**📋 PROCENTE ȘANSE EVENIMENTE:**")
+        cx1, cx2, cx3 = st.columns(3)
+        cx1.metric(label="🟢 PESTE 0.5 HT", value="71.43%", delta="57.14% Oaspeți", delta_color="off")
+        cx2.metric(label="🟢 PESTE 0.5 ST", value="71.43%", delta="57.14% Oaspeți", delta_color="off")
+        cx3.metric(label="🟢 PESTE 1.5 GOLURI", value="85.71%", delta="42.86% Oaspeți", delta_color="off")
+        
+        st.write("---")
+        
+        # Partea 3: Barele de progres în nuanță verde
         st.write("**📈 EVOLUȚIE PROBABILITĂȚI GENERALE GLOBAL:**")
         
-        st.markdown("""
-        <div class="bar-wrapper">
-            <div class="bar-label">Peste 1.5:</div>
-            <div class="bar-container"><div class="bar-fill-intense-green" style="width: 64.29%;">64.29%</div></div>
-        </div>
-        <div class="bar-wrapper">
-            <div class="bar-label">Peste 2.5:</div>
-            <div class="bar-container"><div class="bar-fill-soft-green" style="width: 14.29%;">14.29%</div></div>
-        </div>
-        <div class="bar-wrapper">
-            <div class="bar-label">Peste 0.5 R1:</div>
-            <div class="bar-container"><div class="bar-fill-intense-green" style="width: 64.29%;">64.29%</div></div>
-        </div>
-        <div class="bar-wrapper">
-            <div class="bar-label">Peste 0.5 R2:</div>
-            <div class="bar-container"><div class="bar-fill-intense-green" style="width: 64.29%;">64.29%</div></div>
-        </div>
-        <div class="bar-wrapper">
-            <div class="bar-label">Ambele marchează:</div>
-            <div class="bar-container"><div class="bar-fill-intense-green" style="width: 50.00%;">50.00%</div></div>
-        </div>
-        <div class="bar-wrapper">
-            <div class="bar-label">+ 3.5 Cartonașe:</div>
+        st.write("🔹 Peste 1.5 Goluri: **64.29%**")
+        st.progress(0.64)
+        
+        st.write("🔹 Peste 2.5 Goluri: **14.29%**")
+        st.progress(0.14)
+        
+        st.write("🔹 Peste 0.5 R1: **64.29%**")
+        st.progress(0.64)
+        
+        st.write("🔹 Ambele marchează: **50.00%**")
+        st.progress(0.50)
+        
+        st.write("---")
+        st.info("🔸 **Stats arbitru &bull; probabilitate matematică**\nM. Turkmen &bull; 7/7 meciuri din ligă analizate cu succes")
+
+with col_abonamente:
+    st.subheader("🏆 Abonamente VIP")
+    
+    t_low, t_med, t_high = st.tabs(["🟢 LOW", "🟡 MEDIUM", "🔥 HIGH"])
+    
+    with t_low:
+        with st.container(border=True):
+            st.markdown("<h4 style='color:#22c55e;'>PACHET LOW</h4>", unsafe_allow_html=True)
+            st.subheader("40 RON / lună")
+            st.write("✅ 3 Bilete analizate / săptămână")
+            st.button("Abonare LOW", key="b_low", use_container_width=True)
+
+    with t_med:
+        with st.container(border=True):
+            st.markdown("<h4 style='color:#eab308;'>PACHET MEDIUM</h4>", unsafe_allow_html=True)
+            st.subheader("70 RON / lună")
+            st.write("✅ 1 Bilet Premium în fiecare zi")
+            st.button("Abonare MEDIUM", key="b_med", use_container_width=True)
+
+    with t_high:
+        with st.container(border=True):
+            st.markdown("<h4 style='color:#ef4444;'>HIGH VIP ELITE</h4>", unsafe_allow_html=True)
+            st.subheader("120 RON / lună")
+            st.write("✅ Cota 2 VIP zilnică asigurată")
+            st.button("Deblochează VIP ELITE", key="b_high", use_container_width=True)
