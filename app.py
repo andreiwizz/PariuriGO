@@ -247,3 +247,188 @@ st.markdown("<br><p style='text-align: center; color: #475569; font-size: 14px; 
     
     .stripe-low-med { background: linear-gradient(135deg, #00ff66 0%, #00bc43 100%) !important; color: #000000 !important; box-shadow: 0 4px 20px rgba(0, 255, 102, 0.3) !important; }
     .stripe-high { background: linear-gradient(135deg, #ff0055 0%, #b3003b 100%) !important; color: #ffffff !important; box-shadow: 0 4px 25px rgba(255, 0, 85, 0.4) !important; }
+import streamlit as st
+import base64
+from datetime import datetime
+
+# ==============================================================================
+# 1. CONFIGURARE PAGINĂ PRINCIPALĂ (MANDATORIU PRIMA LINIE STREAMLIT)
+# ==============================================================================
+st.set_page_config(
+    page_title="PariuriGO World Live Center",
+    page_icon="⚽",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
+
+data_azi = datetime.now().strftime("%d.%m.%Y")
+
+# ==============================================================================
+# 2. CITIRE ȘI CONFIGURARE RESURSE VIZUALE (BASE64)
+# ==============================================================================
+def incarc_imagine_locala(cale_imagine):
+    try:
+        with open(cale_imagine, "rb") as f:
+            return base64.b64encode(f.read()).decode()
+    except Exception:
+        return ""
+
+teren_base64 = incarc_imagine_locala("teren.jpg")
+logo_base64 = incarc_imagine_locala("logo.png")
+
+if teren_base64:
+    bg_style = f"background: linear-gradient(rgba(4, 14, 8, 0.95), rgba(2, 6, 4, 0.97)), url('data:image/jpeg;base64,{teren_base64}') !important; background-size: cover !important; background-position: center !important; background-attachment: fixed !important;"
+else:
+    bg_style = "background-color: #030a05 !important;"
+
+# ==============================================================================
+# 3. STILIZARE CSS PREMIUM COMPLETĂ (INTEGRATĂ FĂRĂ ERORI DE INDENTARE)
+# ==============================================================================
+st.markdown(f"""
+<style>
+    @import url('https://googleapis.com');
+    
+    .stApp {{
+        {bg_style}
+        color: #ffffff !important;
+        font-family: 'Rajdhani', sans-serif !important;
+    }}
+    
+    h1, h2, h3, h4, p, span, label, .stTabs button {{
+        font-family: 'Rajdhani', sans-serif !important;
+        font-weight: 700 !important;
+    }}
+    
+    /* Fix premium pentru butoanele de control din aplicație */
+    div.stButton > button {{
+        background: linear-gradient(135deg, rgba(0, 255, 102, 0.15) 0%, rgba(0, 92, 32, 0.05) 100%) !important;
+        color: #00ff66 !important;
+        border: 1px solid #00ff66 !important;
+        font-weight: 800 !important;
+        font-size: 16px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1.5px !important;
+        border-radius: 12px !important;
+        padding: 16px 30px !important;
+        width: 100% !important;
+        display: block !important;
+        transition: all 0.4s ease !important;
+        box-shadow: 0 4px 15px rgba(0, 255, 102, 0.1) !important;
+    }}
+
+    div.stButton > button:hover {{
+        background: linear-gradient(135deg, #00ff66 0%, #00bc43 100%) !important;
+        color: #000000 !important;
+        box-shadow: 0 0 25px rgba(0, 255, 102, 0.6) !important;
+        transform: translateY(-3px);
+    }}
+    
+    div.stButton > button div {{
+        font-size: 15px !important;
+    }}
+    
+    .vip-card-box {{
+        background: linear-gradient(135deg, rgba(6, 20, 13, 0.75) 0%, rgba(3, 10, 6, 0.9) 100%) !important;
+        backdrop-filter: blur(16px) !important;
+        border-radius: 18px !important;
+        padding: 26px !important;
+        margin-bottom: 25px !important;
+    }}
+
+    .stTextInput input {{
+        background: rgba(0, 0, 0, 0.6) !important;
+        border: 1px solid rgba(0, 255, 102, 0.2) !important;
+        color: #ffffff !important;
+        border-radius: 12px !important;
+        padding: 14px !important;
+        font-size: 16px !important;
+        font-family: 'Rajdhani', sans-serif !important;
+        box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8) !important;
+        transition: all 0.3s ease;
+    }}
+    
+    .stTextInput input:focus {{
+        border-color: #00ff66 !important;
+        box-shadow: 0 0 15px rgba(0, 255, 102, 0.25), inset 0 2px 8px rgba(0, 0, 0, 0.8) !important;
+        background: rgba(2, 12, 6, 0.7) !important;
+    }}
+
+    @keyframes cyberScan {{
+        0% {{ top: 0%; opacity: 0; }}
+        10% {{ opacity: 1; }}
+        90% {{ opacity: 1; }}
+        100% {{ top: 100%; opacity: 0; }}
+    }}
+
+    .full-screen-login-card {{
+        position: relative;
+        background: linear-gradient(135deg, rgba(6, 26, 14, 0.9) 0%, rgba(2, 12, 6, 0.98) 100%) !important;
+        backdrop-filter: blur(25px) !important;
+        border: 2px solid rgba(0, 255, 102, 0.4) !important;
+        border-radius: 24px !important;
+        padding: 45px !important;
+        max-width: 500px;
+        margin: 40px auto !important;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 255, 102, 0.1) !important;
+        overflow: hidden;
+    }}
+
+    .full-screen-login-card::after {{
+        content: '';
+        position: absolute;
+        left: 0; right: 0; height: 4px;
+        background: linear-gradient(90deg, transparent, #00ff66, transparent);
+        box-shadow: 0 0 20px #00ff66, 0 0 40px #00ff66;
+        animation: cyberScan 3.5s infinite linear;
+    }}
+
+    .admin-box {{
+        background: linear-gradient(145deg, rgba(8, 28, 16, 0.6) 0%, rgba(4, 14, 8, 0.8) 100%) !important;
+        backdrop-filter: blur(12px) !important;
+        border: 1px solid rgba(0, 255, 102, 0.2) !important;
+        border-radius: 16px !important;
+        padding: 24px !important;
+        margin-bottom: 25px;
+    }}
+
+    /* DESIGN LUX CASETE PREȚURI */
+    .pricing-card-lux {{
+        background: linear-gradient(135deg, rgba(6, 24, 14, 0.85) 0%, rgba(2, 10, 5, 0.95) 100%) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border-radius: 20px !important;
+        padding: 30px !important;
+        margin-top: 20px;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }}
+    
+    .pricing-border-low {{ border: 1px solid rgba(0, 255, 102, 0.3) !important; box-shadow: 0 15px 35px rgba(0, 255, 102, 0.05) !important; }}
+    .pricing-border-medium {{ border: 1px solid rgba(255, 204, 0, 0.3) !important; box-shadow: 0 15px 35px rgba(255, 204, 0, 0.05) !important; }}
+    .pricing-border-high {{ border: 1px solid rgba(255, 0, 85, 0.4) !important; box-shadow: 0 15px 35px rgba(255, 0, 85, 0.08) !important; }}
+
+    .stripe-luxury-btn {{
+        font-family: 'Rajdhani', sans-serif !important;
+        font-weight: 800 !important;
+        font-size: 16px !important;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        border: none !important;
+        border-radius: 12px !important;
+        padding: 14px 20px !important;
+        display: block !important;
+        text-align: center !important;
+        width: 100% !important;
+        text-decoration: none !important;
+        margin-top: 25px;
+        transition: all 0.3s ease !important;
+    }}
+    
+    .stripe-low-med {{ background: linear-gradient(135deg, #00ff66 0%, #00bc43 100%) !important; color: #000000 !important; box-shadow: 0 4px 20px rgba(0, 255, 102, 0.3) !important; }}
+    .stripe-high {{ background: linear-gradient(135deg, #ff0055 0%, #b3003b 100%) !important; color: #ffffff !important; box-shadow: 0 4px 25px rgba(255, 0, 85, 0.4) !important; }}
+</style>
+""", unsafe_allow_html=True)
+
+if logo_base64:
+    st.markdown(f'<div style="text-align: center; margin-bottom: 15px;"><img src="data:image/png;base64,{logo_base64}" width="280"></div>', unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: #ffffff; font-weight: 800; text-shadow: 0 0 15px rgba(0,255,102,0.2);'>⚽ PARIURIGO &bull; WORLD LIVE CENTER</h1>", unsafe_allow_html=True)
+st.write("---")
