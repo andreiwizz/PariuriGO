@@ -131,7 +131,7 @@ with col_abonamente:
             <a class="stripe-btn btn-red" href="{link_stripe}" target="_blank">DEBLOCHEAZĂ ACCES HIGH 🔥</a>
         </div>
         """, unsafe_allow_html=True)
-python# ==============================================================================
+#python# ==============================================================================
 # INITIALIZARE STATE SECURIZAT ȘI MEMBRI
 # ==============================================================================
 if "lista_membri" not in st.session_state:
