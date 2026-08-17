@@ -1,35 +1,7 @@
-import sqlite3
-import requests
-
-# ===== VIP MEMBERS =====
-conn = sqlite3.connect("members.db", check_same_thread=False)
-c = conn.cursor()
-c.execute("CREATE TABLE IF NOT EXISTS members(username TEXT PRIMARY KEY,password TEXT)")
-conn.commit()
-
-def adauga_membru(u,p):
-    c.execute("INSERT OR REPLACE INTO members VALUES(?,?)",(u,p))
-    conn.commit()
-
-# ADAUGĂ AICI MEMBRII TĂI
-adauga_membru("andrei","1234")
-adauga_membru("vip1","9999")
-
-API_KEY = "PUNE_CHEIA_TA_API_FOOTBALL"
-HEADERS={"x-apisports-key":API_KEY}
-
-def meciuri_live():
-    try:
-        r=requests.get("https://v3.football.api-sports.io/fixtures?live=all",headers=HEADERS,timeout=10)
-        if r.status_code!=200:
-            return []
-        return r.json()["response"]
-    except:
-        return []
-
-
 import streamlit as st
 from datetime import datetime
+import requests
+import base64
 
 # 1. Configurare Pagină principală (MANDATORIU PRIMA LINIE)
 st.set_page_config(
@@ -38,6 +10,31 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="collapsed"
 )
+
+# ===== FUNDAL GITHUB =====
+url = "https://raw.githubusercontent.com/andreiwizz/PariuriGO/main/teren.jpg"
+img = requests.get(url).content
+b64 = base64.b64encode(img).decode()
+
+st.markdown(f"""
+<style>
+.stApp{
+    background-image:url("data:image/jpg;base64,{b64}");
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+}
+.stApp::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.70);
+    z-index:-1;
+}
+</style>
+""", unsafe_allow_html=True)
+
+
 
 # Determinarea datei curente
 data_azi = datetime.now().strftime("%d.%m.%Y")
@@ -284,24 +281,21 @@ with col_abonamente:
     pachete = [
         {
             "nume": "🥉 PACHET LOW",
-            "pret": "49 RON / lună",
-            "beneficii": ["1-2 ponturi pe zi", "Acces grup Telegram Low", "Analiză statistică de bază"],
-            "link_telegram": "https://t.me/PariuriGO_Low",
-            "link_stripe": "https://buy.stripe.com/inlocuiește_cu_linkul_tau_low"
+            "pret": "40 RON / săptămână",
+            "beneficii": ["1-2 ponturi zilnic","Statistici de bază","Acces VIP LOW"],
+            "link_stripe": "LINK_STRIPE_LOW"
         },
         {
             "nume": "🥈 PACHET MEDIUM",
-            "pret": "99 RON / lună",
-            "beneficii": ["3-5 ponturi pe zi", "Acces grup Telegram Medium", "Analiză algoritm avansată", "Statistici live"],
-            "link_telegram": "https://t.me/PariuriGO_Medium",
-            "link_stripe": "https://buy.stripe.com/inlocuiește_cu_linkul_tau_medium"
+            "pret": "70 RON / lună",
+            "beneficii": ["3-5 ponturi pe zi","Analiză AI","Statistici LIVE","Acces VIP MEDIUM"],
+            "link_stripe": "LINK_STRIPE_MEDIUM"
         },
         {
             "nume": "🥇 PACHET HIGH",
-            "pret": "199 RON / lună",
-            "beneficii": ["Ponturi nelimitate", "Acces grup Telegram VIP High", "Analiză completă + suport direct", "Predicții premium în timp real"],
-            "link_telegram": "https://t.me/PariuriGO_High",
-            "link_stripe": "https://buy.stripe.com/inlocuiește_cu_linkul_tau_high"
+            "pret": "120 RON / lună",
+            "beneficii": ["Ponturi nelimitate","Scoruri corecte","GG / Cornere / Cartonașe","Acces TOTAL VIP"],
+            "link_stripe": "LINK_STRIPE_HIGH"
         }
     ]
 
@@ -311,68 +305,8 @@ with col_abonamente:
         st.markdown(f'<p class="vip-price">{pachet["pret"]}</p>', unsafe_allow_html=True)
         for beneficiu in pachet["beneficii"]:
             st.markdown(f'<p class="vip-feature">✔️ {beneficiu}</p>', unsafe_allow_html=True)
-        
-        st.link_button("💳 Plătește cu Card (Stripe)", pachet["link_stripe"])
+        st.link_button("💳 CUMPĂRĂ ABONAMENT", pachet["link_stripe"])
         st.markdown('</div>', unsafe_allow_html=True)
-pachete = [
-    {
-        "nume": "🥉 PACHET LOW",
-        "pret": "40 RON / săptămână",
-        "beneficii": [
-            "1-2 ponturi zilnic",
-            "Statistici de bază",
-            "Acces VIP LOW"
-        ],
-        "link_stripe": "LINK_STRIPE_LOW"
-    },
 
-    {
-        "nume": "🥈 PACHET MEDIUM",
-        "pret": "70 RON / lună",
-        "beneficii": [
-            "3-5 ponturi pe zi",
-            "Analiză AI",
-            "Statistici LIVE",
-            "Acces VIP MEDIUM"
-        ],
-        "link_stripe": "LINK_STRIPE_MEDIUM"
-    },
-
-    {
-        "nume": "🥇 PACHET HIGH",
-        "pret": "120 RON / lună",
-        "beneficii": [
-            "Ponturi nelimitate",
-            "Scoruri corecte",
-            "GG / Cornere / Cartonașe",
-            "Acces TOTAL VIP"
-        ],
-        "link_stripe": "LINK_STRIPE_HIGH"
-    }
-]
-    import base64
-import requests
-
-url = "https://raw.githubusercontent.com/andreiwizz/PariuriGO/main/teren.jpg"
-
-img = requests.get(url).content
-b64 = base64.b64encode(img).decode()
-
-st.markdown(f"""
-<style>
-.stApp {{
-    background-image: url("data:image/jpg;base64,{b64}");
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-}}
-
-.stApp::before {{
-    content:"";
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.70);
-    z-index:-1;
-}}
-</style>
-""", unsafe_allow_html=True)
+    st.write("---")
+    st.caption("Actualizat automat la data de " + data_azi)
