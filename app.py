@@ -131,3 +131,61 @@ with col_abonamente:
             <a class="stripe-btn btn-red" href="{link_stripe}" target="_blank">DEBLOCHEAZĂ ACCES HIGH 🔥</a>
         </div>
         """, unsafe_allow_html=True)
+python# ==============================================================================
+# INITIALIZARE STATE SECURIZAT ȘI MEMBRI
+# ==============================================================================
+if "lista_membri" not in st.session_state:
+    st.session_state.lista_membri = {"admin": "pariurigo"}
+
+if "vip" not in st.session_state:
+    st.session_state.vip = False
+
+if "admin" not in st.session_state:
+    st.session_state.admin = False
+
+# ==============================================================================
+# PANOU CONTROL LATERAL (SIDEBAR LOGIN)
+# ==============================================================================
+with st.sidebar:
+    st.title("🔐 LOGIN ACCES")
+    utilizator = st.text_input("Utilizator", key="login_user")
+    parola = st.text_input("Parolă", type="password", key="login_pass")
+
+    if st.button("Conectare"):
+        if utilizator in st.session_state.lista_membri and st.session_state.lista_membri[utilizator] == parola:
+            st.session_state.vip = True
+            if utilizator == "admin":
+                st.session_state.admin = True
+            st.success("Conectat cu succes!")
+            st.rerun()
+        else:
+            st.error("Date de identificare incorecte!")
+
+# ==============================================================================
+# INTERFAȚĂ MANAGING ADMIN PANEL (Apare doar dacă te loghezi cu contul 'admin')
+# ==============================================================================
+if st.session_state.admin:
+    st.write("---")
+    st.header("🛠 ADMIN PANEL")
+    
+    col_adm1, col_adm2 = st.columns(2)
+    with col_adm1:
+        nume = st.text_input("Nume membru nou")
+        passw = st.text_input("Parolă membru nou")
+        if st.button("➕ Adaugă membru"):
+            if nume and passw:
+                st.session_state.lista_membri[nume] = passw
+                st.success(f"Membru {nume} adăugat!")
+                st.rerun()
+                
+    with col_adm2:
+        st.subheader("👥 Utilizatori Activi")
+        for user_nume in list(st.session_state.lista_membri.keys()):
+            c_u, c_b = st.columns([3, 1])
+            c_u.write(f"👤 {user_nume}")
+            if user_nume != "admin":
+                if c_b.button("Șterge", key=f"del_{user_nume}"):
+                    del st.session_state.lista_membri[user_nume]
+                    st.success("Utilizator eliminat!")
+                    st.rerun()
+    st.write("---")
