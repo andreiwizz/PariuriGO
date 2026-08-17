@@ -104,4 +104,10 @@ with col_abonamente:
             <a class="stripe-btn" href="{link_stripe}" target="_blank">DEBLOCHEAZĂ ACCES HIGH 🔥</a>
         </div>
         """, unsafe_allow_html=True)
+# Crearea coloanelor pentru layout (repară eroarea NameError)
+col_stinga, col_abonamente = st.columns([1.8, 1.2])
+
+with col_abonamente:
+    st.markdown('<h3 style="color: #ffffff; font-weight:800; margin-bottom:15px;">🏆 SELECȚIE ACCES VIP</h3>', unsafe_allow_html=True)
+    # ... restul codului pentru pachete pe care îl ai deja
 
