@@ -212,3 +212,38 @@ else:
 
 # Subsol global fixat la sfârșitul paginii
 st.markdown("<br><p style='text-align: center; color: #475569; font-size: 14px; font-weight:600;'>&copy; 2026 PariuriGO World Live Center. Toate drepturile rezervate. Pariază responsabil.</p>", unsafe_allow_html=True)
+    /* DESIGN PREMIUM PENTRU CASETELE DE PREȚURI VIP */
+    .pricing-card-lux {
+        background: linear-gradient(135deg, rgba(6, 24, 14, 0.85) 0%, rgba(2, 10, 5, 0.95) 100%) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border-radius: 20px !important;
+        padding: 30px !important;
+        margin-top: 20px;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .pricing-border-low { border: 1px solid rgba(0, 255, 102, 0.3) !important; box-shadow: 0 15px 35px rgba(0, 255, 102, 0.05) !important; }
+    .pricing-border-medium { border: 1px solid rgba(255, 204, 0, 0.3) !important; box-shadow: 0 15px 35px rgba(255, 204, 0, 0.05) !important; }
+    .pricing-border-high { border: 1px solid rgba(255, 0, 85, 0.4) !important; box-shadow: 0 15px 35px rgba(255, 0, 85, 0.08) !important; }
+
+    /* BUTON STRIPE ANIMAT CU GLOW */
+    .stripe-luxury-btn {
+        font-family: 'Rajdhani', sans-serif !important;
+        font-weight: 800 !important;
+        font-size: 16px !important;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        border: none !important;
+        border-radius: 12px !important;
+        padding: 14px 20px !important;
+        display: block !important;
+        text-align: center !important;
+        width: 100% !important;
+        text-decoration: none !important;
+        margin-top: 25px;
+        transition: all 0.3s ease !important;
+    }
+    
+    .stripe-low-med { background: linear-gradient(135deg, #00ff66 0%, #00bc43 100%) !important; color: #000000 !important; box-shadow: 0 4px 20px rgba(0, 255, 102, 0.3) !important; }
+    .stripe-high { background: linear-gradient(135deg, #ff0055 0%, #b3003b 100%) !important; color: #ffffff !important; box-shadow: 0 4px 25px rgba(255, 0, 85, 0.4) !important; }
