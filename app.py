@@ -212,4 +212,3 @@ else:
 
 # Subsol global fixat la sfârșitul paginii
 st.markdown("<br><p style='text-align: center; color: #475569; font-size: 14px; font-weight:600;'>&copy; 2026 PariuriGO World Live Center. Toate drepturile rezervate. Pariază responsabil.</p>", unsafe_allow_html=True)
-    /
