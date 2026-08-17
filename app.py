@@ -126,3 +126,89 @@ if logo_base64:
     st.markdown(f'<div style="text-align: center; margin-bottom: 15px;"><img src="data:image/png;base64,{logo_base64}" width="280"></div>', unsafe_allow_html=True)
 st.markdown("<h1 style='text-align: center; color: #ffffff; font-weight: 800; text-shadow: 0 0 15px rgba(0,255,102,0.2);'>⚽ PARIURIGO &bull; WORLD LIVE CENTER</h1>", unsafe_allow_html=True)
 st.write("---")
+# ==============================================================================
+# 5. INITIALIZARE STĂRI SECURIZATE ȘI MEMORIE CONTURI
+# ==============================================================================
+if "lista_membri" not in st.session_state:
+    st.session_state.lista_membri = {"admin": "pariurigo"}
+
+if "vip" not in st.session_state:
+    st.session_state.vip = False
+
+if "admin" not in st.session_state:
+    st.session_state.admin = False
+
+if "ecran_login" not in st.session_state:
+    st.session_state.ecran_login = False
+
+# ==============================================================================
+# 6. MANAGEMENT RENDERARE INTERFAȚĂ (LOGIN FULL-SCREEN VS PLATFORMĂ)
+# ==============================================================================
+
+# SITUAȚIA A: Utilizatorul a cerut login-ul (Se ascunde tot și apare doar portalul)
+if st.session_state.ecran_login and not st.session_state.vip:
+    st.markdown("""
+        <div class="full-screen-login-card" style="text-align: center;">
+            <div style="background:rgba(0,255,102,0.1); border:1px solid #00ff66; color:#00ff66; font-size:11px; font-weight:800; padding:6px 16px; border-radius:30px; display:inline-block; margin-bottom:20px; letter-spacing:1px;">🔒 SECURE MATRIX ACTIVE</div>
+            <h1 style='color: #ffffff; font-weight: 800; font-size: 34px; margin: 0 0 10px 0;'>VIP PORTAL</h1>
+            <p style='color: #94a3b8; font-size: 15px; margin-bottom:0;'>Introdu acreditările de acces autorizat.</p>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    col_c1, col_c2, col_c3 = st.columns([1, 1.2, 1])
+    with col_c2:
+        utilizator = st.text_input("NUME UTILIZATOR", placeholder="Cont utilizator...", key="lux_user_v6")
+        parola = st.text_input("PAROLĂ SECURIZATĂ", placeholder="••••••••", type="password", key="lux_pass_v6")
+        st.markdown("<div style='margin-top: 15px;'></div>", unsafe_allow_html=True)
+        
+        c_b1, c_b2 = st.columns(2)
+        if c_b1.button("CONECTARE ⚡", key="btn_lux_submit_v6"):
+            if utilizator in st.session_state.lista_membri and st.session_state.lista_membri[utilizator] == parola:
+                st.session_state.vip = True
+                st.session_state.ecran_login = False
+                if utilizator == "admin":
+                    st.session_state.admin = True
+                st.success("Sistem deblocat!")
+                st.rerun()
+            else:
+                st.error("Date de identificare incorecte!")
+                
+        if c_b2.button("ÎNAPOI ↩️", key="btn_lux_back_v6"):
+            st.session_state.ecran_login = False
+            st.rerun()
+
+# SITUAȚIA B: Interfața principală (Apare la pornire sau după logarea cu succes)
+else:
+    # Crearea layout-ului pe coloane
+    col_stinga, col_abonamente = st.columns([1.9, 1.1])
+
+    # Coloana Stângă: Platforma de scoruri și meciuri live ScoreBat
+    with col_stinga:
+        st.markdown('<h3 style="color: #00ff66; font-weight:800; margin-bottom:15px;">📊 CENTRALIZATOR MECIURI LIVE SCOREBAT</h3>', unsafe_allow_html=True)
+        st.components.v1.html(
+            """
+            <div style="border: 2px solid rgba(0, 255, 102, 0.3); border-radius: 20px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.8); background: #111;">
+                <iframe src="https://scorebat.com" style="width: 100%; height: 750px; border: none; background: #111;" allow="autoplay; fullscreen" loading="lazy"></iframe>
+            </div>
+            """,
+            height=770,
+            scrolling=False
+        )
+
+    # Coloana Dreaptă: Control acces și înrolare buton de lux
+    with col_abonamente:
+        if not st.session_state.vip:
+            st.markdown("<div style='margin-top: 25px;'></div>", unsafe_allow_html=True)
+            if st.button("🔐 DEBLOCHEAZĂ PORTAL VIP", key="btn_portal_master_v6"):
+                st.session_state.ecran_login = True
+                st.rerun()
+        else:
+            st.markdown(f"""
+                <div class="vip-card-box" style="text-align: center; border: 1px solid #00ff66 !important; margin-top:25px;">
+                    <h4 style="color:#00ff66; margin:0; font-weight:800;">🟢 CONEXIUNE SECURIZATĂ</h4>
+                    <p style="color:#ffffff; margin:8px 0 0 0; font-size:16px;">Datele VIP au fost sincronizate cu succes.</p>
+                </div>
+            """, unsafe_allow_html=True)
+
+# Subsol global fixat la sfârșitul paginii
+st.markdown("<br><p style='text-align: center; color: #475569; font-size: 14px; font-weight:600;'>&copy; 2026 PariuriGO World Live Center. Toate drepturile rezervate. Pariază responsabil.</p>", unsafe_allow_html=True)
