@@ -282,6 +282,19 @@ with col_abonamente:
 # ================== BAZA MEMBRI ==================
 import sqlite3
 
+# Ascundem textul urât de săgeată care apare deasupra meniului în noile versiuni de Streamlit
+st.markdown("""
+<style>
+    /* Ascunde textul brut de iconițe care buguiește sidebar-ul */
+    button div {
+        font-size: 0px !important;
+    }
+    button div:before {
+        font-size: 16px !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 conn = sqlite3.connect("membri.db", check_same_thread=False)
 c = conn.cursor()
 
@@ -353,7 +366,7 @@ if admin:
     membri = c.fetchall()
 
     for m in membri:
-        col1, col2 = st.columns([3,1])
+        col1, col2 = st.columns([3, 1])
         col1.write("👤 " + m[0])
 
         if m[0] != "admin":
@@ -365,5 +378,5 @@ if admin:
                 conn.commit()
                 st.success("Membru șters!")
                 st.rerun()
-    initial_sidebar_state="expanded"
+
 )
