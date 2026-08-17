@@ -1,7 +1,6 @@
 import streamlit as st
 from datetime import datetime
 import requests
-import base64
 
 # 1. Configurare Pagină principală (MANDATORIU PRIMA LINIE)
 st.set_page_config(
@@ -12,14 +11,10 @@ st.set_page_config(
 )
 
 # ===== FUNDAL GITHUB =====
-url = "https://raw.githubusercontent.com/andreiwizz/PariuriGO/main/teren.jpg"
-img = requests.get(url).content
-b64 = base64.b64encode(img).decode()
-
-st.markdown(f"""
+st.markdown("""
 <style>
 .stApp{
-    background-image:url("data:image/jpg;base64,{b64}");
+    background-image:url("https://raw.githubusercontent.com/andreiwizz/PariuriGO/main/teren.jpg");
     background-size:cover;
     background-position:center;
     background-attachment:fixed;
@@ -33,8 +28,6 @@ st.markdown(f"""
 }
 </style>
 """, unsafe_allow_html=True)
-
-
 
 # Determinarea datei curente
 data_azi = datetime.now().strftime("%d.%m.%Y")
