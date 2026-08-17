@@ -406,68 +406,13 @@ else:
                     st.session_state.lista_membri[nume] = passw
                     st.success("Membru activat!")
                     st.rerun()
-            st.markdown('</div>', unsafe_allow_html=True)
-        with col_adm2:
-            st.markdown('<div class="admin-box">', unsafe_allow_html=True)
-            for user_nume in list(st.session_state.lista_membri.keys()):
-                c_u, c_b = st.columns([2.5, 1.5])
-                c_u.write(f"👤 Cont: {user_nume}")
-                if user_nume != "admin" and c_b.button("Șterge ❌", key=f"del_{user_nume}"):
-                    del st.session_state.lista_membri[user_nume]
-                    st.rerun()
-            st.markdown('</div>', unsafe_allow_html=True)
-        st.write("---")
-
-    # CREARE CONTEXT COLOANE APLICAȚIE (Se rulează curat în bloc liniar)
-    col_stinga, col_abonamente = st.columns([1.9, 1.1])
-
-    # RENDERING WIDGET LIVE SCOREBAT REAL-TIME (În coloana din Stânga)
-    with col_stinga:
-        st.markdown('<h3 style="color: #00ff66; font-weight:800; margin-bottom:15px;">📊 SCORURI LIVE & VIDEOCLIPURI SCOREBAT</h3>', unsafe_allow_html=True)
-        
-        # Widget-ul oficial ScoreBat API gratuit, complet integrat fără erori de blocare cross-origin
-        st.components.v1.html(
-            """
-            <div style="border: 2px solid rgba(0, 255, 102, 0.3); border-radius: 20px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.8); background: #111;">
-                <iframe 
-                    src="https://scorebat.com" 
-                    style="width: 100%; height: 750px; border: none; background: #111;"
-                    allow="autoplay; fullscreen"
-                    loading="lazy">
-                </iframe>
-            </div>
-            """,
-            height=770,
-            scrolling=False
-        )
-
-    # RENDERING ELEMENTE ÎN COLOANA DIN DREAPTA
-    with col_abonamente:
-        if not st.session_state.vip:
-            st.markdown("<div style='margin-top: 25px;'></div>", unsafe_allow_html=True)
               # ==============================================================================
-    # RENDERING ELEMENTE IN COLOANA DIN DREAPTA (ALINIAT PERFECT)
+    # BLOC FINAL CURAT - NU MAI ADĂUGA NIMIC SUB ACESTĂ LINIE
     # ==============================================================================
     with col_abonamente:
         if not st.session_state.vip:
             st.markdown("<div style='margin-top: 25px;'></div>", unsafe_allow_html=True)
-            if st.button("🔐 DEBLOCHEAZĂ PORTAL VIP", key="btn_trigger_fullscreen_final"):
-                st.session_state.ecran_login = True
-                st.rerun()
-        else:
-            st.markdown(f"""
-                <div class="vip-card-box border-low" style="text-align: center; border-color: #00ff66 !important; margin-top:25px;">
-                    <h4 style="color:#00ff66; margin:0; font-weight:800;">🟢 CONEXIUNE VALIDĂ</h4>
-                    <p style="color:#ffffff; margin:8px 0 0 0; font-size:16px;">Sesiune complet autorizată</p>
-                </div>
-            """, unsafe_allow_html=True)
-    # ==============================================================================
-    # COLOANA DREAPTA - BUTON UNIC DEBLOCARE (FĂRĂ DUPLICATE)
-    # ==============================================================================
-    with col_abonamente:
-        if not st.session_state.vip:
-            st.markdown("<div style='margin-top: 25px;'></div>", unsafe_allow_html=True)
-            if st.button("🔐 DEBLOCHEAZĂ PORTAL VIP", key="btn_portal_vip_final_unic"):
+            if st.button("🔐 DEBLOCHEAZĂ PORTAL VIP", key="btn_portal_vip_unic_si_final"):
                 st.session_state.ecran_login = True
                 st.rerun()
         else:
