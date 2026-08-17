@@ -300,3 +300,75 @@ if "vip" not in st.session_state:
 
 if "admin" not in st.session_state:
     st.session_state.admin = False
+st.write("---")
+# ================== LOGIN ==================
+with st.sidebar:
+
+    st.title("🔐 LOGIN")
+
+    utilizator = st.text_input("Utilizator")
+    parola = st.text_input("Parolă", type="password")
+
+    if st.button("Conectare"):
+
+        c.execute(
+            "SELECT * FROM membri WHERE user=? AND parola=?",
+            (utilizator, parola)
+        )
+
+        if c.fetchone():
+
+            st.session_state.vip = True
+
+            if utilizator == "admin":
+                st.session_state.admin = True
+
+            st.success("Conectat cu succes!")
+
+        else:
+            st.error("Date greșite!")
+
+vip = st.session_state.vip
+admin = st.session_state.admin
+# ================== ADMIN PANEL ==================
+
+if admin:
+
+    st.write("---")
+    st.header("🛠 ADMIN PANEL")
+
+    nume = st.text_input("Nume membru")
+    passw = st.text_input("Parolă membru")
+
+    if st.button("➕ Adaugă membru"):
+
+        c.execute(
+            "INSERT OR REPLACE INTO membri VALUES (?,?)",
+            (nume, passw)
+        )
+
+        conn.commit()
+        st.success("Membru adăugat!")
+
+    st.subheader("👥 Lista membrilor")
+
+    c.execute("SELECT user FROM membri")
+    membri = c.fetchall()
+
+    for m in membri:
+
+        col1, col2 = st.columns([3,1])
+
+        col1.write("👤 " + m[0])
+
+        if m[0] != "admin":
+
+            if col2.button("Șterge", key=m[0]):
+
+                c.execute(
+                    "DELETE FROM membri WHERE user=?",
+                    (m[0],)
+                )
+
+                conn.commit()
+                st.rerun()
