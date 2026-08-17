@@ -132,7 +132,7 @@ with col_abonamente:
         </div>
         """, unsafe_allow_html=True)
 # ==============================================================================
-# INITIALIZARE STATE SECURIZAT ȘI MEMBRI (DE LA LINIA 134)
+# INITIALIZARE STATE SECURIZAT ȘI MEMBRI (DE LA LINIA 134 V2)
 # ==============================================================================
 if "lista_membri" not in st.session_state:
     st.session_state.lista_membri = {"admin": "pariurigo"}
@@ -143,68 +143,120 @@ if "vip" not in st.session_state:
 if "admin" not in st.session_state:
     st.session_state.admin = False
 
+# Injectare stiluri de lux dedicate pentru Login și Admin (Laser animat + Neon)
+st.markdown("""
+<style>
+    @keyframes cyberScan {
+        0% { top: 0%; opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { top: 100%; opacity: 0; }
+    }
+
+    .luxury-login-card {
+        position: relative;
+        background: linear-gradient(135deg, rgba(4, 20, 10, 0.85) 0%, rgba(1, 8, 4, 0.95) 100%) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(0, 255, 102, 0.35) !important;
+        border-radius: 24px !important;
+        padding: 30px !important;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 255, 102, 0.05) !important;
+        overflow: hidden;
+        margin-bottom: 25px;
+    }
+
+    .luxury-login-card::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #00ff66, transparent);
+        box-shadow: 0 0 15px #00ff66, 0 0 30px #00ff66;
+        animation: cyberScan 4s infinite linear;
+    }
+
+    .security-badge {
+        background: rgba(0, 255, 102, 0.08);
+        border: 1px solid rgba(0, 255, 102, 0.3);
+        color: #00ff66;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        padding: 6px 14px;
+        border-radius: 30px;
+        display: inline-block;
+        margin-bottom: 15px;
+        text-shadow: 0 0 8px rgba(0, 255, 102, 0.4);
+    }
+</style>
+""", unsafe_allow_html=True)
+
 # ==============================================================================
-# INTERFAȚĂ LATERALĂ DE LUX - SIDEBAR LOGIN
+# SIDEBAR LOGIN - EDIȚIE DE LUX ANIMATĂ CIBERNETIC
 # ==============================================================================
 with st.sidebar:
     st.markdown("""
-        <div style='text-align: center; margin-bottom: 20px;'>
-            <h2 style='color: #00ff66; font-weight: 800; font-size: 26px; letter-spacing: 1px; text-shadow: 0 0 15px rgba(0,255,102,0.4); margin: 0;'>🔐 VIP ACCESS</h2>
-            <p style='color: #94a3b8; font-size: 13px; font-weight: 600; text-transform: uppercase; margin-top: 5px;'>PariuriGO Security Gate</p>
+        <div class="luxury-login-card" style="text-align: center;">
+            <div class="security-badge">🔴 SYSTEM SECURE GATE</div>
+            <h2 style='color: #ffffff; font-weight: 800; font-size: 28px; margin: 0 0 5px 0; letter-spacing:0.5px;'>VIP PORTAL</h2>
+            <p style='color: #64748b; font-size: 14px; font-weight: 600; margin-bottom: 25px;'>Introdu acreditările autorizate</p>
         </div>
     """, unsafe_allow_html=True)
     
-    utilizator = st.text_input("Nume Utilizator", placeholder="Introdu user-ul...", key="login_user")
-    parola = st.text_input("Parolă Securizată", placeholder="••••••••", type="password", key="login_pass")
+    utilizator = st.text_input("NUME UTILIZATOR", placeholder="User de acces...", key="login_user")
+    parola = st.text_input("PAROLĂ SECURIZATĂ", placeholder="••••••••", type="password", key="login_pass")
     
-    st.markdown("<div style='margin-top: 10px;'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='margin-top: 15px;'></div>", unsafe_allow_html=True)
     
-    if st.button("AUTENTIFICARE CONTROL 🚀", key="btn_execute_login"):
+    if st.button("CONECTARE SECURIZATĂ ⚡", key="btn_execute_login"):
         if utilizator in st.session_state.lista_membri and st.session_state.lista_membri[utilizator] == parola:
             st.session_state.vip = True
             if utilizator == "admin":
                 st.session_state.admin = True
-            st.success("⚡ Conexiune securizată stabilită!")
+            st.success("✔️ Autentificare reușită!")
             st.rerun()
         else:
-            st.error("❌ Date incorecte sau cont inactiv!")
+            st.error("❌ Acces respins. Date invalide.")
 
 # ==============================================================================
-# PANOU ADMINISTRATOR MATRIX EXECUTIVE (Apare doar pentru userul 'admin')
+# PANOU ADMINISTRATOR MATRIX EXECUTIVE
 # ==============================================================================
 if st.session_state.admin:
     st.write("---")
-    st.markdown("<h2 style='color: #00ff66; font-weight: 800; letter-spacing: 1px; text-shadow: 0 0 10px rgba(0,255,102,0.2);'>🛠 SYSTEM EXECUTIVE PANEL</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color: #00ff66; font-weight: 800; letter-spacing: 1px;'>🛠 CORE PLATFORM ADMINISTRATION</h2>", unsafe_allow_html=True)
     
     col_adm1, col_adm2 = st.columns(2)
     
     with col_adm1:
         st.markdown('<div class="admin-box">', unsafe_allow_html=True)
-        st.markdown("<h4 style='color: #ffffff; margin-top:0; font-weight:800; border-bottom: 1px solid rgba(0,255,102,0.15); padding-bottom: 8px;'>➕ CREARE CONT CLIENT</h4>", unsafe_allow_html=True)
-        nume = st.text_input("Setează Utilizator:", placeholder="Ex: costel12", key="add_user_input")
-        passw = st.text_input("Setează Parolă:", placeholder="Ex: pass1234", type="password", key="add_pass_input")
+        st.markdown("<h4 style='color: #ffffff; margin-top:0; font-weight:800; border-bottom: 1px solid rgba(0,255,102,0.15); padding-bottom: 8px;'>➕ ÎNREGISTRARE CLIENT NOU</h4>", unsafe_allow_html=True)
+        nume = st.text_input("Nume Utilizator:", placeholder="Ex: marian_vip", key="add_user_input")
+        passw = st.text_input("Parolă:", placeholder="Parolă cont...", type="password", key="add_pass_input")
         
         st.markdown("<div style='margin-top: 15px;'></div>", unsafe_allow_html=True)
-        if st.button("PROMOVEAZĂ MEMBRU VIP 💎", key="btn_add_member"):
+        if st.button("ACORDĂ PRIVILEGII VIP 💎", key="btn_add_member"):
             if nume and passw:
                 st.session_state.lista_membri[nume] = passw
-                st.success(f"✔️ Utilizatorul '{nume}' are acum acces complet!")
+                st.success(f"✔️ Utilizatorul '{nume}' a fost activat!")
                 st.rerun()
         st.markdown('</div>', unsafe_allow_html=True)
                 
     with col_adm2:
         st.markdown('<div class="admin-box">', unsafe_allow_html=True)
-        st.markdown("<h4 style='color: #ffffff; margin-top:0; font-weight:800; border-bottom: 1px solid rgba(255,0,85,0.15); padding-bottom: 8px;'>👥 MANAGEMENT BAZĂ DATE</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color: #ffffff; margin-top:0; font-weight:800; border-bottom: 1px solid rgba(255,0,85,0.15); padding-bottom: 8px;'>👥 CONTROL ACCES MEMBRI</h4>", unsafe_allow_html=True)
         
         for user_nume in list(st.session_state.lista_membri.keys()):
             c_u, c_b = st.columns([2.5, 1.5])
-            c_u.markdown(f"<p style='margin: 14px 0 0 0; color:#ffffff; font-size:16px;'>👤 Status active: <b style='color:#00ff66;'>{user_nume}</b></p>", unsafe_allow_html=True)
+            c_u.markdown(f"<p style='margin: 14px 0 0 0; color:#ffffff; font-size:16px;'>👤 Membru: <b style='color:#00ff66;'>{user_nume}</b></p>", unsafe_allow_html=True)
             
             if user_nume != "admin":
                 st.markdown("<div style='margin-top: 5px;'></div>", unsafe_allow_html=True)
                 if c_b.button("REVOCĂ ACCES ❌", key=f"del_{user_nume}"):
                     del st.session_state.lista_membri[user_nume]
-                    st.success("Acces revocat!")
+                    st.success("Eliminat!")
                     st.rerun()
         st.markdown('</div>', unsafe_allow_html=True)
     st.write("---")
