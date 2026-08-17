@@ -132,7 +132,7 @@ st.write("---")
 if "lista_membri" not in st.session_state:
     st.session_state.lista_membri = {"admin": "pariurigo"}
 # ==============================================================================
-# 4. INITIALIZARE STĂRI SECURIZATE ȘI LIVE DATA (REPARAT GLOW COMPLET)
+# 4. INITIALIZARE STĂRI SECURIZATE ȘI LIVE DATA (REPARAT SINTAXĂ COMPLET)
 # ==============================================================================
 if "lista_membri" not in st.session_state:
     st.session_state.lista_membri = {"admin": "pariurigo"}
@@ -170,7 +170,7 @@ for i, p in enumerate(partide):
 # 5. LOGICĂ RENDERING INTERFAȚĂ DINAMICĂ
 # ==============================================================================
 if st.session_state.ecran_login and not st.session_state.vip:
-    st.markdown('<div class="full-screen-login-card" style="text-align: center;"><div style="background:rgba(0,255,102,0.1); border:1px solid #00ff66; color:#00ff66; font-size:12px; font-weight:800; padding:6px 16px; border-radius:30px; display:inline-block; margin-bottom:20px;">[SECURE PORTAL ACTIVE]</div><h1 style="color: #ffffff; font-weight: 800; font-size: 36px; margin: 0 0 10px 0;">VIP PORTAL</h1><p style='color: #94a3b8; font-size: 15px;'>Sistemul necesita autorizare oficiala pentru deblocarea datelor.</p></div>', unsafe_allow_html=True)
+    st.markdown('<div class="full-screen-login-card" style="text-align: center;"><div style="background:rgba(0,255,102,0.1); border:1px solid #00ff66; color:#00ff66; font-size:12px; font-weight:800; padding:6px 16px; border-radius:30px; display:inline-block; margin-bottom:20px;">[SECURE PORTAL ACTIVE]</div><h1 style="color: #ffffff; font-weight: 800; font-size: 36px; margin: 0 0 10px 0;">VIP PORTAL</h1><p style="color: #94a3b8; font-size: 15px;">Sistemul necesita autorizare oficiala pentru deblocarea datelor.</p></div>', unsafe_allow_html=True)
     
     col_c1, col_c2, col_c3 = st.columns([1, 1.2, 1])
     with col_c2:
@@ -256,3 +256,4 @@ else:
             st.markdown('<div class="vip-card-box" style="text-align: center; border: 1px solid #00ff66 !important; margin-top:25px;"><h4 style="color:#00ff66; margin:0; font-weight:800;">CONEXIUNE SECURIZATA</h4><p style="color:#ffffff; margin:8px 0 0 0; font-size:16px;">Sesiune complet autorizata in sistem</p></div>', unsafe_allow_html=True)
 
 st.markdown("<br><p style='text-align: center; color: #475569; font-size: 14px; font-weight:600;'>&copy; 2026 PariuriGO World Live Center. Toate drepturile rezervate. Pariază responsabil.</p>", unsafe_allow_html=True)
+)
