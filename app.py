@@ -445,7 +445,7 @@ else:
     with col_abonamente:
         if not st.session_state.vip:
             st.markdown("<div style='margin-top: 25px;'></div>", unsafe_allow_html=True)
-            if st.button("🔐 DEBLOCHEAZĂ PORTAL VIP", key="btn_trigger_fullscreen"):
+           if st.button("🔐 DEBLOCHEAZĂ PORTAL VIP", key="btn_trigger_fullscreen_nou"):
                 st.session_state.ecran_login = True
                 st.rerun()
         else:
