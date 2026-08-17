@@ -261,3 +261,63 @@ else:
                     st.rerun()
             st.markdown('</div>', unsafe_allow_html=True)
         st.write("---")
+        # 3. PREDICTOR DINAMIC CU LINII ȘI PROCENTE NEON
+        st.write("---")
+        st.markdown('<h3 style="color: #00ff66; margin-bottom:15px;">📊 PROCENTE ANALIZĂ ALGORITM INTELIGENT</h3>', unsafe_allow_html=True)
+        meci_ales_real = st.selectbox("🎯 Selecteaza meciul de azi pentru detalii procentuale:", partide_reale_zi, key="sel_meci_real_final_v11")
+        mr = meciuri_analiza_zi[meci_ales_real]
+
+        html_curat = '<div class="pricing-card-lux pricing-border-low">'
+        html_curat += '<h4 style="color:#00ff66; margin:0; font-weight:800; letter-spacing:1px;">SISTEM PARIURIGO • DETALII LIVE</h4>'
+        html_curat += '<h2 style="margin:8px 0 5px 0; font-size:30px; color:#ffffff;">' + meci_ales_real + '</h2>'
+        html_curat += '<p style="color:#94a3b8; font-size:14px; text-transform:uppercase; margin-bottom:25px;">🏆 ' + mr['liga'] + ' • ' + data_azi + '</p>'
+        
+        html_curat += '<table style="width:100%; text-align:center; margin:20px 0; border-collapse:collapse; color:#fff;"><tr>'
+        html_curat += '<td style="background:rgba(255,255,255,0.03); padding:12px; border-radius:10px; width:33%;"><div style="font-size:24px; font-weight:800; color:#00ff66;">' + mr['g_gz'] + '</div><div style="font-size:11px; color:#94a3b8; text-transform:uppercase;">Goluri Gazde</div></td>'
+        html_curat += '<td style="background:rgba(255,255,255,0.03); padding:12px; border-radius:10px; width:33%;"><div style="font-size:24px; font-weight:800; color:#ffffff;">' + mr['med_gz'] + ' : ' + mr['med_os'] + '</div><div style="font-size:11px; color:#94a3b8; text-transform:uppercase;">Medie Goluri</div></td>'
+        html_curat += '<td style="background:rgba(255,255,255,0.03); padding:12px; border-radius:10px; width:33%;"><div style="font-size:24px; font-weight:800; color:#00ff66;">' + mr['g_os'] + '</div><div style="font-size:11px; color:#94a3b8; text-transform:uppercase;">Goluri Oaspeți</div></td>'
+        html_curat += '</tr><tr style="height:10px;"></tr><tr>'
+        html_curat += '<td style="background:rgba(255,255,255,0.03); padding:12px; border-radius:10px;"><div style="font-size:24px; font-weight:800; color:#00ff66;">' + mr['gp_gz'] + '</div><div style="font-size:11px; color:#94a3b8; text-transform:uppercase;">Primite Gz</div></td>'
+        html_curat += '<td style="background:rgba(255,255,255,0.03); padding:12px; border-radius:10px;"><div style="font-size:24px; font-weight:800; color:#475569;">VS</div><div style="font-size:11px; color:#94a3b8; text-transform:uppercase;">Status</div></td>'
+        html_curat += '<td style="background:rgba(255,255,255,0.03); padding:12px; border-radius:10px;"><div style="font-size:24px; font-weight:800; color:#00ff66;">' + mr['gp_os'] + '</div><div style="font-size:11px; color:#94a3b8; text-transform:uppercase;">Primite Os</div></td>'
+        html_curat += '</tr></table>'
+        
+        html_curat += '<h4 style="color:#ffffff; margin-top:25px; font-weight:800;">📋 Probabilitati Evenimente (HT/ST):</h4>'
+        html_curat += '<div style="display:flex; background:rgba(0,255,102,0.02); border-left:4px solid #00ff66; padding:10px 14px; margin:8px 0;"><span>Peste 0.5 HT (Prima Repriza)</span><span style="background:#00ff66; color:#000; font-weight:800; padding:2px 10px; border-radius:5px; margin-left:auto;">' + mr['ht_gz'] + '</span></div>'
+        html_curat += '<div style="display:flex; background:rgba(0,255,102,0.02); border-left:4px solid #00ff66; padding:10px 14px; margin:8px 0;"><span>Peste 0.5 ST (A doua Repriza)</span><span style="background:#00ff66; color:#000; font-weight:800; padding:2px 10px; border-radius:5px; margin-left:auto;">' + mr['st_gz'] + '</span></div>'
+        html_curat += '<div style="display:flex; background:rgba(0,255,102,0.02); border-left:4px solid #00ff66; padding:10px 14px; margin:8px 0;"><span>Peste 1.5 Goluri Finale</span><span style="background:#00ff66; color:#000; font-weight:800; padding:2px 10px; border-radius:5px; margin-left:auto;">' + mr['p15_gz'] + '</span></div>'
+        html_curat += '<div style="display:flex; background:rgba(0,255,102,0.02); border-left:4px solid #00ff66; padding:10px 14px; margin:8px 0;"><span>Peste 2.5 Goluri Finale</span><span style="background:#00ff66; color:#000; font-weight:800; padding:2px 10px; border-radius:5px; margin-left:auto;">' + mr['p25_gz'] + '</span></div>'
+        html_curat += '<div style="display:flex; background:rgba(0,255,102,0.02); border-left:4px solid #00ff66; padding:10px 14px; margin:8px 0;"><span>Ambele echipe marcheaza (GG)</span><span style="background:#00ff66; color:#000; font-weight:800; padding:2px 10px; border-radius:5px; margin-left:auto;">' + mr['gg_gz'] + '</span></div>'
+        
+        html_curat += '<h4 style="color:#ffffff; margin-top:25px; font-weight:800;">📈 Bare Evolutie Forta Algoritm:</h4>'
+        html_curat += '<div style="margin: 12px 0;"><div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:4px;"><span>🔥 Probabilitate Peste 1.5 Goluri</span><span>' + mr['w_p15'] + '</span></div><div style="width:100%; background:rgba(255,255,255,0.06); border-radius:20px; height:12px; overflow:hidden;"><div style="height:100%; background:#00ff66; width:' + mr['w_p15'] + '; border-radius:20px;"></div></div></div>'
+        html_curat += '<div style="margin: 12px 0;"><div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:4px;"><span>🔥 Probabilitate Peste 2.5 Goluri</span><span>' + mr['w_p25'] + '</span></div><div style="width:100%; background:rgba(255,255,255,0.06); border-radius:20px; height:12px; overflow:hidden;"><div style="height:100%; background:#00ff66; width:' + mr['w_p25'] + '; border-radius:20px;"></div></div></div>'
+        html_curat += '<div style="margin: 12px 0;"><div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:4px;"><span>⚡ Sanse Gol in Prima Repriza (R1)</span><span>' + mr['w_p05r1'] + '</span></div><div style="width:100%; background:rgba(255,255,255,0.06); border-radius:20px; height:12px; overflow:hidden;"><div style="height:100%; background:#00ff66; width:' + mr['w_p05r1'] + '; border-radius:20px;"></div></div></div>'
+        html_curat += '<div style="margin: 12px 0;"><div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:4px;"><span>⚡ Sanse Ambele Marcheaza (GG)</span><span>' + mr['w_gg'] + '</span></div><div style="width:100%; background:rgba(255,255,255,0.06); border-radius:20px; height:12px; overflow:hidden;"><div style="height:100%; background:#00ff66; width:' + mr['w_gg'] + '; border-radius:20px;"></div></div></div>'
+        html_curat += '</div>'
+        st.markdown(html_curat, unsafe_allow_html=True)
+
+    # ==============================================================================
+    # COLOANA DREAPTĂ: SELECTIE PACHETE VIP
+    # ==============================================================================
+    with col_abonamente:
+        if not st.session_state.vip:
+            st.markdown("<div style='margin-top: 15px;'></div>", unsafe_allow_html=True)
+            pachet_selectat = st.selectbox("ABONAMENTE VIP DISPONIBILE:", ["PACHET LOW", "PACHET MEDIUM", "HIGH VIP ELITE"], key="selector_preturi_final_v11")
+            link_stripe = "https://stripe.com"
+
+            if pachet_selectat == "PACHET LOW":
+                st.markdown(f'<div class="pricing-card-lux pricing-border-low"><h4 style="color:#00ff66; margin:0;">PACHET LOW</h4><h2 style="margin:10px 0 20px 0; font-size:32px;">40 RON <span style="font-size:14px; color:#94a3b8; font-weight:600;">/ luna</span></h2><p>✅ 3 Bilete complet analizate pe saptamana</p><p>✅ Selectie exclusiva din ligile mari europene</p><a class="stripe-luxury-btn stripe-low-med" href="{link_stripe}" target="_blank">CUMPARA ACCES LOW</a></div>', unsafe_allow_html=True)
+            elif pachet_selectat == "PACHET MEDIUM":
+                st.markdown(f'<div class="pricing-card-lux pricing-border-medium"><h4 style="color:#ffcc00; margin:0;">PACHET MEDIUM</h4><h2 style="margin:10px 0 20px 0; font-size:32px;">70 RON <span style="font-size:14px; color:#94a3b8; font-weight:600;">/ luna</span></h2><p>✅ 1 Bilet Premium in fiecare zi calendaristica</p><p>✅ Algoritm avansat pentru probabilitati live</p><a class="stripe-luxury-btn stripe-low-med" href="{link_stripe}" target="_blank">CUMPARA ACCES MEDIUM</a></div>', unsafe_allow_html=True)
+            elif pachet_selectat == "HIGH VIP ELITE":
+                st.markdown(f'<div class="pricing-card-lux pricing-border-high"><h4 style="color:#ff0055; margin:0;">HIGH VIP ELITE</h4><h2 style="margin:10px 0 20px 0; font-size:32px;">120 RON <span style="font-size:14px; color:#94a3b8; font-weight:600;">/ luna</span></h2><p>✅ Cota 2 VIP zilnica + Proiect Dublare</p><p>✅ Monitorizare live non-stop pe sisteme</p><a class="stripe-luxury-btn stripe-high" href="{link_stripe}" target="_blank">DEBLOCHEAZA ACCES HIGH</a></div>', unsafe_allow_html=True)
+
+            st.markdown("<div style='margin-top: 25px; text-align:center;'>", unsafe_allow_html=True)
+            if st.button("ACCESEAZA CONT DETINUT", key="btn_trigger_final_secure_v11"):
+                st.session_state.ecran_login = True
+                st.rerun()
+        else:
+            st.markdown('<div class="vip-card-box" style="text-align: center; border: 1px solid #00ff66 !important; margin-top:25px;"><h4 style="color:#00ff66; margin:0; font-weight:800;">CONEXIUNE SECURIZATA</h4><p style="color:#ffffff; margin:8px 0 0 0; font-size:16px;">Sesiune complet autorizata in sistem</p></div>', unsafe_allow_html=True)
+
+st.markdown("<br><p style='text-align: center; color: #475569; font-size: 14px; font-weight:600;'>&copy; 2026 PariuriGO World Live Center. Toate drepturile rezervate. Pariază responsabil.</p>", unsafe_allow_html=True)
