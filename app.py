@@ -1,3 +1,33 @@
+import sqlite3
+import requests
+
+# ===== VIP MEMBERS =====
+conn = sqlite3.connect("members.db", check_same_thread=False)
+c = conn.cursor()
+c.execute("CREATE TABLE IF NOT EXISTS members(username TEXT PRIMARY KEY,password TEXT)")
+conn.commit()
+
+def adauga_membru(u,p):
+    c.execute("INSERT OR REPLACE INTO members VALUES(?,?)",(u,p))
+    conn.commit()
+
+# ADAUGĂ AICI MEMBRII TĂI
+adauga_membru("andrei","1234")
+adauga_membru("vip1","9999")
+
+API_KEY = "PUNE_CHEIA_TA_API_FOOTBALL"
+HEADERS={"x-apisports-key":API_KEY}
+
+def meciuri_live():
+    try:
+        r=requests.get("https://v3.football.api-sports.io/fixtures?live=all",headers=HEADERS,timeout=10)
+        if r.status_code!=200:
+            return []
+        return r.json()["response"]
+    except:
+        return []
+
+
 import streamlit as st
 from datetime import datetime
 
@@ -281,7 +311,7 @@ with col_abonamente:
         st.markdown(f'<p class="vip-price">{pachet["pret"]}</p>', unsafe_allow_html=True)
         for beneficiu in pachet["beneficii"]:
             st.markdown(f'<p class="vip-feature">✔️ {beneficiu}</p>', unsafe_allow_html=True)
-        st.link_button("📲 Alătură-te pe Telegram", pachet["link_telegram"])
+        
         st.link_button("💳 Plătește cu Card (Stripe)", pachet["link_stripe"])
         st.markdown('</div>', unsafe_allow_html=True)
 
