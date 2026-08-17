@@ -378,4 +378,3 @@ if admin:
                 conn.commit()
                 st.success("Membru șters!")
                 st.rerun()
-)
