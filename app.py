@@ -211,3 +211,53 @@ for i, partida in enumerate(partide_reale_zi):
         "w_p15": f"{82 + (hash_meci % 10)}%", "w_p25": f"{55 + (i * 5) % 20}%", 
         "w_p05r1": f"{65 + (hash_meci % 15)}%", "w_gg": f"{52 + (hash_meci % 25)}%"
     }
+# ==============================================================================
+# 5. CONTROL RENDERARE INTERFAȚĂ DINAMICĂ (LOGIN VS PLATFORMĂ)
+# ==============================================================================
+if st.session_state.ecran_login and not st.session_state.vip:
+    st.markdown('<div class="full-screen-login-card" style="text-align: center;"><div style="background:rgba(0,255,102,0.1); border:1px solid #00ff66; color:#00ff66; font-size:12px; font-weight:800; padding:6px 16px; border-radius:30px; display:inline-block; margin-bottom:20px;">[SECURE PORTAL ACTIVE]</div><h1 style="color: #ffffff; font-weight: 800; font-size: 36px; margin: 0 0 10px 0;">VIP PORTAL</h1><p style="color: #94a3b8; font-size: 15px;">Sistemul necesita autorizare oficiala pentru deblocarea datelor.</p></div>', unsafe_allow_html=True)
+    
+    col_c1, col_c2, col_c3 = st.columns([1, 1.2, 1])
+    with col_c2:
+        utilizator = st.text_input("NUME UTILIZATOR", placeholder="User de acces...", key="lux_user_final_matrix")
+        parola = st.text_input("PAROLA SECURIZATA", placeholder="••••••••", type="password", key="lux_pass_final_matrix")
+        st.markdown("<div style='margin-top: 15px;'></div>", unsafe_allow_html=True)
+        c_b1, c_b2 = st.columns(2)
+        if c_b1.button("CONECTARE", key="btn_lux_submit_final_matrix"):
+            if utilizator in st.session_state.lista_membri and st.session_state.lista_membri[utilizator] == parola:
+                st.session_state.vip = True
+                st.session_state.ecran_login = False
+                if utilizator == "admin":
+                    st.session_state.admin = True
+                st.success("Acces Permis!")
+                st.rerun()
+            else:
+                st.error("Date invalide!")
+        if c_b2.button("INAPOI", key="btn_lux_back_final_matrix"):
+            st.session_state.ecran_login = False
+            st.rerun()
+
+else:
+    if st.session_state.admin:
+        st.markdown("<h3>🛠 PANOU ADMINISTRATOR</h3>", unsafe_allow_html=True)
+        col_adm1, col_adm2 = st.columns(2)
+        with col_adm1:
+            st.markdown('<div class="admin-box">', unsafe_allow_html=True)
+            nume = st.text_input("Nume Utilizator nou:", key="add_user_input")
+            passw = st.text_input("Parola noua:", type="password", key="add_pass_input")
+            if st.button("ACORDA PRIVILEGII VIP", key="btn_add_member"):
+                if nume and passw:
+                    st.session_state.lista_membri[nume] = passw
+                    st.success("Membru activat!")
+                    st.rerun()
+            st.markdown('</div>', unsafe_allow_html=True)
+        with col_adm2:
+            st.markdown('<div class="admin-box">', unsafe_allow_html=True)
+            for user_nume in list(st.session_state.lista_membri.keys()):
+                c_u, c_b = st.columns([2.5, 1.5])
+                c_u.write(f"👤 Cont: {user_nume}")
+                if user_nume != "admin" and c_b.button("Sterge", key=f"del_{user_nume}"):
+                    del st.session_state.lista_membri[user_nume]
+                    st.rerun()
+            st.markdown('</div>', unsafe_allow_html=True)
+        st.write("---")
