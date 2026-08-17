@@ -461,3 +461,19 @@ else:
                     <p style="color:#ffffff; margin:8px 0 0 0; font-size:16px;">Sesiune complet autorizată</p>
                 </div>
             """, unsafe_allow_html=True)
+    # ==============================================================================
+    # COLOANA DREAPTA - BUTON UNIC DEBLOCARE (FĂRĂ DUPLICATE)
+    # ==============================================================================
+    with col_abonamente:
+        if not st.session_state.vip:
+            st.markdown("<div style='margin-top: 25px;'></div>", unsafe_allow_html=True)
+            if st.button("🔐 DEBLOCHEAZĂ PORTAL VIP", key="btn_portal_vip_final_unic"):
+                st.session_state.ecran_login = True
+                st.rerun()
+        else:
+            st.markdown(f"""
+                <div class="vip-card-box border-low" style="text-align: center; border-color: #00ff66 !important; margin-top:25px;">
+                    <h4 style="color:#00ff66; margin:0; font-weight:800;">🟢 CONEXIUNE VALIDĂ</h4>
+                    <p style="color:#ffffff; margin:8px 0 0 0; font-size:16px;">Sesiune complet autorizată</p>
+                </div>
+            """, unsafe_allow_html=True)
