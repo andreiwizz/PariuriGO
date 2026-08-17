@@ -294,3 +294,164 @@ else:
 
 # ==============================================================================
 col_stinga, col_abonamente = st.columns([1.8, 1.2])
+# ==============================================================================
+# INITIALIZARE STĂRI ȘI MEMBRI (DE LA LINIA 134 V4 - FIX SCOREBAT INTEGRAL)
+# ==============================================================================
+if "lista_membri" not in st.session_state:
+    st.session_state.lista_membri = {"admin": "pariurigo"}
+
+if "vip" not in st.session_state:
+    st.session_state.vip = False
+
+if "admin" not in st.session_state:
+    st.session_state.admin = False
+
+if "ecran_login" not in st.session_state:
+    st.session_state.ecran_login = False
+
+# Injectare stiluri CSS exclusive (Scanners, Grid și Bare Progres)
+st.markdown("""
+<style>
+    @keyframes cyberScan {
+        0% { top: 0%; opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { top: 100%; opacity: 0; }
+    }
+
+    .full-screen-login-card {
+        position: relative;
+        background: linear-gradient(135deg, rgba(6, 26, 14, 0.9) 0%, rgba(2, 12, 6, 0.98) 100%) !important;
+        backdrop-filter: blur(25px) !important;
+        border: 2px solid rgba(0, 255, 102, 0.4) !important;
+        border-radius: 24px !important;
+        padding: 45px !important;
+        max-width: 500px;
+        margin: 60px auto !important;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 255, 102, 0.1) !important;
+        overflow: hidden;
+    }
+
+    .full-screen-login-card::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, transparent, #00ff66, transparent);
+        box-shadow: 0 0 20px #00ff66, 0 0 40px #00ff66;
+        animation: cyberScan 3.5s infinite linear;
+    }
+
+    .status-badge-secure {
+        background: rgba(0, 255, 102, 0.1);
+        border: 1px solid #00ff66;
+        color: #00ff66;
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        padding: 6px 16px;
+        border-radius: 30px;
+        display: inline-block;
+        margin-bottom: 20px;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# ==============================================================================
+# LOGICĂ RENDERING INTERFAȚĂ DINAMICĂ
+# ==============================================================================
+if st.session_state.ecran_login and not st.session_state.vip:
+    # A. ECRAN LOGIN FULL-SCREEN
+    st.markdown("""
+        <div class="full-screen-login-card" style="text-align: center;">
+            <div class="status-badge-secure">🔒 SECURE ENCRYPTION ACTIVE</div>
+            <h1 style='color: #ffffff; font-weight: 800; font-size: 36px; margin: 0 0 10px 0;'>VIP PORTAL</h1>
+            <p style='color: #94a3b8; font-size: 15px;'>Sistemul necesită autorizare oficială pentru deblocarea datelor.</p>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    col_c1, col_c2, col_c3 = st.columns([1, 1.2, 1])
+    with col_c2:
+        utilizator = st.text_input("NUME UTILIZATOR", placeholder="User de acces...", key="lux_user")
+        parola = st.text_input("PAROLĂ SECURIZATĂ", placeholder="••••••••", type="password", key="lux_pass")
+        st.markdown("<div style='margin-top: 15px;'></div>", unsafe_allow_html=True)
+        c_b1, c_b2 = st.columns(2)
+        if c_b1.button("CONECTARE ⚡", key="btn_lux_submit"):
+            if utilizator in st.session_state.lista_membri and st.session_state.lista_membri[utilizator] == parola:
+                st.session_state.vip = True
+                st.session_state.ecran_login = False
+                if utilizator == "admin":
+                    st.session_state.admin = True
+                st.success("Acces Permis!")
+                st.rerun()
+            else:
+                st.error("Date invalide!")
+        if c_b2.button("ÎNAPOI ↩️", key="btn_lux_back"):
+            st.session_state.ecran_login = False
+            st.rerun()
+
+else:
+    # B. RENDERING PLATFORMĂ NORMALĂ
+    if st.session_state.admin:
+        st.markdown("<h2 style='color: #00ff66; font-weight: 800;'>🛠 PANOU ADMINISTRATOR</h2>", unsafe_allow_html=True)
+        col_adm1, col_adm2 = st.columns(2)
+        with col_adm1:
+            st.markdown('<div class="admin-box">', unsafe_allow_html=True)
+            nume = st.text_input("Nume Utilizator nou:", key="add_user_input")
+            passw = st.text_input("Parolă nouă:", type="password", key="add_pass_input")
+            if st.button("ACORDĂ PRIVILEGII VIP 💎", key="btn_add_member"):
+                if nume and passw:
+                    st.session_state.lista_membri[nume] = passw
+                    st.success("Membru activat!")
+                    st.rerun()
+            st.markdown('</div>', unsafe_allow_html=True)
+        with col_adm2:
+            st.markdown('<div class="admin-box">', unsafe_allow_html=True)
+            for user_nume in list(st.session_state.lista_membri.keys()):
+                c_u, c_b = st.columns([2.5, 1.5])
+                c_u.write(f"👤 Cont: {user_nume}")
+                if user_nume != "admin" and c_b.button("Șterge ❌", key=f"del_{user_nume}"):
+                    del st.session_state.lista_membri[user_nume]
+                    st.rerun()
+            st.markdown('</div>', unsafe_allow_html=True)
+        st.write("---")
+
+    # CREARE CONTEXT COLOANE APLICAȚIE (Se rulează curat în bloc liniar)
+    col_stinga, col_abonamente = st.columns([1.9, 1.1])
+
+    # RENDERING WIDGET LIVE SCOREBAT REAL-TIME (În coloana din Stânga)
+    with col_stinga:
+        st.markdown('<h3 style="color: #00ff66; font-weight:800; margin-bottom:15px;">📊 SCORURI LIVE & VIDEOCLIPURI SCOREBAT</h3>', unsafe_allow_html=True)
+        
+        # Widget-ul oficial ScoreBat API gratuit, complet integrat fără erori de blocare cross-origin
+        st.components.v1.html(
+            """
+            <div style="border: 2px solid rgba(0, 255, 102, 0.3); border-radius: 20px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.8); background: #111;">
+                <iframe 
+                    src="https://scorebat.com" 
+                    style="width: 100%; height: 750px; border: none; background: #111;"
+                    allow="autoplay; fullscreen"
+                    loading="lazy">
+                </iframe>
+            </div>
+            """,
+            height=770,
+            scrolling=False
+        )
+
+    # RENDERING ELEMENTE ÎN COLOANA DIN DREAPTA
+    with col_abonamente:
+        if not st.session_state.vip:
+            st.markdown("<div style='margin-top: 25px;'></div>", unsafe_allow_html=True)
+            if st.button("🔐 DEBLOCHEAZĂ PORTAL VIP", key="btn_trigger_fullscreen"):
+                st.session_state.ecran_login = True
+                st.rerun()
+        else:
+            st.markdown(f"""
+                <div class="vip-card-box border-low" style="text-align: center; border-color: #00ff66 !important; margin-top:25px;">
+                    <h4 style="color:#00ff66; margin:0; font-weight:800;">🟢 CONEXIUNE VALIDĂ</h4>
+                    <p style="color:#ffffff; margin:8px 0 0 0; font-size:16px;">Sesiune complet autorizată</p>
+                </div>
+            """, unsafe_allow_html=True)
