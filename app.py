@@ -369,6 +369,11 @@ if admin:
                     "DELETE FROM membri WHERE user=?",
                     (m[0],)
                 )
-
+st.set_page_config(
+    page_title="PariuriGO World Live Center",
+    page_icon="⚽",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
                 conn.commit()
                 st.rerun()
