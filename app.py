@@ -297,7 +297,6 @@ col_stinga, col_abonamente = st.columns([1.8, 1.2])
     # ==============================================================================
     # PLATFORMĂ REALĂ FLASHSCORE ÎN TIMP REAL (ALINIATĂ PERFECT PENTRU BLOCUL ELSE)
     # ==============================================================================
-    with col_stinga:
         st.markdown('<h3 style="color: #00ff66; font-weight:800; margin-bottom:15px;">📊 PLATFORMĂ LIVE FLASHSCORE PRO</h3>', unsafe_allow_html=True)
         
         st.components.v1.html(
