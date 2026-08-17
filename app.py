@@ -294,5 +294,26 @@ else:
 
 # ==============================================================================
 col_stinga, col_abonamente = st.columns([1.8, 1.2])
+    # ==============================================================================
+    # PLATFORMA REALĂ FLASHSCORE ÎN TIMP REAL (VERSIUNE INTEGRABILĂ MULTI-LIVE)
+    # ==============================================================================
+    with col_stinga:
+        st.markdown('<h3 style="color: #00ff66; font-weight:800; margin-bottom:15px;">📊 PLATFORMĂ LIVE FLASHSCORE PRO</h3>', unsafe_allow_html=True)
+        
+        # Includerea containerului sandbox securizat pentru încărcarea widgetului de scoruri live
+        st.components.v1.html(
+            """
+            <div style="border: 2px solid rgba(0, 255, 102, 0.3); border-radius: 20px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.8); background: #141414;">
+                <iframe 
+                    src="https://flashscore.ro" 
+                    style="width: 100%; height: 780px; border: none; background: #141414;"
+                    sandbox="allow-scripts allow-same-origin allow-forms"
+                    loading="lazy">
+                </iframe>
+            </div>
+            """,
+            height=800,
+            scrolling=False
+        )
 
 
