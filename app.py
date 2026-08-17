@@ -131,7 +131,7 @@ with col_abonamente:
             <a class="stripe-btn btn-red" href="{link_stripe}" target="_blank">DEBLOCHEAZĂ ACCES HIGH 🔥</a>
         </div>
         """, unsafe_allow_html=True)
-#python# ==============================================================================
+# ==============================================================================
 # INITIALIZARE STATE SECURIZAT ȘI MEMBRI
 # ==============================================================================
 if "lista_membri" not in st.session_state:
@@ -144,10 +144,10 @@ if "admin" not in st.session_state:
     st.session_state.admin = False
 
 # ==============================================================================
-# PANOU CONTROL LATERAL (SIDEBAR LOGIN)
+# SIDEBAR LOGIN ACCES
 # ==============================================================================
 with st.sidebar:
-    st.title("🔐 LOGIN ACCES")
+    st.markdown("<h2 style='color: #00ff66; margin-top:0;'>🔐 LOGIN ACCES</h2>", unsafe_allow_html=True)
     utilizator = st.text_input("Utilizator", key="login_user")
     parola = st.text_input("Parolă", type="password", key="login_pass")
 
@@ -162,30 +162,37 @@ with st.sidebar:
             st.error("Date de identificare incorecte!")
 
 # ==============================================================================
-# INTERFAȚĂ MANAGING ADMIN PANEL (Apare doar dacă te loghezi cu contul 'admin')
+# PANOU ADMINISTRATOR (Apare doar pentru userul 'admin')
 # ==============================================================================
 if st.session_state.admin:
     st.write("---")
-    st.header("🛠 ADMIN PANEL")
+    st.markdown("<h2 style='color: #00ff66; font-weight: 800;'>🛠 PANOU ADMINISTRATOR</h2>", unsafe_allow_html=True)
     
     col_adm1, col_adm2 = st.columns(2)
+    
     with col_adm1:
-        nume = st.text_input("Nume membru nou")
-        passw = st.text_input("Parolă membru nou")
-        if st.button("➕ Adaugă membru"):
+        st.markdown('<div class="admin-box">', unsafe_allow_html=True)
+        st.markdown("<h4 style='color: #ffffff; margin-top:0;'>➕ Înregistrare Membru Nou</h4>", unsafe_allow_html=True)
+        nume = st.text_input("Utilizator nou:", key="add_user_input")
+        passw = st.text_input("Parolă nouă:", type="password", key="add_pass_input")
+        if st.button("Salvează în bază", key="btn_add_member"):
             if nume and passw:
                 st.session_state.lista_membri[nume] = passw
-                st.success(f"Membru {nume} adăugat!")
+                st.success(f"✔️ Membrul '{nume}' a fost adăugat!")
                 st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
                 
     with col_adm2:
-        st.subheader("👥 Utilizatori Activi")
+        st.markdown('<div class="admin-box">', unsafe_allow_html=True)
+        st.markdown("<h4 style='color: #ffffff; margin-top:0;'>👥 Listă Membri Activi</h4>", unsafe_allow_html=True)
         for user_nume in list(st.session_state.lista_membri.keys()):
-            c_u, c_b = st.columns([3, 1])
-            c_u.write(f"👤 {user_nume}")
+            c_u, c_b = st.columns()
+            c_u.markdown(f"<p style='margin: 10px 0; color:#cbd5e1;'>👤 <b>{user_nume}</b></p>", unsafe_allow_html=True)
             if user_nume != "admin":
                 if c_b.button("Șterge", key=f"del_{user_nume}"):
                     del st.session_state.lista_membri[user_nume]
-                    st.success("Utilizator eliminat!")
+                    st.success("Eliminat!")
                     st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
     st.write("---")
+
