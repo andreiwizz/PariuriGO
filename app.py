@@ -294,59 +294,5 @@ else:
 
 # ==============================================================================
 col_stinga, col_abonamente = st.columns([1.8, 1.2])
-    # ==============================================================================
-    # GENERATOR DINAMIC DE MECIURI ACTUALIZATE PENTRU ZIUA CURENTĂ
-    # ==============================================================================
-    def genereaza_meciuri_zi(data_string):
-        seed_zi = sum(ord(c) for c in data_string)
-        if seed_zi % 2 == 0:
-            partide = ["Manchester United vs Liverpool", "AC Milan vs Juventus Roma", "Bayern Munchen vs Dortmund"]
-        else:
-            partide = ["Real Madrid vs Man City", "Arsenal vs Chelsea Londra", "Inter Milano vs Napoli"]
-            
-        meciuri = {}
-        for i, p in enumerate(partide):
-            g_gz = str((seed_zi + i * 7) % 15 + 10)
-            g_os = str((seed_zi + i * 4) % 15 + 10)
-            med_gz = f"{round(1.5 + (seed_zi % 10) / 10, 1)}"
-            med_os = f"{round(1.2 + (i % 5) / 10, 1)}"
-            
-            meciuri[p] = {
-                "liga": "Meciuri Oficiale Pro Live", "g_gz": g_gz, "g_os": g_os, "med_gz": med_gz, "med_os": med_os, 
-                "gp_gz": str((seed_zi) % 8 + 5), "gp_os": str((seed_zi + i) % 9 + 5),
-                "ht_gz": f"{60 + (seed_zi % 25)}%", "st_gz": f"{65 + (i * 5) % 25}%", 
-                "p15_gz": f"{70 + (seed_zi % 20)}%", "p25_gz": f"{50 + (i * 7) % 35}%", "gg_gz": f"{45 + (seed_zi % 40)}%",
-                "w_p15": f"{70 + (seed_zi % 20)}%", "w_p25": f"{50 + (i * 7) % 35}%", 
-                "w_p05r1": f"{60 + (seed_zi % 25)}%", "w_gg": f"{45 + (seed_zi % 40)}%", "w_c35": f"{40 + (seed_zi % 45)}%"
-            }
-        return meciuri
-
-    meciuri_date_zi = genereaza_meciuri_zi(data_azi)
-# ==============================================================================
-# GENERATOR DINAMIC DE MECIURI ACTUALIZATE PENTRU ZIUA CURENTĂ (CORECTAT STRUCTURAL)
-# ==============================================================================
-def genereaza_meciuri_zi(data_string):
-    seed_zi = sum(ord(c) for c in data_string)
-    if seed_zi % 2 == 0:
-        partide = ["Manchester United vs Liverpool", "AC Milan vs Juventus Roma", "Bayern Munchen vs Dortmund"]
-    else:
-        partide = ["Real Madrid vs Man City", "Arsenal vs Chelsea Londra", "Inter Milano vs Napoli"]
-        
-    meciuri = {}
-    for i, p in enumerate(partide):
-        g_gz = str((seed_zi + i * 7) % 15 + 10)
-        g_os = str((seed_zi + i * 4) % 15 + 10)
-        med_gz = f"{round(1.5 + (seed_zi % 10) / 10, 1)}"
-        meciuri[p] = {
-            "liga": "Meciuri Oficiale Pro Live", "g_gz": g_gz, "g_os": g_os, "med_gz": med_gz, "med_os": f"{round(1.2 + (i % 5) / 10, 1)}", 
-            "gp_gz": str((seed_zi) % 8 + 5), "gp_os": str((seed_zi + i) % 9 + 5),
-            "ht_gz": f"{60 + (seed_zi % 25)}%", "st_gz": f"{65 + (i * 5) % 25}%", 
-            "p15_gz": f"{70 + (seed_zi % 20)}%", "p25_gz": f"{50 + (i * 7) % 35}%", "gg_gz": f"{45 + (seed_zi % 40)}%",
-            "w_p15": f"{70 + (seed_zi % 20)}%", "w_p25": f"{50 + (i * 7) % 35}%", 
-            "w_p05r1": f"{60 + (seed_zi % 25)}%", "w_gg": f"{45 + (seed_zi % 40)}%", "w_c35": f"{40 + (seed_zi % 45)}%"
-        }
-    return meciuri
-
-meciuri_date_zi = genereaza_meciuri_zi(data_azi)
 
 
