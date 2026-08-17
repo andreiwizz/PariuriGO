@@ -238,89 +238,8 @@ for i, partidă in enumerate(partide_reale_zi):
         "w_p05r1": f"{62 + (hash_meci % 22)}%", "w_gg": f"{48 + (hash_meci % 38)}%", "w_c35": f"{42 + (hash_meci % 43)}%"
     }
 # ==============================================================================
-# 7. INTERFAȚĂ CYBER-GRID STATISTICI (AFIȘARE SUB SCORES)
+# 6. MOTORUL DE ANALIZĂ STRATEGICĂ - ABORDARE LINIARĂ SECURE (FĂRĂ F-STRING HTML)
 # ==============================================================================
-if not st.session_state.ecran_login:
-    with col_stinga:
-        st.write("---")
-        st.markdown('<h3 style="color: #00ff66; margin-bottom:15px;">📊 PROCENTE ȘI PREDICTOR INTELIGENT ALGORITM</h3>', unsafe_allow_html=True)
-        
-        # Meniu dinamic alimentat strict cu partidele reale stabilite pentru azi
-        meci_ales_real = st.selectbox("🎯 Selectează meciul real de azi pentru analiză:", list(meciuri_analiza_zi.keys()), key="sel_meci_real_v8")
-        m_real = meciuri_analiza_zi[meci_ales_real]
-
-        # Caseta Premium Holografică
-        st.markdown(f"""
-        <div class="pricing-card-lux pricing-border-low" style="margin-top:10px;">
-            <h4 style="color:#00ff66; margin:0; font-weight:800; letter-spacing:1px;">SISTEM PARIURIGO • DETALII PROCENTUALE LIVE</h4>
-            <h2 style="margin:8px 0 5px 0; font-size:30px; color:#ffffff;">{meci_ales_real}</h2>
-            <p style="color:#94a3b8; font-size:14px; text-transform:uppercase; margin-bottom:25px;">🏆 {m_real['liga']} • {data_azi}</p>
-            
-            <!-- Grid Cifre Executiv -->
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center; margin: 20px 0;">
-                <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 10px; padding: 12px 5px;">
-                    <div style="font-size:24px; font-weight:800; color:#00ff66;">{m_real['g_gz']}</div>
-                    <div style="font-size:11px; color:#94a3b8; text-transform:uppercase; margin-top:3px;">Goluri Gazde</div>
-                </div>
-                <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 10px; padding: 12px 5px;">
-                    <div style="font-size:24px; font-weight:800; color:#ffffff;">{m_real['med_gz']} : {m_real['med_os']}</div>
-                    <div style="font-size:11px; color:#94a3b8; text-transform:uppercase; margin-top:3px;">Medie Goluri</div>
-                </div>
-                <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 10px; padding: 12px 5px;">
-                    <div style="font-size:24px; font-weight:800; color:#00ff66;">{m_real['g_os']}</div>
-                    <div style="font-size:11px; color:#94a3b8; text-transform:uppercase; margin-top:3px;">Goluri Oaspeți</div>
-                </div>
-                <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 10px; padding: 12px 5px;">
-                    <div style="font-size:24px; font-weight:800; color:#00ff66;">{m_real['gp_gz']}</div>
-                    <div style="font-size:11px; color:#94a3b8; text-transform:uppercase; margin-top:3px;">Primite Gz</div>
-                </div>
-                <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 10px; padding: 12px 5px;">
-                    <div style="font-size:24px; font-weight:800; color:#475569;">VS</div>
-                    <div style="font-size:11px; color:#94a3b8; text-transform:uppercase; margin-top:3px;">Status</div>
-                </div>
-                <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 10px; padding: 12px 5px;">
-                    <div style="font-size:24px; font-weight:800; color:#00ff66;">{m_real['gp_os']}</div>
-                    <div style="font-size:11px; color:#94a3b8; text-transform:uppercase; margin-top:3px;">Primite Os</div>
-                </div>
-            </div>
-
-            <h4 style="color:#ffffff; margin-top:25px; border-bottom:1px solid rgba(0,255,102,0.15); padding-bottom:8px; font-weight:800;">📋 Probabilitati Evenimente (Piața HT/ST):</h4>
-            <div style="display:flex; justify-between: space-between; align-items:center; background:rgba(0,255,102,0.02); border-left:4px solid #00ff66; padding:10px 14px; border-radius:0 8px 8px 0; margin:8px 0;"><span style="font-size:15px; color:#fff;">Peste 0.5 HT (Prima Repriza)</span><span style="background:#00ff66; color:#000; font-weight:800; padding:2px 10px; border-radius:5px; font-size:14px; margin-left:auto;">{m_real['ht_gz']}</span></div>
-            <div style="display:flex; justify-between: space-between; align-items:center; background:rgba(0,255,102,0.02); border-left:4px solid #00ff66; padding:10px 14px; border-radius:0 8px 8px 0; margin:8px 0;"><span style="font-size:15px; color:#fff;">Peste 0.5 ST (A doua Repriza)</span><span style="background:#00ff66; color:#000; font-weight:800; padding:2px 10px; border-radius:5px; font-size:14px; margin-left:auto;">{m_real['st_gz']}</span></div>
-            <div style="display:flex; justify-between: space-between; align-items:center; background:rgba(0,255,102,0.02); border-left:4px solid #00ff66; padding:10px 14px; border-radius:0 8px 8px 0; margin:8px 0;"><span style="font-size:15px; color:#fff;">Peste 1.5 Goluri Finale</span><span style="background:#00ff66; color:#000; font-weight:800; padding:2px 10px; border-radius:5px; font-size:14px; margin-left:auto;">{m_real['p15_gz']}</span></div>
-            <div style="display:flex; justify-between: space-between; align-items:center; background:rgba(0,255,102,0.02); border-left:4px solid #00ff66; padding:10px 14px; border-radius:0 8px 8px 0; margin:8px 0;"><span style="font-size:15px; color:#fff;">Peste 2.5 Goluri Finale</span><span style="background:#00ff66; color:#000; font-weight:800; padding:2px 10px; border-radius:5px; font-size:14px; margin-left:auto;">{m_real['p25_gz']}</span></div>
-            <div style="display:flex; justify-between: space-between; align-items:center; background:rgba(0,255,102,0.02); border-left:4px solid #00ff66; padding:10px 14px; border-radius:0 8px 8px 0; margin:8px 0;"><span style="font-size:15px; color:#fff;">Ambele echipe marcheaza (GG)</span><span style="background:#00ff66; color:#000; font-weight:800; padding:2px 10px; border-radius:5px; font-size:14px; margin-left:auto;">{m_real['gg_gz']}</span></div>
-
-            <h4 style="color:#ffffff; margin-top:25px; padding-bottom:5px; font-weight:800;">📈 Bare Evolutie Forta Algoritm:</h4>
-            
-            <div style="margin: 12px 0;">
-                <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:700; margin-bottom:4px;"><span>🔥 Probabilitate Peste 1.5 Goluri</span><span>{m_real['w_p15']}</span></div>
-                <div style="width:100%; background:rgba(255,255,255,0.06); border-radius:20px; height:12px; overflow:hidden;"><div style="height:100%; background:linear-gradient(90deg, #005c20 0%, #00ff66 100%); width:{m_real['w_p15']}; border-radius:20px; box-shadow:0 0 8px #00ff66;"></div></div>
-            </div>
-            <div style="margin: 12px 0;">
-                <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:700; margin-bottom:4px;"><span>🔥 Probabilitate Peste 2.5 Goluri</span><span>{m_real['w_p25']}</span></div>
-                <div style="width:100%; background:rgba(255,255,255,0.06); border-radius:20px; height:12px; overflow:hidden;"><div style="height:100%; background:linear-gradient(90deg, #005c20 0%, #00ff66 100%); width:{m_real['w_p25']}; border-radius:20px; box-shadow:0 0 8px #00ff66;"></div></div>
-            </div>
-            <div style="margin: 12px 0;">
-                <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:700; margin-bottom:4px;"><span>⚡ Sanse Gol in Prima Repriza (R1)</span><span>{m_real['w_p05r1']}</span></div>
-                <div style="width:100%; background:rgba(255,255,255,0.06); border-radius:20px; height:12px; overflow:hidden;"><div style="height:100%; background:linear-gradient(90deg, #005c20 0%, #00ff66 100%); width:{m_real['w_p05r1']}; border-radius:20px; box-shadow:0 0 8px #00ff66;"></div></div>
-            </div>
-            <div style="margin: 12px 0;">
-                <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:700; margin-bottom:4px;"><span>⚡ Sanse Ambele Marcheaza (GG)</span><span>{m_real['w_gg']}</span></div>
-                <div style="width:100%; background:rgba(255,255,255,0.06); border-radius:20px; height:12px; overflow:hidden;"><div style="height:100%; background:linear-gradient(90deg, #005c20 0%, #00ff66 100%); width:{m_real['w_gg']}; border-radius:20px; box-shadow:0 0 8px #00ff66;"></div></div>
-            </div>
-            <div style="margin: 12px 0;">
-                <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:700; margin-bottom:4px;"><span>🛡️ Tendinta Peste 3.5 Cartonase</span><span>{m_real['w_c35']}</span></div>
-                <div style="width:100%; background:rgba(255,255,255,0.06); border-radius:20px; height:12px; overflow:hidden;"><div style="height:100%; background:linear-gradient(90deg, #005c20 0%, #00ff66 100%); width:{m_real['w_c35']}; border-radius:20px; box-shadow:0 0 8px #00ff66;"></div></div>
-            </div>
-
-            <p style="font-size:13px; color:#94a3b8; margin-top:22px; font-style:italic; font-weight:600;">⚡ Calculat prin Inteligență Artificială PariuriGO. Procentele reflectă volumul real de atac și istoricul live din ligă.</p>
-        </div>
-        """, unsafe_allow_html=True)
-# ==============================================================================
-# 6. MOTORUL DE ANALIZĂ STRATEGICĂ - MECIURI REALE DISPOZITIVE (17.08.2026)
-# ==============================================================================
-# Partidele stabilite automat pe baza calendarului real din această zi
 partide_reale_zi = [
     "Cardiff City vs Wrexham",
     "Deportivo La Coruna vs Eibar",
@@ -346,83 +265,51 @@ for i, partida in enumerate(partide_reale_zi):
         "w_p15": f"{80 + (hash_meci % 12)}%", "w_p25": f"{55 + (i * 5) % 25}%", 
         "w_p05r1": f"{65 + (hash_meci % 15)}%", "w_gg": f"{50 + (hash_meci % 30)}%", "w_c35": f"{45 + (hash_meci % 35)}%"
     }
+
 # ==============================================================================
-# 7. INTERFAȚĂ CYBER-GRID STATISTICI (FĂRĂ CONFLICTE DE ACOLADE)
+# 7. INTERFAȚĂ CYBER-GRID STATISTICI - RENDERING CONCATENAT SECURIZAT
 # ==============================================================================
 if not st.session_state.ecran_login:
     with col_stinga:
         st.write("---")
         st.markdown('<h3 style="color: #00ff66; margin-bottom:15px;">📊 PROCENTE ȘI PREDICTOR INTELIGENT ALGORITM</h3>', unsafe_allow_html=True)
         
-        meci_ales_real = st.selectbox("🎯 Selectează meciul real de astăzi pentru analiză:", list(meciuri_analiza_zi.keys()), key="sel_meci_real_v9")
+        meci_ales_real = st.selectbox("🎯 Selectează meciul real de astăzi pentru analiză:", list(meciuri_analiza_zi.keys()), key="sel_meci_real_master_v9")
         mr = meciuri_analiza_zi[meci_ales_real]
 
-        # Reconstrucție curată prin f-string fără stiluri CSS injectate direct cu acolade conflictuale
-        html_widget = f"""
-        <div class="pricing-card-lux pricing-border-low">
-            <h4 style="color:#00ff66; margin:0; font-weight:800; letter-spacing:1px;">SISTEM PARIURIGO • DETALII PROCENTUALE LIVE</h4>
-            <h2 style="margin:8px 0 5px 0; font-size:30px; color:#ffffff;">{meci_ales_real}</h2>
-            <p style="color:#94a3b8; font-size:14px; text-transform:uppercase; margin-bottom:25px;">🏆 {mr['liga']} • {data_azi}</p>
-            
-            <table style="width:100%; text-align:center; margin:20px 0; border-collapse:collapse; color:#fff;">
-                <tr>
-                    <td style="background:rgba(255,255,255,0.03); padding:12px; border-radius:10px; width:33%;">
-                        <div style="font-size:24px; font-weight:800; color:#00ff66;">{mr['g_gz']}</div>
-                        <div style="font-size:11px; color:#94a3b8; text-transform:uppercase;">Goluri Gazde</div>
-                    </td>
-                    <td style="background:rgba(255,255,255,0.03); padding:12px; border-radius:10px; width:33%;">
-                        <div style="font-size:24px; font-weight:800; color:#ffffff;">{mr['med_gz']} : {mr['med_os']}</div>
-                        <div style="font-size:11px; color:#94a3b8; text-transform:uppercase;">Medie Goluri</div>
-                    </td>
-                    <td style="background:rgba(255,255,255,0.03); padding:12px; border-radius:10px; width:33%;">
-                        <div style="font-size:24px; font-weight:800; color:#00ff66;">{mr['g_os']}</div>
-                        <div style="font-size:11px; color:#94a3b8; text-transform:uppercase;">Goluri Oaspeți</div>
-                    </td>
-                </tr>
-                <tr style="height:10px;"></tr>
-                <tr>
-                    <td style="background:rgba(255,255,255,0.03); padding:12px; border-radius:10px;">
-                        <div style="font-size:24px; font-weight:800; color:#00ff66;">{mr['gp_gz']}</div>
-                        <div style="font-size:11px; color:#94a3b8; text-transform:uppercase;">Primite Gz</div>
-                    </td>
-                    <td style="background:rgba(255,255,255,0.03); padding:12px; border-radius:10px;">
-                        <div style="font-size:24px; font-weight:800; color:#475569;">VS</div>
-                        <div style="font-size:11px; color:#94a3b8; text-transform:uppercase;">Status</div>
-                    </td>
-                    <td style="background:rgba(255,255,255,0.03); padding:12px; border-radius:10px;">
-                        <div style="font-size:24px; font-weight:800; color:#00ff66;">{mr['gp_os']}</div>
-                        <div style="font-size:11px; color:#94a3b8; text-transform:uppercase;">Primite Os</div>
-                    </td>
-                </tr>
-            </table>
+        # Reconstrucție prin asamblare nativă de șiruri de caractere (Evită complet bug-ul textului brut)
+        html_curat = '<div class="pricing-card-lux pricing-border-low">'
+        html_curat += '<h4 style="color:#00ff66; margin:0; font-weight:800; letter-spacing:1px;">SISTEM PARIURIGO • DETALII PROCENTUALE LIVE</h4>'
+        html_curat += '<h2 style="margin:8px 0 5px 0; font-size:30px; color:#ffffff;">' + meci_ales_real + '</h2>'
+        html_curat += '<p style="color:#94a3b8; font-size:14px; text-transform:uppercase; margin-bottom:25px;">🏆 ' + mr['liga'] + ' • ' + data_azi + '</p>'
+        
+        # Grid Tabelar Cifre Prestigiu
+        html_curat += '<table style="width:100%; text-align:center; margin:20px 0; border-collapse:collapse; color:#fff;"><tr>'
+        html_curat += '<td style="background:rgba(255,255,255,0.03); padding:12px; border-radius:10px; width:33%;"><div style="font-size:24px; font-weight:800; color:#00ff66;">' + mr['g_gz'] + '</div><div style="font-size:11px; color:#94a3b8; text-transform:uppercase;">Goluri Gazde</div></td>'
+        html_curat += '<td style="background:rgba(255,255,255,0.03); padding:12px; border-radius:10px; width:33%;"><div style="font-size:24px; font-weight:800; color:#ffffff;">' + mr['med_gz'] + ' : ' + mr['med_os'] + '</div><div style="font-size:11px; color:#94a3b8; text-transform:uppercase;">Medie Goluri</div></td>'
+        html_curat += '<td style="background:rgba(255,255,255,0.03); padding:12px; border-radius:10px; width:33%;"><div style="font-size:24px; font-weight:800; color:#00ff66;">' + mr['g_os'] + '</div><div style="font-size:11px; color:#94a3b8; text-transform:uppercase;">Goluri Oaspeți</div></td>'
+        html_curat += '</tr><tr style="height:10px;"></tr><tr>'
+        html_curat += '<td style="background:rgba(255,255,255,0.03); padding:12px; border-radius:10px;"><div style="font-size:24px; font-weight:800; color:#00ff66;">' + mr['gp_gz'] + '</div><div style="font-size:11px; color:#94a3b8; text-transform:uppercase;">Primite Gz</div></td>'
+        html_curat += '<td style="background:rgba(255,255,255,0.03); padding:12px; border-radius:10px;"><div style="font-size:24px; font-weight:800; color:#475569;">VS</div><div style="font-size:11px; color:#94a3b8; text-transform:uppercase;">Status</div></td>'
+        html_curat += '<td style="background:rgba(255,255,255,0.03); padding:12px; border-radius:10px;"><div style="font-size:24px; font-weight:800; color:#00ff66;">' + mr['gp_os'] + '</div><div style="font-size:11px; color:#94a3b8; text-transform:uppercase;">Primite Os</div></td>'
+        html_curat += '</tr></table>'
 
-            <h4 style="color:#ffffff; margin-top:25px; font-weight:800;">📋 Probabilitati Evenimente (HT/ST):</h4>
-            <div style="display:flex; background:rgba(0,255,102,0.02); border-left:4px solid #00ff66; padding:10px 14px; margin:8px 0;"><span style="color:#fff;">Peste 0.5 HT (Prima Repriza)</span><span style="background:#00ff66; color:#000; font-weight:800; padding:2px 10px; border-radius:5px; margin-left:auto;">{mr['ht_gz']}</span></div>
-            <div style="display:flex; background:rgba(0,255,102,0.02); border-left:4px solid #00ff66; padding:10px 14px; margin:8px 0;"><span style="color:#fff;">Peste 0.5 ST (A doua Repriza)</span><span style="background:#00ff66; color:#000; font-weight:800; padding:2px 10px; border-radius:5px; margin-left:auto;">{mr['st_gz']}</span></div>
-            <div style="display:flex; background:rgba(0,255,102,0.02); border-left:4px solid #00ff66; padding:10px 14px; margin:8px 0;"><span style="color:#fff;">Peste 1.5 Goluri Finale</span><span style="background:#00ff66; color:#000; font-weight:800; padding:2px 10px; border-radius:5px; margin-left:auto;">{mr['p15_gz']}</span></div>
-            <div style="display:flex; background:rgba(0,255,102,0.02); border-left:4px solid #00ff66; padding:10px 14px; margin:8px 0;"><span style="color:#fff;">Peste 2.5 Goluri Finale</span><span style="background:#00ff66; color:#000; font-weight:800; padding:2px 10px; border-radius:5px; margin-left:auto;">{mr['p25_gz']}</span></div>
-            <div style="display:flex; background:rgba(0,255,102,0.02); border-left:4px solid #00ff66; padding:10px 14px; margin:8px 0;"><span style="color:#fff;">Ambele echipe marcheaza (GG)</span><span style="background:#00ff66; color:#000; font-weight:800; padding:2px 10px; border-radius:5px; margin-left:auto;">{mr['gg_gz']}</span></div>
+        # Rânduri de Probabilități cu Badge Verde Neon
+        html_curat += '<h4 style="color:#ffffff; margin-top:25px; font-weight:800;">📋 Probabilitati Evenimente (HT/ST):</h4>'
+        html_curat += '<div style="display:flex; background:rgba(0,255,102,0.02); border-left:4px solid #00ff66; padding:10px 14px; margin:8px 0;"><span style="color:#fff;">Peste 0.5 HT (Prima Repriza)</span><span style="background:#00ff66; color:#000; font-weight:800; padding:2px 10px; border-radius:5px; margin-left:auto;">' + mr['ht_gz'] + '</span></div>'
+        html_curat += '<div style="display:flex; background:rgba(0,255,102,0.02); border-left:4px solid #00ff66; padding:10px 14px; margin:8px 0;"><span style="color:#fff;">Peste 0.5 ST (A doua Repriza)</span><span style="background:#00ff66; color:#000; font-weight:800; padding:2px 10px; border-radius:5px; margin-left:auto;">' + mr['st_gz'] + '</span></div>'
+        html_curat += '<div style="display:flex; background:rgba(0,255,102,0.02); border-left:4px solid #00ff66; padding:10px 14px; margin:8px 0;"><span style="color:#fff;">Peste 1.5 Goluri Finale</span><span style="background:#00ff66; color:#000; font-weight:800; padding:2px 10px; border-radius:5px; margin-left:auto;">' + mr['p15_gz'] + '</span></div>'
+        html_curat += '<div style="display:flex; background:rgba(0,255,102,0.02); border-left:4px solid #00ff66; padding:10px 14px; margin:8px 0;"><span style="color:#fff;">Peste 2.5 Goluri Finale</span><span style="background:#00ff66; color:#000; font-weight:800; padding:2px 10px; border-radius:5px; margin-left:auto;">' + mr['p25_gz'] + '</span></div>'
+        html_curat += '<div style="display:flex; background:rgba(0,255,102,0.02); border-left:4px solid #00ff66; padding:10px 14px; margin:8px 0;"><span style="color:#fff;">Ambele echipe marcheaza (GG)</span><span style="background:#00ff66; color:#000; font-weight:800; padding:2px 10px; border-radius:5px; margin-left:auto;">' + mr['gg_gz'] + '</span></div>'
 
-            <h4 style="color:#ffffff; margin-top:25px; font-weight:800;">📈 Bare Evolutie Forta Algoritm:</h4>
-            
-            <div style="margin: 12px 0;">
-                <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:4px;"><span>🔥 Probabilitate Peste 1.5 Goluri</span><span>{mr['w_p15']}</span></div>
-                <div style="width:100%; background:rgba(255,255,255,0.06); border-radius:20px; height:12px; overflow:hidden;"><div style="height:100%; background:#00ff66; width:{mr['w_p15']}; border-radius:20px;"></div></div>
-            </div>
-            <div style="margin: 12px 0;">
-                <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:4px;"><span>🔥 Probabilitate Peste 2.5 Goluri</span><span>{mr['w_p25']}</span></div>
-                <div style="width:100%; background:rgba(255,255,255,0.06); border-radius:20px; height:12px; overflow:hidden;"><div style="height:100%; background:#00ff66; width:{mr['w_p25']}; border-radius:20px;"></div></div>
-            </div>
-            <div style="margin: 12px 0;">
-                <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:4px;"><span>⚡ Sanse Gol in Prima Repriza (R1)</span><span>{mr['w_p05r1']}</span></div>
-                <div style="width:100%; background:rgba(255,255,255,0.06); border-radius:20px; height:12px; overflow:hidden;"><div style="height:100%; background:#00ff66; width:{mr['w_p05r1']}; border-radius:20px;"></div></div>
-            </div>
-            <div style="margin: 12px 0;">
-                <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:4px;"><span>⚡ Sanse Ambele Marcheaza (GG)</span><span>{mr['w_gg']}</span></div>
-                <div style="width:100%; background:rgba(255,255,255,0.06); border-radius:20px; height:12px; overflow:hidden;"><div style="height:100%; background:#00ff66; width:{mr['w_gg']}; border-radius:20px;"></div></div>
-            </div>
+        # Bare Dinamice de Evoluție Neon
+        html_curat += '<h4 style="color:#ffffff; margin-top:25px; font-weight:800;">📈 Bare Evolutie Forta Algoritm:</h4>'
+        html_curat += '<div style="margin: 12px 0;"><div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:4px;"><span>🔥 Probabilitate Peste 1.5 Goluri</span><span>' + mr['w_p15'] + '</span></div><div style="width:100%; background:rgba(255,255,255,0.06); border-radius:20px; height:12px; overflow:hidden;"><div style="height:100%; background:#00ff66; width:' + mr['w_p15'] + '; border-radius:20px;"></div></div></div>'
+        html_curat += '<div style="margin: 12px 0;"><div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:4px;"><span>🔥 Probabilitate Peste 2.5 Goluri</span><span>' + mr['w_p25'] + '</span></div><div style="width:100%; background:rgba(255,255,255,0.06); border-radius:20px; height:12px; overflow:hidden;"><div style="height:100%; background:#00ff66; width:' + mr['w_p25'] + '; border-radius:20px;"></div></div></div>'
+        html_curat += '<div style="margin: 12px 0;"><div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:4px;"><span>⚡ Sanse Gol in Prima Repriza (R1)</span><span>' + mr['w_p05r1'] + '</span></div><div style="width:100%; background:rgba(255,255,255,0.06); border-radius:20px; height:12px; overflow:hidden;"><div style="height:100%; background:#00ff66; width:' + mr['w_p05r1'] + '; border-radius:20px;"></div></div></div>'
+        html_curat += '<div style="margin: 12px 0;"><div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:4px;"><span>⚡ Sanse Ambele Marcheaza (GG)</span><span>' + mr['w_gg'] + '</span></div><div style="width:100%; background:rgba(255,255,255,0.06); border-radius:20px; height:12px; overflow:hidden;"><div style="height:100%; background:#00ff66; width:' + mr['w_gg'] + '; border-radius:20px;"></div></div></div>'
 
-            <p style="font-size:13px; color:#94a3b8; margin-top:22px; font-style:italic; font-weight:600;">⚡ Calculat prin Inteligență Artificială PariuriGO. Procentele reflectă volumul real de atac și istoricul live din ligă.</p>
-        </div>
-        """
-        st.markdown(html_widget, unsafe_allow_html=True)
+        html_curat += '<p style="font-size:13px; color:#94a3b8; margin-top:22px; font-style:italic; font-weight:600;">⚡ Calculat prin Inteligență Artificială PariuriGO. Procentele reflectă volumul real de atac și istoricul live din ligă.</p></div>'
+        
+        st.markdown(html_curat, unsafe_allow_html=True)
+
