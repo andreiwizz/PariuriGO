@@ -294,141 +294,34 @@ else:
 
 # ==============================================================================
 col_stinga, col_abonamente = st.columns([1.8, 1.2])
-# ==============================================================================
-# 9. WIDGET INTELIGENT ALGORITM (PLASAT ÎN COLOANA DIN STÂNGA)
-# ==============================================================================
-
-# Se execută doar dacă nu suntem în ecranul de login full-screen
-if not st.session_state.ecran_login:
-    
-    # Adăugăm stilurile CSS specifice widget-ului (Cyber Grid și Bare Progres)
-    st.markdown("""
-    <style>
-        .premium-card {
-            background: rgba(10, 28, 18, 0.85) !important;
-            backdrop-filter: blur(12px) !important;
-            -webkit-backdrop-filter: blur(12px) !important;
-            border: 1px solid rgba(0, 255, 102, 0.25) !important;
-            border-radius: 20px !important;
-            padding: 25px !important;
-            box-shadow: 0 15px 35px 0 rgba(0, 255, 102, 0.05), 0 5px 15px 0 rgba(0,0,0,0.5) !important;
-            margin-bottom: 25px !important;
-        }
-        .cyber-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            text-align: center;
-            margin: 20px 0;
-        }
-        .cyber-grid-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 15px 10px;
-        }
-        .cyber-num {
-            font-size: 28px;
-            font-weight: 800;
-            color: #00ff66;
-            text-shadow: 0 0 10px rgba(0, 255, 102, 0.4);
-        }
-        .cyber-label {
-            font-size: 13px;
-            color: #94a3b8;
-            text-transform: uppercase;
-            margin-top: 5px;
-        }
-        .proc-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0, 255, 102, 0.03);
-            border-left: 4px solid #00ff66;
-            padding: 12px 18px;
-            border-radius: 0 10px 10px 0;
-            margin: 10px 0;
-        }
-        .proc-text { font-size: 16px; color: #ffffff; font-weight: 600; }
-        .proc-badge {
-            background: #00ff66;
-            color: #000000;
-            font-weight: 800;
-            padding: 4px 12px;
-            border-radius: 6px;
-            font-size: 15px;
-            box-shadow: 0 0 10px rgba(0, 255, 102, 0.5);
-        }
-        .bar-wrapper { margin: 16px 0; }
-        .bar-title-flex { display: flex; justify-content: space-between; font-size: 15px; font-weight: 700; margin-bottom: 6px; }
-        .bar-container-custom { width: 100%; background: rgba(255, 255, 255, 0.06); border-radius: 20px; height: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.02); }
-        .bar-fill-neon-custom {
-            height: 100%;
-            background: linear-gradient(90deg, #005c20 0%, #00ff66 100%);
-            border-radius: 20px;
-            box-shadow: 0 0 10px rgba(0, 255, 102, 0.5);
-        }
-    </style>
-    """, unsafe_allow_html=True)
-
-    # Datele statistice ale meciurilor stocate în sesiune
-    if "meciuri_date" not in st.session_state:
-        st.session_state.meciuri_date = {
-            "Real Madrid vs Manchester City": {
-                "liga": "UEFA Champions League", "g_gz": "18", "g_os": "22", "med_gz": "2.1", "med_os": "2.4", "gp_gz": "12", "gp_os": "15",
-                "ht_gz": "82%", "st_gz": "89%", "p15_gz": "91%", "p25_gz": "74%", "gg_gz": "68%",
-                "w_p15": "91%", "w_p25": "74%", "w_p05r1": "82%", "w_gg": "68%", "w_c35": "60%"
-            },
-            "Barcelona vs Bayern Munchen": {
-                "liga": "UEFA Champions League", "g_gz": "15", "g_os": "19", "med_gz": "1.9", "med_os": "2.1", "gp_gz": "10", "gp_os": "11",
-                "ht_gz": "76%", "st_gz": "81%", "p15_gz": "85%", "p25_gz": "65%", "gg_gz": "70%",
-                "w_p15": "85%", "w_p25": "65%", "w_p05r1": "76%", "w_gg": "70%", "w_c35": "55%"
-            }
-        }
-
-    # Deschidem coloana din stânga pentru a desena widgetul
+    # ==============================================================================
+    # WIDGET INTELIGENT ALGORITM (REPARAT - SE LEAGĂ DIRECT PE COLOANA EXISTENTĂ)
+    # ==============================================================================
     with col_stinga:
         st.markdown('<h3 style="color: #00ff66; font-weight:800; margin-bottom:15px;">📊 MODUL INTELIGENT ALGORITM</h3>', unsafe_allow_html=True)
-        meci_ales = st.selectbox("🎯 Selectează partida de analizat:", list(st.session_state.meciuri_date.keys()), key="meci_selector_live")
-        m = st.session_state.meciuri_date[meci_ales]
+        
+        # Meniu de selectare dinamic
+        meci_ales = st.selectbox("🎯 Partide actualizate astăzi:", list(meciuri_date_zi.keys()), key="meci_selector_zi")
+        m = meciuri_date_zi[meci_ales]
 
-        # Structura vizuală a widget-ului
+        # Structura vizuală premium a widget-ului
         st.markdown(f"""
         <div class="premium-card">
-            <h4 style="color:#00ff66; margin:0; font-weight:800; letter-spacing:1px;">SISTEM PARIURIGO • RECOMANDARE PREMIUM</h4>
+            <h4 style="color:#00ff66; margin:0; font-weight:800;">SISTEM PARIURIGO • RECOMANDARE PREMIUM</h4>
             <h2 style="margin:8px 0 5px 0; font-size:32px; color:#ffffff;">{meci_ales}</h2>
-            <p style="color:#94a3b8; font-size:14px; text-transform:uppercase; margin-bottom:25px; font-weight:600;">🏆 {m['liga']} • {data_azi}</p>
+            <p style="color:#94a3b8; font-size:14px; text-transform:uppercase; margin-bottom:25px;">🏆 {m['liga']} • {data_azi}</p>
             
-            <!-- Cifre de prestigiu în Grid -->
+            <!-- Grid Cifre Cibernetice -->
             <div class="cyber-grid">
-                <div class="cyber-grid-item">
-                    <div class="cyber-num">{m['g_gz']}</div>
-                    <div class="cyber-label">Goluri Gazde</div>
-                </div>
-                <div class="cyber-grid-item">
-                    <div class="cyber-num" style="color:#ffffff;">{m['med_gz']} : {m['med_os']}</div>
-                    <div class="cyber-label">Medie Goluri</div>
-                </div>
-                <div class="cyber-grid-item">
-                    <div class="cyber-num">{m['g_os']}</div>
-                    <div class="cyber-label">Goluri Oaspeți</div>
-                </div>
-                <div class="cyber-grid-item">
-                    <div class="cyber-num">{m['gp_gz']}</div>
-                    <div class="cyber-label">Goluri Primite Gz</div>
-                </div>
-                <div class="cyber-grid-item">
-                    <div class="cyber-num" style="color:#475569;">VS</div>
-                    <div class="cyber-label">Status</div>
-                </div>
-                <div class="cyber-grid-item">
-                    <div class="cyber-num">{m['gp_os']}</div>
-                    <div class="cyber-label">Goluri Primite Os</div>
-                </div>
+                <div class="cyber-grid-item"><div class="cyber-num">{m['g_gz']}</div><div class="cyber-label">Goluri Gazde</div></div>
+                <div class="cyber-grid-item"><div class="cyber-num">{m['med_gz']} : {m['med_os']}</div><div class="cyber-label">Medie Goluri</div></div>
+                <div class="cyber-grid-item"><div class="cyber-num">{m['g_os']}</div><div class="cyber-label">Goluri Oaspeți</div></div>
+                <div class="cyber-grid-item"><div class="cyber-num">{m['gp_gz']}</div><div class="cyber-label">Goluri Primite Gz</div></div>
+                <div class="cyber-grid-item"><div class="cyber-num" style="color:#475569;">VS</div><div class="cyber-label">Status</div></div>
+                <div class="cyber-grid-item"><div class="cyber-num">{m['gp_os']}</div><div class="cyber-label">Goluri Primite Os</div></div>
             </div>
 
             <h4 style="color:#ffffff; margin-top:30px; border-bottom:1px solid rgba(0,255,102,0.15); padding-bottom:10px; font-weight:800;">📋 Probabilități Evenimente (Piața HT/ST):</h4>
-            
             <div class="proc-row"><span class="proc-text">Peste 0.5 HT (Prima Repriză)</span><span class="proc-badge">{m['ht_gz']}</span></div>
             <div class="proc-row"><span class="proc-text">Peste 0.5 ST (A doua Repriză)</span><span class="proc-badge">{m['st_gz']}</span></div>
             <div class="proc-row"><span class="proc-text">Peste 1.5 Goluri Finale</span><span class="proc-badge">{m['p15_gz']}</span></div>
@@ -436,28 +329,11 @@ if not st.session_state.ecran_login:
             <div class="proc-row"><span class="proc-text">Ambele echipe marchează (GG)</span><span class="proc-badge">{m['gg_gz']}</span></div>
 
             <h4 style="color:#ffffff; margin-top:30px; padding-bottom:5px; font-weight:800;">📈 Bare Evoluție Forță Algoritm:</h4>
-            
-            <div class="bar-wrapper">
-                <div class="bar-title-flex"><span>🔥 Probabilitate Peste 1.5 Goluri</span><span>{m['w_p15']}</span></div>
-                <div class="bar-container-custom"><div class="bar-fill-neon-custom" style="width: {m['w_p15']};"></div></div>
-            </div>
-            <div class="bar-wrapper">
-                <div class="bar-title-flex"><span>🔥 Probabilitate Peste 2.5 Goluri</span><span>{m['w_p25']}</span></div>
-                <div class="bar-container-custom"><div class="bar-fill-neon-custom" style="width: {m['w_p25']};"></div></div>
-            </div>
-            <div class="bar-wrapper">
-                <div class="bar-title-flex"><span>⚡ Șanse Gol în Prima Repriză (R1)</span><span>{m['w_p05r1']}</span></div>
-                <div class="bar-container-custom"><div class="bar-fill-neon-custom" style="width: {m['w_p05r1']};"></div></div>
-            </div>
-            <div class="bar-wrapper">
-                <div class="bar-title-flex"><span>⚡ Șanse Ambele Marchează (GG)</span><span>{m['w_gg']}</span></div>
-                <div class="bar-container-custom"><div class="bar-fill-neon-custom" style="width: {m['w_gg']};"></div></div>
-            </div>
-            <div class="bar-wrapper">
-                <div class="bar-title-flex"><span>🛡️ Tendință Peste 3.5 Cartonașe</span><span>{m['w_c35']}</span></div>
-                <div class="bar-container-custom"><div class="bar-fill-neon-custom" style="width: {m['w_c35']};"></div></div>
-            </div>
-
-            <p style="font-size:13px; color:#94a3b8; margin-top:25px; font-style:italic; font-weight:600;">⚡ Calculat prin Inteligență Artificială PariuriGO. Procentele reflectă volumul de atac, posesia și istoricul live din ligă.</p>
+            <div class="bar-wrapper"><div class="bar-title-flex"><span>🔥 Probabilitate Peste 1.5 Goluri</span><span>{m['w_p15']}</span></div><div class="bar-container-custom"><div class="bar-fill-neon-custom" style="width: {m['w_p15']};"></div></div></div>
+            <div class="bar-wrapper"><div class="bar-title-flex"><span>🔥 Probabilitate Peste 2.5 Goluri</span><span>{m['w_p25']}</span></div><div class="bar-container-custom"><div class="bar-fill-neon-custom" style="width: {m['w_p25']};"></div></div></div>
+            <div class="bar-wrapper"><div class="bar-title-flex"><span>⚡ Șanse Gol în Prima Repriză (R1)</span><span>{m['w_p05r1']}</span></div><div class="bar-container-custom"><div class="bar-fill-neon-custom" style="width: {m['w_p05r1']};"></div></div></div>
+            <div class="bar-wrapper"><div class="bar-title-flex"><span>⚡ Șanse Ambele Marchează (GG)</span><span>{m['w_gg']}</span></div><div class="bar-container-custom"><div class="bar-fill-neon-custom" style="width: {m['w_gg']};"></div></div></div>
+            <div class="bar-wrapper"><div class="bar-title-flex"><span>🛡️ Tendință Peste 3.5 Cartonașe</span><span>{m['w_c35']}</span></div><div class="bar-container-custom"><div class="bar-fill-neon-custom" style="width: {m['w_c35']};"></div></div></div>
         </div>
         """, unsafe_allow_html=True)
+
