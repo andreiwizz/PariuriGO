@@ -314,6 +314,65 @@ with col_abonamente:
         
         st.link_button("💳 Plătește cu Card (Stripe)", pachet["link_stripe"])
         st.markdown('</div>', unsafe_allow_html=True)
+pachete = [
+    {
+        "nume": "🥉 PACHET LOW",
+        "pret": "40 RON / săptămână",
+        "beneficii": [
+            "1-2 ponturi zilnic",
+            "Statistici de bază",
+            "Acces VIP LOW"
+        ],
+        "link_stripe": "LINK_STRIPE_LOW"
+    },
 
-    st.write("---")
-    st.caption("Actualizat automat la data de " + data_azi)
+    {
+        "nume": "🥈 PACHET MEDIUM",
+        "pret": "70 RON / lună",
+        "beneficii": [
+            "3-5 ponturi pe zi",
+            "Analiză AI",
+            "Statistici LIVE",
+            "Acces VIP MEDIUM"
+        ],
+        "link_stripe": "LINK_STRIPE_MEDIUM"
+    },
+
+    {
+        "nume": "🥇 PACHET HIGH",
+        "pret": "120 RON / lună",
+        "beneficii": [
+            "Ponturi nelimitate",
+            "Scoruri corecte",
+            "GG / Cornere / Cartonașe",
+            "Acces TOTAL VIP"
+        ],
+        "link_stripe": "LINK_STRIPE_HIGH"
+    }
+]
+    import base64
+import requests
+
+url = "https://raw.githubusercontent.com/andreiwizz/PariuriGO/main/teren.jpg"
+
+img = requests.get(url).content
+b64 = base64.b64encode(img).decode()
+
+st.markdown(f"""
+<style>
+.stApp {{
+    background-image: url("data:image/jpg;base64,{b64}");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}}
+
+.stApp::before {{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.70);
+    z-index:-1;
+}}
+</style>
+""", unsafe_allow_html=True)
