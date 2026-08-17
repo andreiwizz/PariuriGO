@@ -164,3 +164,50 @@ if logo_base64:
     st.markdown(f'<div style="text-align: center; margin-bottom: 15px;"><img src="data:image/png;base64,{logo_base64}" width="280"></div>', unsafe_allow_html=True)
 st.markdown("<h1 style='text-align: center; color: #ffffff; font-weight: 800;'>⚽ PARIURIGO &bull; WORLD LIVE CENTER</h1>", unsafe_allow_html=True)
 st.write("---")
+# ==============================================================================
+# 4. INITIALIZARE MEMORIE ȘI CONTROL AUTOMAT CALENDAR
+# ==============================================================================
+if "lista_membri" not in st.session_state:
+    st.session_state.lista_membri = {"admin": "pariurigo"}
+
+if "vip" not in st.session_state:
+    st.session_state.vip = False
+
+if "admin" not in st.session_state:
+    st.session_state.admin = False
+
+if "ecran_login" not in st.session_state:
+    st.session_state.ecran_login = False
+
+# Generator dinamic bazat pe algoritm de dată
+def genereaza_meciuri_dupa_data(data_string):
+    zi_num = sum(ord(c) for c in data_string)
+    elite_gazde = ["Real Madrid", "Barcelona", "Manchester Utd", "FCSB", "Bayern Munchen", "Inter Milano", "Liverpool", "Juventus"]
+    elite_oaspeti = ["Man City", "Arsenal", "Rapid Bucuresti", "Chelsea", "Dortmund", "AC Milan", "Atletico Madrid", "PSG"]
+    
+    meciuri_generate = []
+    for i in range(4):
+        index_gz = (zi_num + i * 2) % len(elite_gazde)
+        index_os = (zi_num + i * 3) % len(elite_oaspeti)
+        if elite_gazde[index_gz] == elite_oaspeti[index_os]:
+            index_os = (index_os + 1) % len(elite_oaspeti)
+        meciuri_generate.append(elite_gazde[index_gz] + " vs " + elite_oaspeti[index_os])
+    return meciuri_generate
+
+partide_reale_zi = genereaza_meciuri_dupa_data(data_azi)
+meciuri_analiza_zi = {}
+seed_zi = sum(ord(c) for c in data_azi)
+
+for i, partida in enumerate(partide_reale_zi):
+    hash_meci = sum(ord(c) for c in partida) + seed_zi
+    g_gz = str((hash_meci + i * 3) % 6 + 12)
+    g_os = str((hash_meci + i * 5) % 6 + 10)
+    med_gz = f"{round(1.8 + (hash_meci % 5) / 10, 1)}"
+    meciuri_analiza_zi[partida] = {
+        "liga": "Meciuri Oficiale Zi Curenta", "g_gz": g_gz, "g_os": g_os, "med_gz": med_gz, "med_os": f"{round(1.3 + (i % 4) / 10, 1)}", 
+        "gp_gz": str((hash_meci) % 4 + 4), "gp_os": str((hash_meci + i) % 4 + 5),
+        "ht_gz": f"{65 + (hash_meci % 15)}%", "st_gz": f"{70 + (i * 3) % 15}%", 
+        "p15_gz": f"{82 + (hash_meci % 10)}%", "p25_gz": f"{55 + (i * 5) % 20}%", "gg_gz": f"{52 + (hash_meci % 25)}%",
+        "w_p15": f"{82 + (hash_meci % 10)}%", "w_p25": f"{55 + (i * 5) % 20}%", 
+        "w_p05r1": f"{65 + (hash_meci % 15)}%", "w_gg": f"{52 + (hash_meci % 25)}%"
+    }
