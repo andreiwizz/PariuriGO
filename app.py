@@ -132,7 +132,7 @@ with col_abonamente:
         </div>
         """, unsafe_allow_html=True)
 # ==============================================================================
-# INITIALIZARE STATE SECURIZAT ȘI MEMBRI
+# INITIALIZARE STATE SECURIZAT ȘI MEMBRI (DE LA LINIA 134)
 # ==============================================================================
 if "lista_membri" not in st.session_state:
     st.session_state.lista_membri = {"admin": "pariurigo"}
@@ -144,55 +144,72 @@ if "admin" not in st.session_state:
     st.session_state.admin = False
 
 # ==============================================================================
-# SIDEBAR LOGIN ACCES
+# INTERFAȚĂ LATERALĂ DE LUX - SIDEBAR LOGIN
 # ==============================================================================
 with st.sidebar:
-    st.markdown("<h2 style='color: #00ff66; margin-top:0;'>🔐 LOGIN ACCES</h2>", unsafe_allow_html=True)
-    utilizator = st.text_input("Utilizator", key="login_user")
-    parola = st.text_input("Parolă", type="password", key="login_pass")
-
-    if st.button("Conectare"):
+    st.markdown("""
+        <div style='text-align: center; margin-bottom: 20px;'>
+            <h2 style='color: #00ff66; font-weight: 800; font-size: 26px; letter-spacing: 1px; text-shadow: 0 0 15px rgba(0,255,102,0.4); margin: 0;'>🔐 VIP ACCESS</h2>
+            <p style='color: #94a3b8; font-size: 13px; font-weight: 600; text-transform: uppercase; margin-top: 5px;'>PariuriGO Security Gate</p>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    utilizator = st.text_input("Nume Utilizator", placeholder="Introdu user-ul...", key="login_user")
+    parola = st.text_input("Parolă Securizată", placeholder="••••••••", type="password", key="login_pass")
+    
+    st.markdown("<div style='margin-top: 10px;'></div>", unsafe_allow_html=True)
+    
+    if st.button("AUTENTIFICARE CONTROL 🚀", key="btn_execute_login"):
         if utilizator in st.session_state.lista_membri and st.session_state.lista_membri[utilizator] == parola:
             st.session_state.vip = True
             if utilizator == "admin":
                 st.session_state.admin = True
-            st.success("Conectat cu succes!")
+            st.success("⚡ Conexiune securizată stabilită!")
             st.rerun()
         else:
-            st.error("Date de identificare incorecte!")
+            st.error("❌ Date incorecte sau cont inactiv!")
 
 # ==============================================================================
-# PANOU ADMINISTRATOR (Apare doar pentru userul 'admin')
+# PANOU ADMINISTRATOR MATRIX EXECUTIVE (Apare doar pentru userul 'admin')
 # ==============================================================================
 if st.session_state.admin:
     st.write("---")
-    st.markdown("<h2 style='color: #00ff66; font-weight: 800;'>🛠 PANOU ADMINISTRATOR</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color: #00ff66; font-weight: 800; letter-spacing: 1px; text-shadow: 0 0 10px rgba(0,255,102,0.2);'>🛠 SYSTEM EXECUTIVE PANEL</h2>", unsafe_allow_html=True)
     
     col_adm1, col_adm2 = st.columns(2)
     
     with col_adm1:
         st.markdown('<div class="admin-box">', unsafe_allow_html=True)
-        st.markdown("<h4 style='color: #ffffff; margin-top:0;'>➕ Înregistrare Membru Nou</h4>", unsafe_allow_html=True)
-        nume = st.text_input("Utilizator nou:", key="add_user_input")
-        passw = st.text_input("Parolă nouă:", type="password", key="add_pass_input")
-        if st.button("Salvează în bază", key="btn_add_member"):
+        st.markdown("<h4 style='color: #ffffff; margin-top:0; font-weight:800; border-bottom: 1px solid rgba(0,255,102,0.15); padding-bottom: 8px;'>➕ CREARE CONT CLIENT</h4>", unsafe_allow_html=True)
+        nume = st.text_input("Setează Utilizator:", placeholder="Ex: costel12", key="add_user_input")
+        passw = st.text_input("Setează Parolă:", placeholder="Ex: pass1234", type="password", key="add_pass_input")
+        
+        st.markdown("<div style='margin-top: 15px;'></div>", unsafe_allow_html=True)
+        if st.button("PROMOVEAZĂ MEMBRU VIP 💎", key="btn_add_member"):
             if nume and passw:
                 st.session_state.lista_membri[nume] = passw
-                st.success(f"✔️ Membrul '{nume}' a fost adăugat!")
+                st.success(f"✔️ Utilizatorul '{nume}' are acum acces complet!")
                 st.rerun()
         st.markdown('</div>', unsafe_allow_html=True)
                 
     with col_adm2:
         st.markdown('<div class="admin-box">', unsafe_allow_html=True)
-        st.markdown("<h4 style='color: #ffffff; margin-top:0;'>👥 Listă Membri Activi</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color: #ffffff; margin-top:0; font-weight:800; border-bottom: 1px solid rgba(255,0,85,0.15); padding-bottom: 8px;'>👥 MANAGEMENT BAZĂ DATE</h4>", unsafe_allow_html=True)
+        
         for user_nume in list(st.session_state.lista_membri.keys()):
-            c_u, c_b = st.columns()
-            c_u.markdown(f"<p style='margin: 10px 0; color:#cbd5e1;'>👤 <b>{user_nume}</b></p>", unsafe_allow_html=True)
+            c_u, c_b = st.columns([2.5, 1.5])
+            c_u.markdown(f"<p style='margin: 14px 0 0 0; color:#ffffff; font-size:16px;'>👤 Status active: <b style='color:#00ff66;'>{user_nume}</b></p>", unsafe_allow_html=True)
+            
             if user_nume != "admin":
-                if c_b.button("Șterge", key=f"del_{user_nume}"):
+                st.markdown("<div style='margin-top: 5px;'></div>", unsafe_allow_html=True)
+                if c_b.button("REVOCĂ ACCES ❌", key=f"del_{user_nume}"):
                     del st.session_state.lista_membri[user_nume]
-                    st.success("Eliminat!")
+                    st.success("Acces revocat!")
                     st.rerun()
         st.markdown('</div>', unsafe_allow_html=True)
     st.write("---")
 
+# ==============================================================================
+# RECREARE STRUCTURĂ COLOANE INTERFAȚĂ PENTRU PARTEA INFERIOARĂ
+# ==============================================================================
+col_stinga, col_abonamente = st.columns([1.8, 1.2])
