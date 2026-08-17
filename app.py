@@ -28,7 +28,6 @@ st.markdown("""
         font-weight: 700 !important;
     }
 
-    /* Carduri tip sticlă mată în nuanțe verzi închise */
     .glass-box-container {
         background: rgba(8, 20, 14, 0.88) !important;
         border: 1px solid rgba(0, 255, 102, 0.2) !important;
@@ -38,7 +37,6 @@ st.markdown("""
         margin-bottom: 25px !important;
     }
 
-    /* Carduri speciale pentru pachetele din dreapta */
     .vip-card-box {
         background: rgba(10, 25, 18, 0.9) !important;
         border: 1px solid rgba(0, 255, 102, 0.3) !important;
@@ -65,7 +63,6 @@ st.markdown("""
         margin: 4px 0 !important;
     }
 
-    /* Meniu selectare meci */
     div[data-testid="stSelectbox"] div[data-baseweb="select"] {
         background-color: rgba(10, 30, 18, 0.9) !important;
         border: 1px solid #00ff66 !important;
@@ -73,7 +70,6 @@ st.markdown("""
         border-radius: 8px !important;
     }
 
-    /* DESIGN PREMIUM PENTRU GRAFIC / SIMETRIE */
     .stat-container { width: 100%; margin: 0 auto; }
     .stat-row { display: flex; justify-content: space-between; align-items: center; margin: 12px 0; text-align: center; }
     .stat-left-val, .stat-right-val { width: 20%; font-size: 22px; font-weight: 800; color: #ffffff; text-align: center; }
@@ -118,7 +114,6 @@ st.markdown("""
         color: #ffffff;
     }
 
-    /* FORȚARE VIZIBILITATE BUTOANE NATIVE STREAMLIT (VERDE STRĂLUCITOR + PULS) */
     div[data-testid="stLinkButton"] a {
         background: linear-gradient(135deg, #00ff66 0%, #00bc43 100%) !important;
         color: #000000 !important;
