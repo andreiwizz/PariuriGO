@@ -59,41 +59,10 @@ st.markdown("<h1 style='text-align: center; color: #ffffff; font-weight: 800;'>�
 st.write("---")
 
 # 4. Layout Coloane (Stânga liberă pentru algoritm, Dreapta pentru Pachete)
-col_stinga, col_abonamente = st.columns([1.8, 1.2])
-
 with col_abonamente:
-    st.markdown('<h3 style="color: #ffffff; font-weight:800; margin-bottom:15px;">🏆 PACHETE ACCES VIP</h3>', unsafe_allow_html=True)
-    link_stripe = "https://stripe.com"
-    
-    # Pachet LOW
-    st.markdown(f"""<div class="vip-card-box">
-        <h4 style="color:#00ff66; margin:0 0 5px 0;">🟢 PACHET LOW</h4>
-        <h2 style="margin:0 0 15px 0; font-size:28px;">40 RON <span style="font-size:14px; color:#94a3b8;">/ lună</span></h2>
-        <p style="margin:6px 0;">✅ 3 Bilete complet analizate pe săptămână</p>
-        <p style="margin:6px 0;">✅ Selecție exclusivă din ligile mari europene</p>
-        <a class="stripe-btn" href="{link_stripe}" target="_blank">CUMPĂRĂ ACCES LOW 🚀</a>
-    </div>""", unsafe_allow_html=True)
-
-    # Pachet MEDIUM
-    st.markdown(f"""<div class="vip-card-box">
-        <h4 style="color:#ffcc00; margin:0 0 5px 0;">🟡 PACHET MEDIUM</h4>
-        <h2 style="margin:0 0 15px 0; font-size:28px;">70 RON <span style="font-size:14px; color:#94a3b8;">/ lună</span></h2>
-        <p style="margin:6px 0;">✅ 1 Bilet Premium în fiecare zi calendaristică</p>
-        <p style="margin:6px 0;">✅ Algoritm avansat pentru probabilități live</p>
-        <a class="stripe-btn" href="{link_stripe}" target="_blank">CUMPĂRĂ ACCES MEDIUM 🟡</a>
-    </div>""", unsafe_allow_html=True)
-
-    # Pachet HIGH
-    st.markdown(f"""<div class="vip-card-box" style="border: 1px solid rgba(255, 0, 85, 0.45) !important;">
-        <h4 style="color:#ff0055; margin:0 0 5px 0;">🔥 HIGH VIP ELITE</h4>
-        <h2 style="margin:0 0 15px 0; font-size:28px;">120 RON <span style="font-size:14px; color:#94a3b8;">/ lună</span></h2>
-        <p style="margin:6px 0;">✅ Cota 2 VIP zilnică + Proiect dedicat Dublare</p>
-        <p style="margin:6px 0;">✅ Monitorizare live non-stop pe toate sistemele</p>
-        <a class="stripe-btn" href="{link_stripe}" style="background: linear-gradient(135deg, #ff0055 0%, #990033 100%) !important; color:#ffffff !important;" target="_blank">DEBLOCHEAZĂ ACCES HIGH 🔥</a>
-    </div>""", unsafe_allow_html=True)
     st.markdown('<h3 style="color: #ffffff; font-weight:800; margin-bottom:15px;">🏆 SELECȚIE ACCES VIP</h3>', unsafe_allow_html=True)
     
-    # Meniu de selectare dinamică a pachetului
+    # Singurul selector care va controla ce pachet se afișează
     pachet_ales = st.selectbox(
         "Alege tipul de abonament:",
         ["🟢 PACHET LOW", "🟡 PACHET MEDIUM", "🔥 HIGH VIP ELITE"],
@@ -102,7 +71,7 @@ with col_abonamente:
     
     link_stripe = "https://stripe.com" # Înlocuiește cu link-ul tău real de plată
 
-    # Randare dinamică în funcție de ce a selectat utilizatorul
+    # Afișare dinamică bazată strict pe selecție
     if pachet_ales == "🟢 PACHET LOW":
         st.markdown(f"""
         <div class="vip-card-box">
@@ -127,11 +96,12 @@ with col_abonamente:
 
     elif pachet_ales == "🔥 HIGH VIP ELITE":
         st.markdown(f"""
-        <div class="vip-card-box" style="border: 1px solid rgba(255, 0, 85, 0.45) !important;">
+        <div class="vip-card-box">
             <h4 style="color:#ff0055; margin:0 0 5px 0;">🔥 HIGH VIP ELITE</h4>
             <h2 style="margin:0 0 15px 0; font-size:28px;">120 RON <span style="font-size:14px; color:#94a3b8;">/ lună</span></h2>
             <p style="margin:6px 0;">✅ Cota 2 VIP zilnică + Proiect dedicat Dublare</p>
             <p style="margin:6px 0;">✅ Monitorizare live non-stop pe toate sistemele</p>
-            <a class="stripe-btn" href="{link_stripe}" style="background: linear-gradient(135deg, #ff0055 0%, #990033 100%) !important; color:#ffffff !important;" target="_blank">DEBLOCHEAZĂ ACCES HIGH 🔥</a>
+            <a class="stripe-btn" href="{link_stripe}" target="_blank">DEBLOCHEAZĂ ACCES HIGH 🔥</a>
         </div>
         """, unsafe_allow_html=True)
+
