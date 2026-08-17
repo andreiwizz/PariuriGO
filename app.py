@@ -50,8 +50,10 @@ st.markdown(f"""
         font-weight: 700 !important;
     }}
     
-    button div {{ font-size: 0px !important; }}
-    button div:before {{ font-size: 16px !important; }}
+    /* FIX DEFINITIV TEXT BUTOANE (REZOLVĂ BUG-UL CU CERCULEȚELE) */
+    div.stButton > button div {{
+        font-size: 15px !important;
+    }}
     
     .vip-card-box {{
         background: linear-gradient(135deg, rgba(6, 20, 13, 0.75) 0%, rgba(3, 10, 6, 0.9) 100%) !important;
