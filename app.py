@@ -445,7 +445,13 @@ else:
     with col_abonamente:
         if not st.session_state.vip:
             st.markdown("<div style='margin-top: 25px;'></div>", unsafe_allow_html=True)
-           if st.button("🔐 DEBLOCHEAZĂ PORTAL VIP", key="btn_trigger_fullscreen_nou"):
+              # ==============================================================================
+    # RENDERING ELEMENTE IN COLOANA DIN DREAPTA (ALINIAT PERFECT)
+    # ==============================================================================
+    with col_abonamente:
+        if not st.session_state.vip:
+            st.markdown("<div style='margin-top: 25px;'></div>", unsafe_allow_html=True)
+            if st.button("🔐 DEBLOCHEAZĂ PORTAL VIP", key="btn_trigger_fullscreen_final"):
                 st.session_state.ecran_login = True
                 st.rerun()
         else:
