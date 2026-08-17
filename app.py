@@ -336,4 +336,46 @@ col_stinga, col_abonamente = st.columns([1.8, 1.2])
             <div class="bar-wrapper"><div class="bar-title-flex"><span>🛡️ Tendință Peste 3.5 Cartonașe</span><span>{m['w_c35']}</span></div><div class="bar-container-custom"><div class="bar-fill-neon-custom" style="width: {m['w_c35']};"></div></div></div>
         </div>
         """, unsafe_allow_html=True)
+    # ==============================================================================
+    # WIDGET INTELIGENT ALGORITM (ALINIAT PERFECT PENTRU BLOCUL ELSE)
+    # ==============================================================================
+    with col_stinga:
+        st.markdown('<h3 style="color: #00ff66; font-weight:800; margin-bottom:15px;">📊 MODUL INTELIGENT ALGORITM</h3>', unsafe_allow_html=True)
+        
+        # Meniu de selectare dinamic
+        meci_ales = st.selectbox("🎯 Partide actualizate astăzi:", list(meciuri_date_zi.keys()), key="meci_selector_zi")
+        m = meciuri_date_zi[meci_ales]
 
+        # Structura vizuală premium a widget-ului
+        st.markdown(f"""
+        <div class="premium-card">
+            <h4 style="color:#00ff66; margin:0; font-weight:800;">SISTEM PARIURIGO • RECOMANDARE PREMIUM</h4>
+            <h2 style="margin:8px 0 5px 0; font-size:32px; color:#ffffff;">{meci_ales}</h2>
+            <p style="color:#94a3b8; font-size:14px; text-transform:uppercase; margin-bottom:25px;">🏆 {m['liga']} • {data_azi}</p>
+            
+            <!-- Grid Cifre Cibernetice -->
+            <div class="cyber-grid">
+                <div class="cyber-grid-item"><div class="cyber-num">{m['g_gz']}</div><div class="cyber-label">Goluri Gazde</div></div>
+                <div class="cyber-grid-item"><div class="cyber-num">{m['med_gz']} : {m['med_os']}</div><div class="cyber-label">Medie Goluri</div></div>
+                <div class="cyber-grid-item"><div class="cyber-num">{m['g_os']}</div><div class="cyber-label">Goluri Oaspeți</div></div>
+                <div class="cyber-grid-item"><div class="cyber-num">{m['gp_gz']}</div><div class="cyber-label">Goluri Primite Gz</div></div>
+                <div class="cyber-grid-item"><div class="cyber-num" style="color:#475569;">VS</div><div class="cyber-label">Status</div></div>
+                <div class="cyber-grid-item"><div class="cyber-num">{m['gp_os']}</div><div class="cyber-label">Goluri Primite Os</div></div>
+            </div>
+
+            <h4 style="color:#ffffff; margin-top:30px; border-bottom:1px solid rgba(0,255,102,0.15); padding-bottom:10px; font-weight:800;">📋 Probabilități Evenimente (Piața HT/ST):</h4>
+            <div class="proc-row"><span class="proc-text">Peste 0.5 HT (Prima Repriză)</span><span class="proc-badge">{m['ht_gz']}</span></div>
+            <div class="proc-row"><span class="proc-text">Peste 0.5 ST (A doua Repriză)</span><span class="proc-badge">{m['st_gz']}</span></div>
+            <div class="proc-row"><span class="proc-text">Peste 1.5 Goluri Finale</span><span class="proc-badge">{m['p15_gz']}</span></div>
+            <div class="proc-row"><span class="proc-text">Peste 2.5 Goluri Finale</span><span class="proc-badge">{m['p25_gz']}</span></div>
+            <div class="proc-row"><span class="proc-text">Ambele echipe marchează (GG)</span><span class="proc-badge">{m['gg_gz']}</span></div>
+
+            <h4 style="color:#ffffff; margin-top:30px; padding-bottom:5px; font-weight:800;">📈 Bare Evoluție Forță Algoritm:</h4>
+            <div class="bar-wrapper"><div class="bar-title-flex"><span>🔥 Probabilitate Peste 1.5 Goluri</span><span>{m['w_p15']}</span></div><div class="bar-container-custom"><div class="bar-fill-neon-custom" style="width: {m['w_p15']};"></div></div></div>
+            <div class="bar-wrapper"><div class="bar-title-flex"><span>🔥 Probabilitate Peste 2.5 Goluri</span><span>{m['w_p25']}</span></div><div class="bar-container-custom"><div class="bar-fill-neon-custom" style="width: {m['w_p25']};"></div></div></div>
+            <div class="bar-wrapper"><div class="bar-title-flex"><span>⚡ Șanse Gol în Prima Repriză (R1)</span><span>{m['w_p05r1']}</span></div><div class="bar-container-custom"><div class="bar-fill-neon-custom" style="width: {m['w_p05r1']};"></div></div></div>
+            <div class="bar-wrapper"><div class="bar-title-flex"><span>⚡ Șanse Ambele Marchează (GG)</span><span>{m['w_gg']}</span></div><div class="bar-container-custom"><div class="bar-fill-neon-custom" style="width: {m['w_gg']};"></div></div></div>
+            <div class="bar-wrapper"><div class="bar-title-flex"><span>🛡️ Tendință Peste 3.5 Cartonașe</span><span>{m['w_c35']}</span></div><div class="bar-container-custom"><div class="bar-fill-neon-custom" style="width: {m['w_c35']};"></div></div></div>
+        </div>
+        """, unsafe_allow_html=True)
+   
