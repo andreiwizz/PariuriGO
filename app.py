@@ -175,6 +175,7 @@ with col_abonamente:
         """, unsafe_allow_html=True)
         st.link_button("CERE CONT DE ACCES 💬", "https://t.me", use_container_width=True)
     # PASUL 2: ALGORITM & STATISTICI (Apare când dau click pe pasul 2)
+        # PASUL 2: ALGORITM & STATISTICI
     elif pas_aplicatie == "📊 Algoritm & Statistici Live":
         meci_ales = st.selectbox("🎯 Schimbă meciul:", list(meciuri_date.keys()))
         m = meciuri_date[meci_ales]
@@ -200,6 +201,93 @@ with col_abonamente:
         st.markdown('</div>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
-    # PASUL 3: STREAM MECIURI LIVE (Apare când dau click pe pasul 3)
+    # PASUL 3: STREAM MECIURI LIVE
     elif pas_aplicatie == "🌍 Toate Meciurile Live":
         st.markdown('<div style="width:100%; height:420px; overflow:auto; background:rgba(0,0,0,0.8); border-radius:12px; border:1px solid #1a0f30; padding:10px; margin-bottom: 25px;"><iframe src="https://scorebat.com" frameborder="0" width="100%" height="390px" allowfullscreen allow="autoplay; fullscreen"></iframe></div>', unsafe_allow_html=True)
+
+with col_abonamente:
+    st.subheader("🏆 Pachete Acces VIP")
+    link_stripe = "https://stripe.com"
+    
+    st.markdown('<div class="vip-card-box" style="border-color: #b042ff !important;">', unsafe_allow_html=True)
+    st.markdown("<h3 style='color:#b042ff; margin:0; font-size:24px;'>🟢 PACHET LOW</h3>", unsafe_allow_html=True)
+    st.markdown("<h2 style='margin:10px 0; font-size:36px; color:#ffffff;'>40 RON <span style='font-size:16px; color:#a0aec0;'>/ lună</span></h2>", unsafe_allow_html=True)
+    st.write("📋 **Beneficii incluse:**")
+    st.write("✅ 3 Bilete analizate / săptămână")
+    st.write("✅ Acces grup comunitate chat")
+    st.write("")
+    st.markdown('</div>', unsafe_allow_html=True)
+    st.link_button("Abonare LOW 🚀", link_stripe, use_container_width=True)
+    
+    st.markdown('<div class="vip-card-box" style="border-color: #eab308 !important;">', unsafe_allow_html=True)
+    st.markdown("<h3 style='color:#eab308; margin:0; font-size:24px;'>🟡 PACHET MEDIUM</h3>", unsafe_allow_html=True)
+    st.markdown("<h2 style='margin:10px 0; font-size:36px; color:#ffffff;'>70 RON <span style='font-size:16px; color:#a0aec0;'>/ lună</span></h2>", unsafe_allow_html=True)
+    st.write("📋 **Beneficii incluse:**")
+    st.write("✅ 1 Bilet Premium în fiecare zi")
+    st.write("✅ Notificări instant Telegram")
+    st.write("")
+    st.markdown('</div>', unsafe_allow_html=True)
+    st.link_button("Abonare MEDIUM 🟡", link_stripe, use_container_width=True)
+    
+    st.markdown('<div class="vip-card-box" style="border-color: #ef4444 !important;">', unsafe_allow_html=True)
+    st.markdown("<h3 style='color:#ef4444; margin:0; font-size:24px;'>🔥 HIGH VIP ELITE</h3>", unsafe_allow_html=True)
+    st.markdown("<h2 style='margin:10px 0; font-size:36px; color:#ffffff;'>120 RON <span style='font-size:14px; color:#a0aec0;'>/ lună</span></h2>", unsafe_allow_html=True)
+    st.write("📋 **Beneficii incluse:**")
+    st.write("✅ Cota 2 VIP zilnică + Proiect Dublare")
+    st.write("✅ Consultanță 1-la-1 privată")
+    st.write("")
+    st.markdown('</div>', unsafe_allow_html=True)
+    st.link_button("Deblochează HIGH 🔥", link_stripe, use_container_width=True)
+
+    st.write("---")
+    st.markdown('<p style="font-size: 20px; color: #b042ff; font-weight:800; margin-bottom: 5px;">🔐 PORTALUL TĂU VIP</p>', unsafe_allow_html=True)
+    
+    if st.session_state.vip:
+        st.markdown("""
+        <div class="vip-card-box" style="border-color: #00ff66 !important; background: rgba(0,255,102,0.03) !important;">
+            <h4 style="color:#00ff66; margin:0; text-align:center;">🔓 ACCES DEBLOCAT</h4>
+            <p style="font-size:14px; color:#cbd5e1; text-align:center; margin:10px 0;">Contul tău este activ. Apasă butonul de mai jos pentru a intra pe canalul oficial cu ponturi!</p>
+        </div>
+        """, unsafe_allow_html=True)
+        st.link_button("ACCESEAZĂ CANALUL TELEGRAM VIP 🔓", "https://t.me", use_container_width=True)
+    else:
+        st.markdown("""
+        <div class="vip-card-box" style="border-color: #ef4444 !important; background: rgba(255,0,0,0.02) !important;">
+            <h4 style="color:#ef4444; margin:0; text-align:center;">🔒 ZONĂ RESTRÂNSĂ</h4>
+            <p style="font-size:14px; color:#a0aec0; text-align:center; margin:10px 0;">Acest panou conține biletul zilei și cotele premium din algoritm. Conectează-te din meniul din stânga pentru deblocare.</p>
+        </div>
+        """, unsafe_allow_html=True)
+        st.link_button("CERE CONT DE ACCES 💬", "https://t.me", use_container_width=True)
+
+# ================== HISTORIC ȘI NOTIFICĂRI JOS ==================
+st.write("---")
+st.markdown('<p style="font-size: 22px; color: #b042ff; font-weight:800; margin-bottom: 10px;">🟢 ISTORIC BILETE ȘI NOTIFICĂRI RECENTE PARIURIGO</p>', unsafe_allow_html=True)
+
+col_b1, col_b2, col_b3 = st.columns(3)
+with col_b1:
+    st.markdown("""
+    <div class="glass-box-container" style="border-color: rgba(0, 255, 102, 0.4) !important;">
+        <h4 style="color:#00ff66; margin:0;">✅ BILET CASTIGATOR GATA</h4>
+        <p style="font-size:24px; font-weight:800; margin:10px 0;">COTA 2.45 <span style="font-size:14px; color:#a0aec0;">(Ieri)</span></p>
+        <p style="font-size:14px; color:#cbd5e1; margin:0;">• Real Madrid vs Barcelona -> Peste 2.5<br>• Man. City vs Liverpool -> GG</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col_b2:
+    st.markdown("""
+    <div class="glass-box-container" style="border-color: rgba(0, 255, 102, 0.4) !important;">
+        <h4 style="color:#00ff66; margin:0;">✅ DUBLARE REUȘITĂ</h4>
+        <p style="font-size:24px; font-weight:800; margin:10px 0;">COTA 2.00 <span style="font-size:14px; color:#a0aec0;">(17.08)</span></p>
+        <p style="font-size:14px; color:#cbd5e1; margin:0;">• Inter vs Milan -> Peste 1.5 goluri R2<br>• FCSB vs Rapid -> Peste 0.5 HT</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col_b3:
+    st.markdown("""
+    <div class="glass-box-container" style="border-color: rgba(176, 66, 255, 0.4) !important;">
+        <h4 style="color:#b042ff; margin:0;">📢 ANUNȚ IMPORTANT VIP</h4>
+        <p style="font-size:18px; font-weight:800; margin:10px 0;">BILETE DE AZI LIVE</p>
+        <p style="font-size:14px; color:#cbd5e1; margin:0;">Toate analizele și cotele din algoritm pentru meciurile de diseară au fost trimise instant pe Telegramul VIP!</p>
+    </div>
+    """, unsafe_allow_html=True)
+
