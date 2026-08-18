@@ -82,3 +82,69 @@ if st.session_state.admin:
             st.rerun()
 
 col_meciuri, col_abonamente = st.columns([1.3, 0.7], gap="large")
+with col_abonamente:
+    st.subheader("🏆 Pachete Acces VIP")
+    link_stripe = "https://stripe.com"
+    
+    st.markdown('<div class="vip-card-box" style="border-color: #b042ff !important;">', unsafe_allow_html=True)
+    st.markdown("<h3 style='color:#b042ff; margin:0; font-size:24px;'>🟢 PACHET LOW</h3>", unsafe_allow_html=True)
+    st.markdown("<h2 style='margin:10px 0; font-size:36px; color:#ffffff;'>40 RON <span style='font-size:16px; color:#a0aec0;'>/ lună</span></h2>", unsafe_allow_html=True)
+    st.write("📋 **Beneficii incluse:**")
+    st.write("✅ 3 Bilete analizate / săptămână")
+    st.write("✅ Acces grup comunitate chat")
+    st.write("")
+    st.markdown('</div>', unsafe_allow_html=True)
+    st.link_button("Abonare LOW 🚀", link_stripe, use_container_width=True)
+    
+    st.markdown('<div class="vip-card-box" style="border-color: #eab308 !important;">', unsafe_allow_html=True)
+    st.markdown("<h3 style='color:#eab308; margin:0; font-size:24px;'>🟡 PACHET MEDIUM</h3>", unsafe_allow_html=True)
+    st.markdown("<h2 style='margin:10px 0; font-size:36px; color:#ffffff;'>70 RON <span style='font-size:16px; color:#a0aec0;'>/ lună</span></h2>", unsafe_allow_html=True)
+    st.write("📋 **Beneficii incluse:**")
+    st.write("✅ 1 Bilet Premium în fiecare zi")
+    st.write("✅ Notificări instant Telegram")
+    st.write("")
+    st.markdown('</div>', unsafe_allow_html=True)
+    st.link_button("Abonare MEDIUM 🟡", link_stripe, use_container_width=True)
+    
+    st.markdown('<div class="vip-card-box" style="border-color: #ef4444 !important;">', unsafe_allow_html=True)
+    st.markdown("<h3 style='color:#ef4444; margin:0; font-size:24px;'>🔥 HIGH VIP ELITE</h3>", unsafe_allow_html=True)
+    st.markdown("<h2 style='margin:10px 0; font-size:36px; color:#ffffff;'>120 RON <span style='font-size:14px; color:#a0aec0;'>/ lună</span></h2>", unsafe_allow_html=True)
+    st.write("📋 **Beneficii incluse:**")
+    st.write("✅ Cota 2 VIP zilnică + Dublare")
+    st.write("✅ Consultanță 1-la-1 privată")
+    st.write("")
+    st.markdown('</div>', unsafe_allow_html=True)
+    st.link_button("Deblochează HIGH 🔥", link_stripe, use_container_width=True)
+
+# ================== PANOUL SPECIAL DE IERI (AȘEZAT JOS) ==================
+st.write("---")
+st.markdown('<p style="font-size: 22px; color: #b042ff; font-weight:800; margin-bottom: 10px;">🟢 ISTORIC BILETE ȘI NOTIFICĂRI RECENTE PARIURIGO</p>', unsafe_allow_html=True)
+
+col_b1, col_b2, col_b3 = st.columns(3)
+
+with col_b1:
+    st.markdown("""
+    <div class="glass-box-container" style="border-color: rgba(0, 255, 102, 0.4) !important;">
+        <h4 style="color:#00ff66; margin:0;">✅ BILET CASTIGATOR GATA</h4>
+        <p style="font-size:24px; font-weight:800; margin:10px 0;">COTA 2.45 <span style="font-size:14px; color:#a0aec0;">(Ieri)</span></p>
+        <p style="font-size:14px; color:#cbd5e1; margin:0;">• Real Madrid vs Barcelona -> Peste 2.5<br>• Man. City vs Liverpool -> GG</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col_b2:
+    st.markdown("""
+    <div class="glass-box-container" style="border-color: rgba(0, 255, 102, 0.4) !important;">
+        <h4 style="color:#00ff66; margin:0;">✅ DUBLARE REUȘITĂ</h4>
+        <p style="font-size:24px; font-weight:800; margin:10px 0;">COTA 2.00 <span style="font-size:14px; color:#a0aec0;">(17.08)</span></p>
+        <p style="font-size:14px; color:#cbd5e1; margin:0;">• Inter vs Milan -> Peste 1.5 goluri R2<br>• FCSB vs Rapid -> Peste 0.5 HT</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col_b3:
+    st.markdown("""
+    <div class="glass-box-container" style="border-color: rgba(176, 66, 255, 0.4) !important;">
+        <h4 style="color:#b042ff; margin:0;">📢 ANUNȚ IMPORTANT VIP</h4>
+        <p style="font-size:18px; font-weight:800; margin:10px 0;">BILETE DE AZI LIVE</p>
+        <p style="font-size:14px; color:#cbd5e1; margin:0;">Toate analizele și cotele din algoritm pentru meciurile de diseară au fost trimise instant pe Telegramul VIP!</p>
+    </div>
+    """, unsafe_allow_html=True)
