@@ -148,3 +148,29 @@ with col_b3:
         <p style="font-size:14px; color:#cbd5e1; margin:0;">Toate analizele și cotele din algoritm pentru meciurile de diseară au fost trimise instant pe Telegramul VIP!</p>
     </div>
     """, unsafe_allow_html=True)
+# ================== PORTAL VIP PORTABIL (DEBLOCAT ÎN DREAPTA) ==================
+with col_abonamente:
+    st.write("---")
+    st.markdown('<p style="font-size: 20px; color: #b042ff; font-weight:800; margin-bottom: 5px;">🔐 PORTALUL TĂU VIP</p>', unsafe_allow_html=True)
+    
+    # Dacă utilizatorul s-a logat cu succes din sidebar
+    if st.session_state.vip:
+        st.markdown("""
+        <div class="vip-card-box" style="border-color: #00ff66 !important; background: rgba(0,255,102,0.03) !important;">
+            <h4 style="color:#00ff66; margin:0; text-align:center;">🔓 ACCES DEBLOCAT</h4>
+            <p style="font-size:14px; color:#cbd5e1; text-align:center; margin:10px 0;">Contul tău este activ. Apasă butonul de mai jos pentru a intra pe canalul oficial cu ponturi!</p>
+        </div>
+        """, unsafe_allow_html=True)
+        # Aici pui link-ul vostru real de la grupul privat de Telegram unde stau clienții plătitori
+        link_grup_privat_telegram = "https://t.me"
+        st.link_button("ACCESEAZĂ CANALUL TELEGRAM VIP 🔓", link_grup_privat_telegram, use_container_width=True)
+    
+    # Dacă utilizatorul NU este logat încă
+    else:
+        st.markdown("""
+        <div class="vip-card-box" style="border-color: #ef4444 !important; background: rgba(255,0,0,0.02) !important;">
+            <h4 style="color:#ef4444; margin:0; text-align:center;">🔒 ZONĂ RESTRÂNSĂ</h4>
+            <p style="font-size:14px; color:#a0aec0; text-align:center; margin:10px 0;">Acest panou conține biletul zilei și cotele premium din algoritm. Conectează-te din meniul din stânga pentru deblocare.</p>
+        </div>
+        """, unsafe_allow_html=True)
+        st.link_button("CERE CONT DE ACCES 💬", "https://t.me", use_container_width=True)
