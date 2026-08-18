@@ -1,23 +1,56 @@
 import streamlit as st
+import base64
+import os
 
 # 1. Configurare pagină (Full Screen)
 st.set_page_config(page_title="PariuriGo • Live Center", page_icon="⚽", layout="wide")
 
-# 2. Injectare CSS pentru a reproduce designul premium și culorile din imagine
+# Funcție pentru a converti imaginea locală într-un fundal CSS
+def adauga_imagine_fundal(nume_fisier):
+    if os.path.exists(nume_fisier):
+        with open(nume_fisier, "rb") as image_file:
+            encoded_string = base64.b64encode(image_file.read()).decode()
+        st.markdown(
+            f"""
+            <style>
+            .stApp {{
+                background-image: linear-gradient(rgba(5, 11, 14, 0.85), rgba(5, 11, 14, 0.85)), url("data:image/jpg;base64,{encoded_string}");
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed;
+                color: #ffffff;
+                font-family: 'Segoe UI', sans-serif;
+            }}
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+    else:
+        # Fallback în caz că imaginea nu este găsită încă pe GitHub
+        st.markdown(
+            """
+            <style>
+            .stApp { background-color: #050b0e; color: #ffffff; font-family: 'Segoe UI', sans-serif; }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+
+# Aplică fundalul din fișierul tău
+adauga_imagine_fundal("fundal.jpg")
+
+# 2. Injectare restul de stiluri CSS pentru carduri (păstrând transparența peste fundal)
 st.markdown("""
     <style>
-    /* Fundalul principal și textul */
-    .stApp { background-color: #050b0e; color: #ffffff; font-family: 'Segoe UI', sans-serif; }
-    
     /* Header principal */
     .main-header { font-size: 28px; font-weight: bold; letter-spacing: 1px; color: #ffffff; margin-bottom: 5px; }
-    .sub-header-text { color: #5f7582; font-size: 11px; margin-bottom: 30px; }
+    .sub-header-text { color: #8a9da8; font-size: 11px; margin-bottom: 30px; }
     
     /* Titluri secțiuni */
     .section-title { font-size: 16px; font-weight: bold; color: #ffffff; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
     
-    /* Card meci Live (Oțelul vs Craiova) */
-    .live-card { background-color: #0a1116; border: 1px solid #14222b; border-radius: 8px; padding: 20px; margin-bottom: 20px; position: relative; }
+    /* Card meci Live (Oțelul vs Craiova) - fundal ușor transparent pentru a lăsa poza să se vadă discret */
+    .live-card { background-color: rgba(10, 17, 22, 0.9); border: 1px solid #14222b; border-radius: 8px; padding: 20px; margin-bottom: 20px; position: relative; }
     .live-badge { background-color: #4c1c1f; color: #ff4d4d; font-size: 11px; font-weight: bold; padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 15px; }
     .league-tag { float: right; color: #5f7582; font-size: 11px; font-weight: bold; text-transform: uppercase; }
     
@@ -38,7 +71,7 @@ st.markdown("""
     .ai-content { color: #ffffff; font-size: 13px; font-weight: 500; }
     
     /* Card meci Pre-meci (Corvinul vs CFR Cluj) */
-    .prematch-card { background-color: #0a1116; border: 1px solid #14222b; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+    .prematch-card { background-color: rgba(10, 17, 22, 0.9); border: 1px solid #14222b; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
     .prematch-badge { background-color: #162a35; color: #00bfff; font-size: 11px; font-weight: bold; padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 15px; }
     .prematch-teams { text-align: center; font-size: 18px; font-weight: bold; margin: 20px 0; color: #ffffff; }
     .vs-text { color: #5f7582; font-size: 14px; font-weight: normal; margin: 0 15px; }
@@ -53,7 +86,7 @@ st.markdown("""
     .tipster-content { color: #ffffff; font-size: 13px; font-weight: 500; }
     
     /* Coloana din dreapta - Card VIP */
-    .vip-card { background-color: #0a1116; border: 1px solid #14222b; border-radius: 8px; padding: 25px; text-align: center; }
+    .vip-card { background-color: rgba(10, 17, 22, 0.9); border: 1px solid #14222b; border-radius: 8px; padding: 25px; text-align: center; }
     .vip-pills { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; font-size: 11px; font-weight: bold; }
     .pill-low { color: #00ff87; }
     .pill-med { color: #ffaa00; }
@@ -86,7 +119,7 @@ st.markdown('<div class="main-header">⚽ PARIURIGO • LIVE CENTER</div>', unsa
 st.markdown('<div class="sub-header-text">Meciurile Reale de Astăzi • Design Premium Stadium-Watermark</div>', unsafe_allow_html=True)
 
 # 4. Structura pe două coloane (Stânga: 70% Meciuri, Dreapta: 30% VIP)
-col_stanga, col_dreapta = st.columns([7, 3])
+col_stanga, col_dreapta = st.columns([0.7, 0.3])
 
 with col_stanga:
     st.markdown('<div class="section-title">🏟️ Meciurile Zilei (SuperLiga)</div>', unsafe_allow_html=True)
