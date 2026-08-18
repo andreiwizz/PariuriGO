@@ -1,4 +1,4 @@
-import streamlit st
+import streamlit as st
 import base64
 from datetime import datetime
 from baza import aplica_stiluri_champions, preia_baza_date
@@ -83,7 +83,7 @@ col_meciuri, col_abonamente = st.columns([1.3, 0.7], gap="large")
 
 with col_meciuri:
     st.markdown('<p style="font-size: 22px; color: #b042ff; font-weight:800; margin-bottom: 10px;">📱 APLICAȚIA INTERACTIVĂ PARIURIGO</p>', unsafe_allow_html=True)
-    pas_aplicatie = st.radio("🧭 Navigare Pasi Aplicație:", ["🔥 Oferta Zilei (3 Zile Moca)", "📊 Algoritm & Statistici Live", "🌍 Toate Meciurile Live"], horizontal=True)
+    pas_aplicatie = st.radio("🧭 Navigare Pasi Aplicatie:", ["🔥 Oferta Zilei (3 Zile Moca)", "📊 Algoritm & Statistici Live", "🌍 Toate Meciurile Live"], horizontal=True)
     st.write("---")
     
     if pas_aplicatie == "🔥 Oferta Zilei (3 Zile Moca)":
