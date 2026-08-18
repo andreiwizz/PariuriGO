@@ -79,3 +79,138 @@ if st.session_state.admin:
             st.rerun()
 
 col_meciuri, col_abonamente = st.columns([1.3, 0.7], gap="large")
+with col_meciuri:
+    st.markdown('<p style="font-size: 22px; color: #b042ff; font-weight:800; margin-bottom: 10px;">📱 APLICAȚIA INTERACTIVĂ PARIURIGO</p>', unsafe_allow_html=True)
+    
+    # Selectorul automat pentru programul de Azi sau de Mâine
+    selectie_ziua = st.radio("📅 Selectează programul meciurilor:", ["Azi", "Mâine"], horizontal=True, key="sel_zi")
+    meciuri_date = descarca_meciuri_zile(selectie_ziua)
+    
+    st.write("---")
+    pas_aplicatie = st.radio("Compass Navigare Pași:", ["🔥 Oferta Zilei (3 Zile Moca)", "📊 Algoritm & Statistici Live", "🌍 Toate Meciurile Live"], horizontal=True, key="pasi_app")
+    st.write("---")
+    
+    if pas_aplicatie == "🔥 Oferta Zilei (3 Zile Moca)":
+        st.markdown("""
+        <div class="glass-box-container" style="border-color: #ff9900 !important; background: rgba(255,153,0,0.03) !important;">
+            <h2 style="color:#ff9900; text-align:center; font-size:32px;">🎁 CADOU: 3 ZILE DE PROBĂ GRATUITE!</h2>
+            <p style="font-size:18px; text-align:center; margin:15px 0; color:#cbd5e1;">Vrei să testezi algoritmul PariuriGO fără să plătești nimic? Îți oferim acces complet timp de 72 de ore pe canalul nostru VIP!</p>
+            <p style="text-align:center; font-size:15px; color:#a0aec0;">• Bilete zilnice incluse • Notificări instant • Fără obligații</p>
+        </div>
+        """, unsafe_allow_html=True)
+        st.link_button("💥 RECLAMĂ CELE 3 ZILE GRATUITE PE TELEGRAM", "https://t.me", use_container_width=True, key="btn_trial")
+    
+    elif pas_aplicatie == "📊 Algoritm & Statistici Live":
+        lista_meciuri_disponibile = list(meciuri_date.keys())
+        meci_ales = st.selectbox("🎯 Schimbă meciul selectat din listă:", lista_meciuri_disponibile, key="sel_meci_api")
+        m = meciuri_date[meci_ales]
+        
+        st.markdown('<div class="glass-box-container">', unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align:center; color:#b042ff; margin: 5px 0; font-size:32px; font-weight:800;'>"+meci_ales+"</h2>", unsafe_allow_html=True)
+        st.markdown("<p style='text-align:center; color:#cbd5e1; font-size:14px; font-weight:700;'>🏆 "+m['liga']+" &bull; "+data_azi+"</p>", unsafe_allow_html=True)
+        st.markdown('<hr style="border-color: #221545;">', unsafe_allow_html=True)
+        
+        st.markdown('<div class="stat-container">', unsafe_allow_html=True)
+        st.markdown('<div class="stat-row"><div class="stat-left-val">'+m["g_gz"]+'</div><div class="stat-center-label">Total goluri marcate</div><div class="stat-right-val">'+m["g_os"]+'</div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="stat-row"><div class="stat-left-val">'+m["med_gz"]+'</div><div class="stat-center-label">Medie goluri</div><div class="stat-right-val">'+m["med_os"]+'</div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="stat-row"><div class="stat-left-val">'+m["gp_gz"]+'</div><div class="stat-center-label">Goluri primite</div><div class="stat-right-val">'+m["gp_os"]+'</div></div>', unsafe_allow_html=True)
+        st.markdown('<hr style="border-color: #221545;">', unsafe_allow_html=True)
+        st.markdown('<div class="stat-row"><div class="stat-left-val"><span class="mov-badge-tiktok">'+m["ht_gz"]+'</span></div><div class="stat-center-label">Peste 0.5 HT</div><div class="stat-right-val"><span class="mov-badge-tiktok">'+m["ht_os"]+'</span></div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="stat-row"><div class="stat-left-val"><span class="mov-badge-tiktok">'+m["st_gz"]+'</span></div><div class="stat-center-label">Peste 0.5 ST</div><div class="stat-right-val"><span class="mov-badge-tiktok">'+m["st_os"]+'</span></div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="stat-row"><div class="stat-left-val"><span class="mov-badge-tiktok">'+m["p15_gz"]+'</span></div><div class="stat-center-label">Peste 1.5 goluri</div><div class="stat-right-val"><span class="mov-badge-tiktok">'+m["p15_os"]+'</span></div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="stat-row"><div class="stat-left-val" style="color:#b042ff; font-size:20px;">'+m["p25_gz"]+'</div><div class="stat-center-label">Peste 2.5 goluri</div><div class="stat-right-val" style="color:#b042ff; font-size:20px;">'+m["p25_os"]+'</div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="stat-row"><div class="stat-left-val" style="color:#b042ff; font-size:20px;">'+m["gg_gz"]+'</div><div class="stat-center-label">Ambele marchează</div><div class="stat-right-val" style="color:#b042ff; font-size:20px;">'+m["gg_os"]+'</div></div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
+        
+        st.markdown('<hr style="border-color: #221545; margin: 20px 0;">', unsafe_allow_html=True)
+        st.markdown('<div class="bar-wrapper"><div class="bar-title-flex"><span>Peste 1.5:</span></div><div class="bar-container-custom"><div class="bar-fill-mov-tiktok" style="width: '+m["w_p15"]+';"></div></div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="bar-wrapper"><div class="bar-label">Peste 2.5:</div><div class="bar-container-custom"><div class="bar-fill-mov-tiktok" style="width: '+m["w_p25"]+';"></div></div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="bar-wrapper"><div class="bar-label">Peste 0.5 R1:</div><div class="bar-container-custom"><div class="bar-fill-mov-tiktok" style="width: '+m["w_p05r1"]+';"></div></div></div>', unsafe_allow_html=True)
+        st.markdown('</div></div>', unsafe_allow_html=True)
+
+    elif pas_aplicatie == "🌍 Toate Meciurile Live":
+        st.markdown('<div style="width:100%; height:420px; overflow:auto; background:rgba(0,0,0,0.8); border-radius:12px; border:1px solid #1a0f30; padding:10px; margin-bottom: 25px;"><iframe src="https://scorebat.com" frameborder="0" width="100%" height="390px" allowfullscreen allow="autoplay; fullscreen"></iframe></div>', unsafe_allow_html=True)
+with col_abonamente:
+    st.subheader("🏆 Pachete Acces VIP")
+    link_stripe = "https://stripe.com"
+    
+    st.markdown('<div class="vip-card-box" style="border-color: #b042ff !important;">', unsafe_allow_html=True)
+    st.markdown("<h3 style='color:#b042ff; margin:0; font-size:24px;'>🟢 PACHET LOW</h3>", unsafe_allow_html=True)
+    st.markdown("<h2 style='margin:10px 0; font-size:36px; color:#ffffff;'>40 RON <span style='font-size:16px; color:#a0aec0;'>/ luna</span></h2>", unsafe_allow_html=True)
+    st.write("📋 **Beneficii incluse:**")
+    st.write("✅ 3 Bilete analizate / saptamana")
+    st.write("✅ Acces grup comunitate chat")
+    st.write("")
+    st.markdown('</div>', unsafe_allow_html=True)
+    st.link_button("Abonare LOW 🚀", link_stripe, use_container_width=True, key="stripe_low")
+    
+    st.markdown('<div class="vip-card-box" style="border-color: #eab308 !important;">', unsafe_allow_html=True)
+    st.markdown("<h3 style='color:#eab308; margin:0; font-size:24px;'>🟡 PACHET MEDIUM</h3>", unsafe_allow_html=True)
+    st.markdown("<h2 style='margin:10px 0; font-size:36px; color:#ffffff;'>70 RON <span style='font-size:16px; color:#a0aec0;'>/ luna</span></h2>", unsafe_allow_html=True)
+    st.write("📋 **Beneficii incluse:**")
+    st.write("✅ 1 Bilet Premium in fiecare zi")
+    st.write("✅ Notificari instant Telegram")
+    st.write("")
+    st.markdown('</div>', unsafe_allow_html=True)
+    st.link_button("Abonare MEDIUM 🟡", link_stripe, use_container_width=True, key="stripe_med")
+    
+    st.markdown('<div class="vip-card-box" style="border-color: #ef4444 !important;">', unsafe_allow_html=True)
+    st.markdown("<h3 style='color:#ef4444; margin:0; font-size:24px;'>🔥 HIGH VIP ELITE</h3>", unsafe_allow_html=True)
+    st.markdown("<h2 style='margin:10px 0; font-size:36px; color:#ffffff;'>120 RON <span style='font-size:14px; color:#a0aec0;'>/ luna</span></h2>", unsafe_allow_html=True)
+    st.write("📋 **Beneficii incluse:**")
+    st.write("✅ Cota 2 VIP zilnica + Proiect Dublare")
+    st.write("✅ Consultanta 1-la-1 privata")
+    st.write("")
+    st.markdown('</div>', unsafe_allow_html=True)
+    st.link_button("Deblocheaza HIGH 🔥", link_stripe, use_container_width=True, key="stripe_high")
+
+    st.write("---")
+    st.markdown('<p style="font-size: 20px; color: #b042ff; font-weight:800; margin-bottom: 5px;">🔐 PORTALUL TĂU VIP</p>', unsafe_allow_html=True)
+    if st.session_state.vip:
+        st.markdown("""
+        <div class="vip-card-box" style="border-color: #00ff66 !important; background: rgba(0,255,102,0.03) !important;">
+            <h4 style="color:#00ff66; margin:0; text-align:center;">🔓 ACCES DEBLOCAT</h4>
+            <p style="font-size:14px; color:#cbd5e1; text-align:center; margin:10px 0;">Contul tau este activ. Apasa butonul de mai jos pentru a intra pe canalul oficial cu ponturi!</p>
+        </div>
+        """, unsafe_allow_html=True)
+        st.link_button("ACCESEAZĂ CANALUL TELEGRAM VIP 🔓", "https://t.me", use_container_width=True, key="tg_portal_url")
+    else:
+        st.markdown("""
+        <div class="vip-card-box" style="border-color: #ef4444 !important; background: rgba(255,0,0,0.02) !important;">
+            <h4 style="color:#ef4444; margin:0; text-align:center;">🔒 ZONĂ RESTRÂNSĂ</h4>
+            <p style="font-size:14px; color:#a0aec0; text-align:center; margin:10px 0;">Acest panou contine biletul zilei si cotele premium din algoritm. Conecteaza-te din meniul din stanga pentru deblocare.</p>
+        </div>
+        """, unsafe_allow_html=True)
+        st.link_button("CERE CONT DE ACCES 💬", "https://t.me", use_container_width=True, key="tg_contact_url")
+
+# ================== HISTORIC ȘI NOTIFICĂRI JOS ==================
+st.write("---")
+st.markdown('<p style="font-size: 22px; color: #b042ff; font-weight:800; margin-bottom: 10px;">🟢 ISTORIC BILETE ȘI NOTIFICĂRI RECENTE PARIURIGO</p>', unsafe_allow_html=True)
+
+col_b1, col_b2, col_b3 = st.columns(3)
+with col_b1:
+    st.markdown("""
+    <div class="glass-box-container" style="border-color: rgba(0, 255, 102, 0.4) !important;">
+        <h4 style="color:#00ff66; margin:0;">✅ BILET CASTIGATOR GATA</h4>
+        <p style="font-size:24px; font-weight:800; margin:10px 0;">COTA 2.45 <span style="font-size:14px; color:#a0aec0;">(Ieri)</span></p>
+        <p style="font-size:14px; color:#cbd5e1; margin:0;">• Real Madrid vs Barcelona -> Peste 2.5<br>• Man. City vs Liverpool -> GG</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col_b2:
+    st.markdown("""
+    <div class="glass-box-container" style="border-color: rgba(0, 255, 102, 0.4) !important;">
+        <h4 style="color:#00ff66; margin:0;">✅ DUBLARE REUȘITĂ</h4>
+        <p style="font-size:24px; font-weight:800; margin:10px 0;">COTA 2.00 <span style="font-size:14px; color:#a0aec0;">(17.08)</span></p>
+        <p style="font-size:14px; color:#cbd5e1; margin:0;">• Inter vs Milan -> Peste 1.5 goluri R2<br>• FCSB vs Rapid -> Peste 0.5 HT</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col_b3:
+    st.markdown("""
+    <div class="glass-box-container" style="border-color: rgba(176, 66, 255, 0.4) !important;">
+        <h4 style="color:#b042ff; margin:0;">📢 ANUNȚ IMPORTANT VIP</h4>
+        <p style="font-size:18px; font-weight:800; margin:10px 0;">BILETE DE AZI LIVE</p>
+        <p style="font-size:14px; color:#cbd5e1; margin:0;">Toate analizele si cotele din algoritm pentru meciurile de diseara au fost trimise instant pe Telegramul VIP!</p>
+    </div>
+    """, unsafe_allow_html=True)
