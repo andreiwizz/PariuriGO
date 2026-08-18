@@ -223,3 +223,26 @@ with col_b3:
         <p style="font-size:14px; color:#cbd5e1; margin:0;">Toate analizele, procentele algoritmului și cotele de prestigiu pentru programul din {selectie_ziua} au fost încărcate în portal!</p>
     </div>
     """, unsafe_allow_html=True)
+# ================== TEXT LEGAL PENTRU APROBARE APP STORE / GOOGLE PLAY ==================
+st.write("---")
+col_legal1, col_legal2 = st.columns([2, 1])
+
+with col_legal1:
+    st.markdown("""
+    <div style="font-size:12px; color:#a0aec0; line-height:1.4;">
+        <b>⚠️ DISCLAIMER LEGAL & RESPONSABILITATE (18+)</b><br>
+        PariuriGO World Live Center este o platformă de analiză statistică și predictivă bazată pe algoritmi matematici. 
+        Informațiile furnizate au scop pur informativ și de divertisment. Nu garantăm câștiguri financiare. 
+        Pariurile sportive implică risc financiar. Jucați responsabil! Dacă simțiți că pierdeți controlul, apelați la servicii de suport.
+    </div>
+    """, unsafe_allow_html=True)
+
+with col_legal2:
+    # Înlocuiește link-urile cu documentele tale reale când le vei avea, sunt obligatorii la publicare!
+    st.markdown("""
+    <div style="text-align:right; font-size:12px;">
+        <a href="https://t.me" target="_blank" style="color:#b042ff; text-decoration:none;">Politică de Confidențialitate</a><br>
+        <a href="https://t.me" target="_blank" style="color:#b042ff; text-decoration:none;">Termeni și Condiții</a><br>
+        <span style="color:#ef4444; font-weight:800;">🔞 DOAR 18+</span>
+    </div>
+    """, unsafe_allow_html=True)
