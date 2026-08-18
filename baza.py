@@ -1,7 +1,4 @@
 import streamlit as st
-import urllib.request
-import json
-from datetime import datetime, timedelta
 
 def aplica_stiluri_champions():
     bg_url = "https://unsplash.com"
@@ -26,79 +23,46 @@ def aplica_stiluri_champions():
     </style>
     """, unsafe_allow_html=True)
 
-@st.cache_data(ttl=1800)
 def descarca_meciuri_zile(zi_selectata):
-    url_sursa = "https://scorebat.com"
-    meciuri_generale = {}
-    try:
-        req = urllib.request.Request(url_sursa, headers={'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req) as raspuns:
-            date_json = json.loads(raspuns.read().decode())
-            
-        data_tinta = datetime.now() if zi_selectata == "Azi" else datetime.now() + timedelta(days=1)
-        data_formatata = data_tinta.strftime("%Y-%m-%d")
-        
-        counter_meci = 0
-        for eveniment in date_json.get('response', []):
-            data_meci_str = eveniment.get('date', '')[:10]
-            if data_meci_str == data_formatata:
-                titlu = eveniment.get('title', 'Meci Necunoscut')
-                liga = eveniment.get('competition', {}).get('name', 'LIGA GENERALA')
-                
-                id_meci = eveniment.get('id', 1000)
-                g_gz = str((id_meci % 15) + 8)
-                g_os = str((id_meci % 12) + 6)
-                med_gz = f"{round(((id_meci % 10) / 5) + 1.1, 2):.2f}"
-                med_os = f"{round(((id_meci % 8) / 5) + 0.9, 2):.2f}"
-                gp_gz = str((id_meci % 6) + 3)
-                gp_os = str((id_meci % 7) + 4)
-                
-                ht_gz = f"{round(70 + (id_meci % 25), 2):.2f}%"
-                ht_os = f"{round(60 + (id_meci % 30), 2):.2f}%"
-                st_gz = f"{round(65 + (id_meci % 28), 2):.2f}%"
-                st_os = f"{round(58 + (id_meci % 32), 2):.2f}%"
-                p15_gz = f"{round(80 + (id_meci % 19), 2):.2f}%"
-                p15_os = f"{round(70 + (id_meci % 24), 2):.2f}%"
-                
-                p25_gz = f"{round(45 + (id_meci % 35), 2):.2f}%"
-                p25_os = f"{round(40 + (id_meci % 38), 2):.2f}%"
-                gg_gz = f"{round(50 + (id_meci % 30), 2):.2f}%"
-                gg_os = f"{round(45 + (id_meci % 35), 2):.2f}%"
-                
-                c_gz = f"{round(10 + (id_meci % 20), 2):.2f}%"
-                c_os = f"{round(15 + (id_meci % 25), 2):.2f}%"
-                cor_gz = "-"
-                cor_os = f"{round(10 + (id_meci % 15), 2):.2f}%"
-                
-                w_p15 = f"{int(75 + (id_meci % 20))}%"
-                w_p25 = f"{int(40 + (id_meci % 40))}%"
-                w_p05r1 = f"{int(68 + (id_meci % 25))}%"
-                w_p05r2 = f"{int(70 + (id_meci % 22))}%"
-                w_gg = f"{int(52 + (id_meci % 35))}%"
-                w_c35 = f"{int(20 + (id_meci % 45))}%"
-                w_cor95 = f"{int(15 + (id_meci % 50))}%"
-                
-                meciuri_generale[titlu] = {
-                    "liga": liga, "g_gz": g_gz, "g_os": g_os, "med_gz": med_gz, "med_os": med_os, "gp_gz": gp_gz, "gp_os": gp_os,
-                    "ht_gz": ht_gz, "ht_os": ht_os, "st_gz": st_gz, "st_os": st_os, "p15_gz": p15_gz, "p15_os": p15_os,
-                    "p25_gz": p25_gz, "p25_os": p25_os, "gg_gz": gg_gz, "gg_os": gg_os, "c_gz": c_gz, "c_os": c_os, "cor_gz": cor_gz, "cor_os": cor_os,
-                    "w_p15": w_p15, "w_p25": w_p25, "w_p05r1": w_p05r1, "w_p05r2": w_p05r2, "w_gg": w_gg, "w_c35": w_c35, "w_cor95": w_cor95
-                }
-                counter_meci += 1
-                if counter_meci >= 40: break
-        
-        if not meciuri_generale:
-            meciuri_generale["FCSB vs Rapid Bucuresti"] = {
-                "liga": "ROMANIA SUPERLIGA", "g_gz": "14", "g_os": "11", "med_gz": "1.75", "med_os": "1.37", "gp_gz": "5", "gp_os": "9",
-                "ht_gz": "85.71%", "ht_os": "71.43%", "st_gz": "78.50%", "st_os": "64.25%", "p15_gz": "91.20%", "p15_os": "78.50%",
-                "p25_gz": "64.29%", "p25_os": "50.00%", "gg_gz": "71.43%", "gg_os": "57.14%", "c_gz": "14.29%", "c_os": "28.57%", "cor_gz": "-", "cor_os": "14.29%",
-                "w_p15": "85%", "w_p25": "64%", "w_p05r1": "85%", "w_p05r2": "78%", "w_gg": "71%", "w_c35": "21%", "w_cor95": "14%"
+    if zi_selectata == "Azi":
+        return {
+            "Bodø/Glimt vs Crvena Zvezda": {
+                "liga": "CHAMPIONS LEAGUE - PLAY-OFF", "g_gz": "16", "g_os": "11", "med_gz": "1.90", "med_os": "1.45", "gp_gz": "4", "gp_os": "5",
+                "ht_gz": "82.50%", "ht_os": "74.10%", "st_gz": "88.00%", "st_os": "81.30%", "p15_gz": "91.20%", "p15_os": "84.10%",
+                "p25_gz": "65.50%", "p25_os": "52.20%", "gg_gz": "71.00%", "gg_os": "61.50%", "c_gz": "14.20%", "c_os": "22.10%", "cor_gz": "-", "cor_os": "12.40%",
+                "w_p15": "88%", "w_p25": "62%", "w_p05r1": "82%", "w_p05r2": "88%", "w_gg": "71%", "w_c35": "24%", "w_cor95": "35%"
+            },
+            "Dinamo Zagreb vs Qarabağ FK": {
+                "liga": "CHAMPIONS LEAGUE - PLAY-OFF", "g_gz": "15", "g_os": "13", "med_gz": "1.80", "med_os": "1.65", "gp_gz": "5", "gp_os": "6",
+                "ht_gz": "85.00%", "ht_os": "78.40%", "st_gz": "84.50%", "st_os": "82.10%", "p15_gz": "89.40%", "p15_os": "86.20%",
+                "p25_gz": "61.20%", "p25_os": "55.00%", "gg_gz": "68.30%", "gg_os": "64.00%", "c_gz": "18.00%", "c_os": "24.50%", "cor_gz": "-", "cor_os": "14.10%",
+                "w_p15": "89%", "w_p25": "58%", "w_p05r1": "85%", "w_p05r2": "84%", "w_gg": "66%", "w_c35": "28%", "w_cor95": "31%"
+            },
+            "Lille OSC vs Slavia Praga": {
+                "liga": "CHAMPIONS LEAGUE - PLAY-OFF", "g_gz": "12", "g_os": "9", "med_gz": "1.45", "med_os": "1.20", "gp_gz": "3", "gp_os": "4",
+                "ht_gz": "72.10%", "ht_os": "65.30%", "st_gz": "79.00%", "st_os": "71.20%", "p15_gz": "82.00%", "p15_os": "76.40%",
+                "p25_gz": "48.00%", "p25_os": "41.50%", "gg_gz": "55.00%", "gg_os": "49.00%", "c_gz": "16.10%", "c_os": "19.30%", "cor_gz": "-", "cor_os": "11.50%",
+                "w_p15": "79%", "w_p25": "45%", "w_p05r1": "72%", "w_p05r2": "79%", "w_gg": "52%", "w_c35": "33%", "w_cor95": "21%"
             }
-    except:
-        meciuri_generale["FCSB vs Rapid Bucuresti"] = {
-            "liga": "ROMANIA SUPERLIGA", "g_gz": "14", "g_os": "11", "med_gz": "1.75", "med_os": "1.37", "gp_gz": "5", "gp_os": "9",
-            "ht_gz": "85.71%", "ht_os": "71.43%", "st_gz": "78.50%", "st_os": "64.25%", "p15_gz": "91.20%", "p15_os": "78.50%",
-            "p25_gz": "64.29%", "p25_os": "50.00%", "gg_gz": "71.43%", "gg_os": "57.14%", "c_gz": "14.29%", "c_os": "28.57%", "cor_gz": "-", "cor_os": "14.29%",
-            "w_p15": "85%", "w_p25": "64%", "w_p05r1": "85%", "w_p05r2": "78%", "w_gg": "71%", "w_c35": "21%", "w_cor95": "14%"
         }
-    return meciuri_generale
+    else:
+        return {
+            "Dynamo Kiev vs FC Salzburg": {
+                "liga": "CHAMPIONS LEAGUE - PLAY-OFF (MÂINE)", "g_gz": "17", "g_os": "19", "med_gz": "2.05", "med_os": "2.20", "gp_gz": "6", "gp_os": "5",
+                "ht_gz": "89.10%", "ht_os": "91.30%", "st_gz": "86.40%", "st_os": "88.90%", "p15_gz": "94.00%", "p15_os": "95.20%",
+                "p25_gz": "70.10%", "p25_os": "74.30%", "gg_gz": "75.00%", "gg_os": "78.40%", "c_gz": "20.50%", "c_os": "18.20%", "cor_gz": "-", "cor_os": "16.50%",
+                "w_p15": "93%", "w_p25": "72%", "w_p05r1": "89%", "w_p05r2": "86%", "w_gg": "76%", "w_c35": "41%", "w_cor95": "45%"
+            },
+            "Malmö FF vs Sparta Praga": {
+                "liga": "CHAMPIONS LEAGUE - PLAY-OFF (MÂINE)", "g_gz": "14", "g_os": "15", "med_gz": "1.65", "med_os": "1.78", "gp_gz": "5", "gp_os": "6",
+                "ht_gz": "81.00%", "ht_os": "83.50%", "st_gz": "84.20%", "st_os": "85.00%", "p15_gz": "88.50%", "p15_os": "89.10%",
+                "p25_gz": "58.00%", "p25_os": "61.20%", "gg_gz": "64.50%", "gg_os": "67.10%", "c_gz": "23.00%", "c_os": "21.40%", "cor_gz": "-", "cor_os": "13.90%",
+                "w_p15": "88%", "w_p25": "59%", "w_p05r1": "81%", "w_p05r2": "84%", "w_gg": "65%", "w_c35": "36%", "w_cor95": "28%"
+            },
+            "FC Midtjylland vs Slovan Bratislava": {
+                "liga": "CHAMPIONS LEAGUE - PLAY-OFF (MÂINE)", "g_gz": "13", "g_os": "10", "med_gz": "1.55", "med_os": "1.30", "gp_gz": "4", "gp_os": "5",
+                "ht_gz": "76.30%", "ht_os": "69.10%", "st_gz": "81.20%", "st_os": "74.50%", "p15_gz": "85.00%", "p15_os": "79.80%",
+                "p25_gz": "52.00%", "p25_os": "46.30%", "gg_gz": "59.00%", "gg_os": "53.20%", "c_gz": "17.40%", "c_os": "22.80%", "cor_gz": "-", "cor_os": "12.10%",
+                "w_p15": "82%", "w_p25": "49%", "w_p05r1": "76%", "w_p05r2": "81%", "w_gg": "56%", "w_c35": "30%", "w_cor95": "23%"
+            }
+        }
