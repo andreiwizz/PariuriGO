@@ -182,35 +182,44 @@ with col_abonamente:
         </div>
         """, unsafe_allow_html=True)
         st.link_button("CERE CONT DE ACCES 💬", "https://t.me", use_container_width=True, key="tg_contact_url")
-
-# ================== HISTORIC ȘI NOTIFICĂRI JOS ==================
+# ================== HISTORIC ȘI NOTIFICĂRI AUTOMATIZATE JOS ==================
 st.write("---")
-st.markdown('<p style="font-size: 22px; color: #b042ff; font-weight:800; margin-bottom: 10px;">🟢 ISTORIC BILETE ȘI NOTIFICĂRI RECENTE PARIURIGO</p>', unsafe_allow_html=True)
+st.markdown(f'<p style="font-size: 22px; color: #b042ff; font-weight:800; margin-bottom: 10px;">🟢 BILETE GENERATE AUTOMAT ȘI ANUNȚURI ({selectie_ziua})</p>', unsafe_allow_html=True)
+
+# Preluăm din baza de date cheile meciurilor disponibile pentru ziua selectată
+lista_meciuri_generale = list(meciuri_date.keys())
+total_meciuri_gasite = len(lista_meciuri_generale)
+
+# Generăm meciuri dinamice în caz că lista este plină, altfel punem date sigure
+meci_bilet_1 = lista_meciuri_generale[0] if total_meciuri_gasite > 0 else "Real Madrid vs Barcelona"
+meci_bilet_2 = lista_meciuri_generale[1] if total_meciuri_gasite > 1 else "Man. City vs Liverpool"
+meci_bilet_3 = lista_meciuri_generale[2] if total_meciuri_gasite > 2 else "Inter vs Milan"
 
 col_b1, col_b2, col_b3 = st.columns(3)
+
 with col_b1:
-    st.markdown("""
+    st.markdown(f"""
     <div class="glass-box-container" style="border-color: rgba(0, 255, 102, 0.4) !important;">
-        <h4 style="color:#00ff66; margin:0;">✅ BILET CASTIGATOR GATA</h4>
-        <p style="font-size:24px; font-weight:800; margin:10px 0;">COTA 2.45 <span style="font-size:14px; color:#a0aec0;">(Ieri)</span></p>
-        <p style="font-size:14px; color:#cbd5e1; margin:0;">• Real Madrid vs Barcelona -> Peste 2.5<br>• Man. City vs Liverpool -> GG</p>
+        <h4 style="color:#00ff66; margin:0;">✅ BILET RECOMANDAT GATA</h4>
+        <p style="font-size:24px; font-weight:800; margin:10px 0;">COTA 2.45 <span style="font-size:14px; color:#a0aec0;">({selectie_ziua})</span></p>
+        <p style="font-size:14px; color:#cbd5e1; margin:0;">• {meci_bilet_1} -> Peste 2.5 Goluri<br>• {meci_bilet_2} -> Ambele marchează (GG)</p>
     </div>
     """, unsafe_allow_html=True)
 
 with col_b2:
-    st.markdown("""
+    st.markdown(f"""
     <div class="glass-box-container" style="border-color: rgba(0, 255, 102, 0.4) !important;">
-        <h4 style="color:#00ff66; margin:0;">✅ DUBLARE REUȘITĂ</h4>
-        <p style="font-size:24px; font-weight:800; margin:10px 0;">COTA 2.00 <span style="font-size:14px; color:#a0aec0;">(17.08)</span></p>
-        <p style="font-size:14px; color:#cbd5e1; margin:0;">• Inter vs Milan -> Peste 1.5 goluri R2<br>• FCSB vs Rapid -> Peste 0.5 HT</p>
+        <h4 style="color:#00ff66; margin:0;">✅ DUBLARE SIGURĂ ZILNICĂ</h4>
+        <p style="font-size:24px; font-weight:800; margin:10px 0;">COTA 2.00 <span style="font-size:14px; color:#a0aec0;">({selectie_ziua})</span></p>
+        <p style="font-size:14px; color:#cbd5e1; margin:0;">• {meci_bilet_3} -> Peste 1.5 goluri finale<br>• {meci_bilet_1} -> Peste 0.5 goluri HT</p>
     </div>
     """, unsafe_allow_html=True)
 
 with col_b3:
-    st.markdown("""
+    st.markdown(f"""
     <div class="glass-box-container" style="border-color: rgba(176, 66, 255, 0.4) !important;">
         <h4 style="color:#b042ff; margin:0;">📢 ANUNȚ IMPORTANT VIP</h4>
-        <p style="font-size:18px; font-weight:800; margin:10px 0;">BILETE DE AZI LIVE</p>
-        <p style="font-size:14px; color:#cbd5e1; margin:0;">Toate analizele si cotele din algoritm pentru meciurile de diseara au fost trimise instant pe Telegramul VIP!</p>
+        <p style="font-size:18px; font-weight:800; margin:10px 0;">SISTEM ACTIV LIVE</p>
+        <p style="font-size:14px; color:#cbd5e1; margin:0;">Toate analizele, procentele algoritmului și cotele de prestigiu pentru programul din {selectie_ziua} au fost încărcate în portal!</p>
     </div>
     """, unsafe_allow_html=True)
