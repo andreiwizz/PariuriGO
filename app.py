@@ -95,3 +95,26 @@ with col_meciuri:
         </div>
         """, unsafe_allow_html=True)
         st.link_button("💥 RECLAMĂ CELE 3 ZILE GRATUITE PE TELEGRAM", "https://t.me", use_container_width=True)
+    elif pas_aplicatie == "📊 Algoritm & Statistici Live":
+        meci_ales = st.selectbox("🎯 Schimba meciul:", list(meciuri_date.keys()))
+        m = meciuri_date[meci_ales]
+        st.markdown('<div class="glass-box-container">', unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align:center; color:#b042ff; margin: 5px 0; font-size:32px; font-weight:800;'>"+meci_ales+"</h2>", unsafe_allow_html=True)
+        st.markdown("<p style='text-align:center; color:#cbd5e1; font-size:14px; font-weight:700;'>🏆 "+m['liga']+" &bull; "+data_azi+"</p>", unsafe_allow_html=True)
+        st.markdown('<hr style="border-color: #221545;">', unsafe_allow_html=True)
+        st.markdown('<div class="stat-container">', unsafe_allow_html=True)
+        st.markdown('<div class="stat-row"><div class="stat-left-val">'+m["g_gz"]+'</div><div class="stat-center-label">Total goluri marcate</div><div class="stat-right-val">'+m["g_os"]+'</div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="stat-row"><div class="stat-left-val">'+m["med_gz"]+'</div><div class="stat-center-label">Medie goluri</div><div class="stat-right-val">'+m["med_os"]+'</div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="stat-row"><div class="stat-left-val">'+m["gp_gz"]+'</div><div class="stat-center-label">Goluri primite</div><div class="stat-right-val">'+m["gp_os"]+'</div></div>', unsafe_allow_html=True)
+        st.markdown('<hr style="border-color: #221545;">', unsafe_allow_html=True)
+        st.markdown('<div class="stat-row"><div class="stat-left-val"><span class="mov-badge-tiktok">'+m["ht_gz"]+'</span></div><div class="stat-center-label">Peste 0.5 HT</div><div class="stat-right-val"><span class="mov-badge-tiktok">'+m["ht_os"]+'</span></div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="stat-row"><div class="stat-left-val"><span class="mov-badge-tiktok">'+m["st_gz"]+'</span></div><div class="stat-center-label">Peste 0.5 ST</div><div class="stat-right-val"><span class="mov-badge-tiktok">'+m["st_os"]+'</span></div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="stat-row"><div class="stat-left-val"><span class="mov-badge-tiktok">'+m["p15_gz"] + '</span></div><div class="stat-center-label">Peste 1.5 goluri</div><div class="stat-right-val"><span class="mov-badge-tiktok">'+m["p15_os"]+'</span></div></div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown('<hr style="border-color: #221545; margin: 20px 0;">', unsafe_allow_html=True)
+        st.markdown('<div class="bar-wrapper"><div class="bar-title-flex"><span>Peste 1.5:</span></div><div class="bar-container-custom"><div class="bar-fill-mov-tiktok" style="width: '+m["w_p15"]+';"></div></div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="bar-wrapper"><div class="bar-label">Peste 2.5:</div><div class="bar-container-custom"><div class="bar-fill-mov-tiktok" style="width: '+m["w_p25"]+';"></div></div></div>', unsafe_allow_html=True)
+        st.markdown('</div></div>', unsafe_allow_html=True)
+
+    elif pas_aplicatie == "🌍 Toate Meciurile Live":
+        st.markdown('<div style="width:100%; height:420px; overflow:auto; background:rgba(0,0,0,0.8); border-radius:12px; border:1px solid #1a0f30; padding:10px; margin-bottom: 25px;"><iframe src="https://scorebat.com" frameborder="0" width="100%" height="390px" allowfullscreen allow="autoplay; fullscreen"></iframe></div>', unsafe_allow_html=True)
