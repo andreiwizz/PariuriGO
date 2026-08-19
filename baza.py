@@ -1,5 +1,4 @@
 import streamlit as st
-from datetime import datetime, timedelta
 
 def aplica_stiluri_champions():
     bg_url = "https://unsplash.com"
@@ -27,38 +26,38 @@ def descarca_meciuri_zile(zi_selectata):
     if zi_selectata == "Azi":
         # MECIURI REALE DE ASTĂZI (MIERCURI 19 AUGUST 2026)
         return {
-            "Dynamo Kiev vs FC Salzburg": {
-                "liga": "CHAMPIONS LEAGUE - PLAY-OFF", "g_gz": "17", "g_os": "19", "med_gz": "2.05", "med_os": "2.20", "gp_gz": "6", "gp_os": "5",
-                "ht_gz": "89.10%", "ht_os": "91.30%", "st_gz": "86.40%", "st_os": "88.90%", "p15_gz": "94.00%", "p15_os": "95.20%",
-                "p25_gz": "70.10%", "p25_os": "74.30%", "gg_gz": "75.00%", "gg_os": "78.40%", "c_gz": "20.50%", "c_os": "18.20%", "cor_gz": "-", "cor_os": "16.50%",
-                "w_p15": "93%", "w_p25": "72%", "w_p05r1": "89%", "w_p05r2": "86%", "w_gg": "76%", "w_c35": "41%", "w_cor95": "45%"
+            "Vikingur Reykjavik vs UE Santa Coloma": {
+                "liga": "UEFA CONFERENCE LEAGUE", "g_gz": "14", "g_os": "6", "med_gz": "1.75", "med_os": "1.10", "gp_gz": "3", "gp_os": "8",
+                "ht_gz": "81.20%", "ht_os": "65.40%", "st_gz": "86.00%", "st_os": "72.30%", "p15_gz": "88.20%", "p15_os": "74.10%",
+                "p25_gz": "58.50%", "p25_os": "42.20%", "gg_gz": "61.00%", "gg_os": "52.50%", "c_gz": "12.50%", "c_os": "20.10%", "cor_gz": "-", "cor_os": "11.40%",
+                "w_p15": "85%", "w_p25": "55%", "w_p05r1": "81%", "w_p05r2": "86%", "w_gg": "60%", "w_c35": "24%", "w_cor95": "31%"
             },
-            "Malmö FF vs Sparta Praga": {
-                "liga": "CHAMPIONS LEAGUE - PLAY-OFF", "g_gz": "14", "g_os": "15", "med_gz": "1.65", "med_os": "1.78", "gp_gz": "5", "gp_os": "6",
-                "ht_gz": "81.00%", "ht_os": "83.50%", "st_gz": "84.20%", "st_os": "85.00%", "p15_gz": "88.50%", "p15_os": "89.10%",
-                "p25_gz": "58.00%", "p25_os": "61.20%", "gg_gz": "64.50%", "gg_os": "67.10%", "c_gz": "23.00%", "c_os": "21.40%", "cor_gz": "-", "cor_os": "13.90%",
-                "w_p15": "88%", "w_p25": "59%", "w_p05r1": "81%", "w_p05r2": "84%", "w_gg": "65%", "w_c35": "36%", "w_cor95": "28%"
-            },
-            "FC Midtjylland vs Slovan Bratislava": {
-                "liga": "CHAMPIONS LEAGUE - PLAY-OFF", "g_gz": "13", "g_os": "10", "med_gz": "1.55", "med_os": "1.30", "gp_gz": "4", "gp_os": "5",
-                "ht_gz": "76.30%", "ht_os": "69.10%", "st_gz": "81.20%", "st_os": "74.50%", "p15_gz": "85.00%", "p15_os": "79.80%",
-                "p25_gz": "52.00%", "p25_os": "46.30%", "gg_gz": "59.00%", "gg_os": "53.20%", "c_gz": "17.40%", "c_os": "22.80%", "cor_gz": "-", "cor_os": "12.10%",
-                "w_p15": "82%", "w_p25": "49%", "w_p05r1": "76%", "w_p05r2": "81%", "w_gg": "56%", "w_c35": "30%", "w_cor95": "23%"
+            "Minaur Baia Mare vs SCM Zalău": {
+                "liga": "CUPA ROMÂNIEI", "g_gz": "11", "g_os": "9", "med_gz": "1.37", "med_os": "1.22", "gp_gz": "6", "gp_os": "7",
+                "ht_gz": "75.00%", "ht_os": "68.20%", "st_gz": "78.50%", "st_os": "71.15%", "p15_gz": "82.40%", "p15_os": "76.50%",
+                "p25_gz": "48.20%", "p25_os": "44.00%", "gg_gz": "57.10%", "gg_os": "51.10%", "c_gz": "25.00%", "c_os": "31.50%", "cor_gz": "-", "cor_os": "10.20%",
+                "w_p15": "80%", "w_p25": "46%", "w_p05r1": "75%", "w_p05r2": "78%", "w_gg": "54%", "w_c35": "18%", "w_cor95": "14%"
             }
         }
     else:
-        # PROGRAMUL PENTRU MÂINE (JOI 20 AUGUST 2026) - LIGA EUROPA & CONFERENCE
+        # MECIURI REALE DE MÂINE (JOI 20 AUGUST 2026) - ROMÂNII ÎN EUROPA
         return {
-            "CFR Cluj vs Pafos FC": {
-                "liga": "CONFERENCE LEAGUE - PLAY-OFF (MÂINE)", "g_gz": "12", "g_os": "8", "med_gz": "1.50", "med_os": "1.10", "gp_gz": "4", "gp_os": "6",
-                "ht_gz": "78.00%", "ht_os": "62.00%", "st_gz": "82.00%", "st_os": "70.00%", "p15_gz": "85.00%", "p15_os": "75.00%",
-                "p25_gz": "45.00%", "p25_os": "38.00%", "gg_gz": "52.00%", "gg_os": "46.00%", "c_gz": "21.00%", "c_os": "26.00%", "cor_gz": "-", "cor_os": "11.80%",
-                "w_p15": "80%", "w_p25": "42%", "w_p05r1": "75%", "w_p05r2": "80%", "w_gg": "50%", "w_c35": "38%", "w_cor95": "22%"
-            },
             "LASK Linz vs FCSB": {
-                "liga": "EUROPA LEAGUE - PLAY-OFF (MÂINE)", "g_gz": "14", "g_os": "11", "med_gz": "1.65", "med_os": "1.35", "gp_gz": "6", "gp_os": "8",
-                "ht_gz": "80.00%", "ht_os": "74.00%", "st_gz": "83.00%", "st_os": "79.00%", "p15_gz": "87.00%", "p15_os": "82.00%",
-                "p25_gz": "55.00%", "p25_os": "48.00%", "gg_gz": "62.00%", "gg_os": "58.00%", "c_gz": "19.00%", "c_os": "22.00%", "cor_gz": "-", "cor_os": "13.50%",
-                "w_p15": "85%", "w_p25": "51%", "w_p05r1": "79%", "w_p05r2": "82%", "w_gg": "58%", "w_c35": "34%", "w_cor95": "26%"
+                "liga": "UEFA EUROPA LEAGUE - PLAY-OFF", "g_gz": "16", "g_os": "14", "med_gz": "1.85", "med_os": "1.55", "gp_gz": "5", "gp_os": "7",
+                "ht_gz": "84.10%", "ht_os": "78.30%", "st_gz": "86.20%", "st_os": "81.00%", "p15_gz": "91.00%", "p15_os": "85.20%",
+                "p25_gz": "62.40%", "p25_os": "54.30%", "gg_gz": "68.00%", "gg_os": "61.40%", "c_gz": "18.50%", "c_os": "22.40%", "cor_gz": "-", "cor_os": "13.50%",
+                "w_p15": "90%", "w_p25": "58%", "w_p05r1": "84%", "w_p05r2": "86%", "w_gg": "64%", "w_c35": "38%", "w_cor95": "40%"
+            },
+            "CFR Cluj vs Pafos FC": {
+                "liga": "UEFA CONFERENCE LEAGUE - PLAY-OFF", "g_gz": "15", "g_os": "11", "med_gz": "1.65", "med_os": "1.28", "gp_gz": "4", "gp_os": "6",
+                "ht_gz": "81.00%", "ht_os": "71.50%", "st_gz": "84.50%", "st_os": "76.00%", "p15_gz": "87.50%", "p15_os": "79.10%",
+                "p25_gz": "55.00%", "p25_os": "44.20%", "gg_gz": "61.50%", "gg_os": "52.10%", "c_gz": "21.00%", "c_os": "24.50%", "cor_gz": "-", "cor_os": "12.90%",
+                "w_p15": "85%", "w_p25": "50%", "w_p05r1": "81%", "w_p05r2": "84%", "w_gg": "58%", "w_c35": "32%", "w_cor95": "25%"
+            },
+            "Corvinul Hunedoara vs HNK Rijeka": {
+                "liga": "UEFA CONFERENCE LEAGUE - PLAY-OFF", "g_gz": "12", "g_os": "13", "med_gz": "1.40", "med_os": "1.52", "gp_gz": "6", "gp_os": "5",
+                "ht_gz": "74.20%", "ht_os": "76.10%", "st_gz": "79.10%", "st_os": "82.30%", "p15_gz": "81.50%", "p15_os": "84.20%",
+                "p25_gz": "46.30%", "p25_os": "51.00%", "gg_gz": "54.00%", "gg_os": "58.20%", "c_gz": "23.40%", "c_os": "19.50%", "cor_gz": "-", "cor_os": "11.20%",
+                "w_p15": "82%", "w_p25": "48%", "w_p05r1": "74%", "w_p05r2": "79%", "w_gg": "56%", "w_c35": "28%", "w_cor95": "20%"
             }
         }
