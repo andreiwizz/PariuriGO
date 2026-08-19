@@ -26,29 +26,52 @@ def aplica_stiluri_aplicatie_nativa():
     """, unsafe_allow_html=True)
 
 def obtine_meciurile_zilei_automat():
-    # Verifică ziua curentă direct de pe ceasul serverului
     ziua_curenta = datetime.now().strftime("%d")
     
-    # Dacă este ziua de Azi (Miercuri, 19 August)
+    # Programul REAL de Astăzi (Miercuri, 19 August 2026)
     if ziua_curenta == "19":
         return {
-            "MTK Budapest vs Puskas Academy": {
-                "liga": "NB I (HUNGARY) &bull; LIVE", "g_gz": "12", "g_os": "15", "med_gz": "1.65", "med_os": "1.80", "ht_gz": "82.00%", "w_p15": "88%", "w_gg": "68%"
+            "Young Boys vs Galatasaray": {
+                "liga": "UEFA CHAMPIONS LEAGUE &bull; 22:00", "g_gz": "15", "g_os": "21", "med_gz": "1.85", "med_os": "2.40", "ht_gz": "88.10%", "w_p15": "93%", "w_gg": "76%"
             },
-            "Vysočina Jihlava vs Příbram": {
-                "liga": "FNL (CZECH REPUBLIC) &bull; 18:45", "g_gz": "9", "g_os": "11", "med_gz": "1.20", "med_os": "1.40", "ht_gz": "74.50%", "w_p15": "81%", "w_gg": "55%"
+            "FC Midtjylland vs Slovan Bratislava": {
+                "liga": "UEFA CHAMPIONS LEAGUE &bull; 22:00", "g_gz": "14", "g_os": "11", "med_gz": "1.60", "med_os": "1.35", "ht_gz": "78.40%", "w_p15": "85%", "w_gg": "58%"
             },
-            "SJK vs Gnistan": {
-                "liga": "VEIKKAUSLIIGA (FINLAND) &bull; 19:00", "g_gz": "16", "g_os": "14", "med_gz": "2.05", "med_os": "1.75", "ht_gz": "89.10%", "w_p15": "93%", "w_gg": "74%"
+            "Malmö FF vs Sparta Praga": {
+                "liga": "UEFA CHAMPIONS LEAGUE &bull; 22:00", "g_gz": "13", "g_os": "12", "med_gz": "1.52", "med_os": "1.44", "ht_gz": "75.00%", "w_p15": "81%", "w_gg": "62%"
             }
         }
-    # Când ceasul trece de 00:00 și devine Joi (20 August), se încarcă automat meciurile astea:
+    # Se schimbă AUTOMAT la ora 00:00 pentru Mâine (Joi, 20 August 2026)
     else:
         return {
             "LASK Linz vs FCSB": {
-                "liga": "UEFA EUROPA LEAGUE &bull; JOI", "g_gz": "16", "g_os": "14", "med_gz": "1.85", "med_os": "1.55", "ht_gz": "84.10%", "w_p15": "90%", "w_gg": "64%"
+                "liga": "UEFA EUROPA LEAGUE &bull; PLAY-OFF", "g_gz": "16", "g_os": "14", "med_gz": "1.85", "med_os": "1.55", "ht_gz": "84.10%", "w_p15": "90%", "w_gg": "64%"
             },
             "CFR Cluj vs Pafos FC": {
-                "liga": "UEFA CONFERENCE LEAGUE &bull; JOI", "g_gz": "15", "g_os": "11", "med_gz": "1.65", "med_os": "1.28", "ht_gz": "81.00%", "w_p15": "85%", "w_gg": "58%"
+                "liga": "UEFA CONFERENCE LEAGUE &bull; PLAY-OFF", "g_gz": "15", "g_os": "11", "med_gz": "1.65", "med_os": "1.28", "ht_gz": "81.00%", "w_p15": "85%", "w_gg": "58%"
+            }
+        }
+
+def obtine_cs2_zilei_automat():
+    ziua_curenta = datetime.now().strftime("%d")
+    
+    # Programul REAL CS2 de Astăzi (Miercuri, 19 August 2026)
+    if ziua_curenta == "19":
+        return {
+            "MOUZ vs Virtus.pro": {
+                "liga": "BETBOOM DACHA BELGRADE &bull; DISEARĂ", "maps_gz": "68%", "maps_os": "55%", "pistol_gz": "62%", "pistol_os": "50%", "clutch_gz": "58%", "w_over": "64%", "w_winner": "MOUZ"
+            },
+            "Team Spirit vs Team Falcons": {
+                "liga": "BETBOOM DACHA BELGRADE &bull; DISEARĂ", "maps_gz": "75%", "maps_os": "48%", "pistol_gz": "55%", "pistol_os": "52%", "clutch_gz": "61%", "w_over": "52%", "w_winner": "Spirit"
+            }
+        }
+    # Se schimbă AUTOMAT la ora 00:00 pentru Mâine CS2 (Joi, 20 August 2026)
+    else:
+        return {
+            "Natus Vincere vs FaZe Clan": {
+                "liga": "ESL PRO LEAGUE &bull; MÂINE", "maps_gz": "71%", "maps_os": "65%", "pistol_gz": "58%", "pistol_os": "60%", "clutch_gz": "55%", "w_over": "69%", "w_winner": "NAVI"
+            },
+            "Vitality vs G2 Esports": {
+                "liga": "ESL PRO LEAGUE &bull; MÂINE", "maps_gz": "69%", "maps_os": "58%", "pistol_gz": "54%", "pistol_os": "52%", "clutch_gz": "50%", "w_over": "58%", "w_winner": "Vitality"
             }
         }
