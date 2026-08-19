@@ -1,154 +1,54 @@
 import streamlit as st
+from datetime import datetime
 
 def aplica_stiluri_aplicatie_nativa():
     st.markdown("""
     <style>
         @import url('https://googleapis.com');
-        
-        /* Aplicatie Full-Screen pe fundal inchis, fara elemente de site */
-        .stApp {
-            background-color: #0d0d11 !important;
-            color: #ffffff !important;
-            font-family: 'Rajdhani', sans-serif !important;
-        }
-        
-        h1, h2, h3, h4, p, span, label {
-            font-family: 'Rajdhani', sans-serif !important;
-            color: #ffffff !important;
-        }
-        
-        /* Header-ul de cautare de sus ca in TikTok */
-        .app-search-bar {
-            background: #16161f;
-            border: 1px solid #222230;
-            border-radius: 25px;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        /* Cardurile mari de sport stilizate exact ca in imagine */
-        .native-card {
-            background: #16161f !important;
-            border: 1px solid #222230 !important;
-            border-radius: 16px !important;
-            padding: 18px !important;
-            margin-bottom: 12px !important;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
-        }
-
-        .native-flex {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .native-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .native-title {
-            font-size: 18px;
-            font-weight: 800;
-            margin: 0;
-            color: #ffffff;
-        }
-
-        .native-desc {
-            font-size: 13px;
-            color: #71717a;
-            margin: 2px 0 0 0;
-        }
-
-        /* Insignele verzi cu AVAILABLE Mov din imaginea ta */
-        .status-available {
-            background: rgba(176, 66, 255, 0.1) !important;
-            color: #b042ff !important;
-            border: 1px solid #b042ff !important;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-        }
-
-        .status-soon {
-            background: rgba(255, 255, 255, 0.02) !important;
-            color: #71717a !important;
-            border: 1px solid #27272a !important;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 800;
-        }
-
-        /* Stil tabel interior module sport */
-        .module-table {
-            width: 100%;
-            margin-top: 15px;
-        }
-
-        .module-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 8px;
-            border-bottom: 1px solid #222230;
-        }
-
-        .module-label {
-            color: #a1a1aa;
-            font-size: 14px;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        .module-val {
-            color: #ffffff;
-            font-weight: 800;
-            font-size: 16px;
-        }
-
-        .badge-purple-neon {
-            background: linear-gradient(135deg, #b042ff 0%, #7900f2 100%) !important;
-            color: #ffffff !important;
-            padding: 4px 14px;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 800;
-        }
-
-        /* Stil special pentru butoanele invizibile de click pe carduri */
-        div.stButton > button {
-            background: transparent !important;
-            border: none !important;
-            color: transparent !important;
-            padding: 0 !important;
-            height: 0px !important;
-            margin: 0 !important;
-        }
+        .stApp { background-color: #0b0b10 !important; color: #ffffff !important; font-family: 'Rajdhani', sans-serif !important; }
+        h1, h2, h3, h4, p, span, label { font-family: 'Rajdhani', sans-serif !important; color: #ffffff !important; }
+        .app-search-bar { background: #14141f; border: 1px solid #1f1f2e; border-radius: 25px; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .match-card-container { background: #14141f !important; border: 1px solid #1f1f2e !important; border-radius: 16px !important; padding: 20px !important; margin-bottom: 15px !important; box-shadow: 0 8px 24px rgba(0,0,0,0.4) !important; text-align: center; }
+        .match-header-info { font-size: 13px; color: #b042ff; font-weight: 700; margin-bottom: 12px; letter-spacing: 0.5px; }
+        .match-teams-grid { display: flex; justify-content: space-around; align-items: center; margin: 15px 0; }
+        .team-box-app { width: 40%; text-align: center; }
+        .team-name-app { font-size: 18px; font-weight: 800; margin-top: 5px; color: #ffffff; }
+        .vs-text-app { font-size: 14px; font-weight: 700; color: #71717a; width: 10%; }
+        .filter-time-bar { display: flex; justify-content: space-between; background: #14141f; padding: 6px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #1f1f2e; }
+        .filter-time-item { padding: 8px 16px; font-size: 14px; font-weight: 800; color: #71717a; border-radius: 8px; }
+        .filter-time-active { background: linear-gradient(135deg, #b042ff 0%, #7900f2 100%) !important; color: #ffffff !important; }
+        .module-table { width: 100%; margin-top: 15px; }
+        .module-row { display: flex; justify-content: space-between; padding: 10px 5px; border-bottom: 1px solid #1f1f2e; }
+        .module-label { color: #a1a1aa; font-size: 13px; text-transform: uppercase; font-weight: 700; }
+        .module-val { color: #ffffff; font-weight: 800; font-size: 15px; }
+        .badge-purple-neon { background: linear-gradient(135deg, #b042ff 0%, #7900f2 100%) !important; color: #ffffff !important; padding: 3px 10px; border-radius: 6px; font-size: 13px; font-weight: 800; }
     </style>
     """, unsafe_allow_html=True)
 
-def date_fotbal_interactiv():
-    return {
-        "FCSB vs Rapid București": {
-            "liga": "ROMÂNIA SUPERLIGA", "g_gz": "14", "g_os": "11", "med_gz": "1.75", "med_os": "1.37", "ht_gz": "85.71%", "p15_gz": "91.20%", "w_p15": "85%", "w_gg": "71%"
-        },
-        "LASK Linz vs FCSB": {
-            "liga": "UEFA EUROPA LEAGUE", "g_gz": "16", "g_os": "14", "med_gz": "1.85", "med_os": "1.55", "ht_gz": "84.10%", "p15_gz": "91.00%", "w_p15": "90%", "w_gg": "64%"
+def obtine_meciurile_zilei_automat():
+    # Verifică ziua curentă direct de pe ceasul serverului
+    ziua_curenta = datetime.now().strftime("%d")
+    
+    # Dacă este ziua de Azi (Miercuri, 19 August)
+    if ziua_curenta == "19":
+        return {
+            "MTK Budapest vs Puskas Academy": {
+                "liga": "NB I (HUNGARY) &bull; LIVE", "g_gz": "12", "g_os": "15", "med_gz": "1.65", "med_os": "1.80", "ht_gz": "82.00%", "w_p15": "88%", "w_gg": "68%"
+            },
+            "Vysočina Jihlava vs Příbram": {
+                "liga": "FNL (CZECH REPUBLIC) &bull; 18:45", "g_gz": "9", "g_os": "11", "med_gz": "1.20", "med_os": "1.40", "ht_gz": "74.50%", "w_p15": "81%", "w_gg": "55%"
+            },
+            "SJK vs Gnistan": {
+                "liga": "VEIKKAUSLIIGA (FINLAND) &bull; 19:00", "g_gz": "16", "g_os": "14", "med_gz": "2.05", "med_os": "1.75", "ht_gz": "89.10%", "w_p15": "93%", "w_gg": "74%"
+            }
         }
-    }
-
-def date_cs2_interactiv():
-    return {
-        "FaZe Clan vs Natus Vincere": {
-            "liga": "PGL MAJOR COLOGNE", "maps_gz": "64%", "maps_os": "72%", "pistol_gz": "58%", "pistol_os": "61%", "clutch_gz": "54%", "w_over": "68%", "w_winner": "FaZe"
-        },
-        "G2 Esports vs Team Vitality": {
-            "liga": "BLAST PREMIER FINALS", "maps_gz": "55%", "maps_os": "68%", "pistol_gz": "50%", "pistol_os": "55%", "clutch_gz": "48%", "w_over": "59%", "w_winner": "Vitality"
+    # Când ceasul trece de 00:00 și devine Joi (20 August), se încarcă automat meciurile astea:
+    else:
+        return {
+            "LASK Linz vs FCSB": {
+                "liga": "UEFA EUROPA LEAGUE &bull; JOI", "g_gz": "16", "g_os": "14", "med_gz": "1.85", "med_os": "1.55", "ht_gz": "84.10%", "w_p15": "90%", "w_gg": "64%"
+            },
+            "CFR Cluj vs Pafos FC": {
+                "liga": "UEFA CONFERENCE LEAGUE &bull; JOI", "g_gz": "15", "g_os": "11", "med_gz": "1.65", "med_os": "1.28", "ht_gz": "81.00%", "w_p15": "85%", "w_gg": "58%"
+            }
         }
-    }
