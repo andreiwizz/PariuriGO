@@ -124,3 +124,155 @@ with col3:
     """, unsafe_allow_html=True)
     if st.button("Abonează-te (120 lei)", key="pro"):
         st.info("Redirecționare către plata Stripe...")
+import streamlit as st
+from baza import init_db, adauga_pont, get_ponturi, salveaza_user, verfica_acces
+
+init_db()
+
+st.set_page_config(page_title="BetGO VIP", page_icon="⚡", layout="centered")
+
+# CSS Modern Style
+st.markdown("""
+    <style>
+    .stApp { background-color: #0d0e15; }
+    .card-pricing {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .card-vip {
+        border: 1px solid #00E676;
+        box-shadow: 0px 0px 15px rgba(0, 230, 118, 0.2);
+    }
+    .badge-price {
+        font-size: 24px;
+        font-weight: 800;
+        color: #00E676;
+    }
+    .card-match {
+        background: #161822;
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 12px;
+        border-left: 4px solid #00E676;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+st.title("⚡ BetGO")
+
+# Session State Auth Simpla
+if "user_email" not in st.session_state:
+    st.session_state["user_email"] = None
+
+# Autentificare
+if not st.session_state["user_email"]:
+    st.subheader("🔑 Autentificare")
+    email_input = st.text_input("Introdu adresa de e-mail (Google / Apple / Email):")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("Autentificare cu Email", use_container_width=True):
+            if "@" in email_input:
+                st.session_state["user_email"] = email_input
+                salveaza_user(email_input)
+                st.rerun()
+            else:
+                st.error("E-mail invalid.")
+    with col2:
+        if st.button("Continue with Google / Apple", use_container_width=True):
+            st.info("Aici se conectează furnizorul OAuth direct.")
+else:
+    email = st.session_state["user_email"]
+    platit, abonament = verfica_acces(email)
+    
+    st.write(f"Conectat ca: **{email}** | Plan: **{abonament}**")
+    if st.button("Deconectare"):
+        st.session_state["user_email"] = None
+        st.rerun()
+        
+    st.divider()
+
+    # Daca NU are abonament platit -> Afiseaza Pachtele de Pret
+    if not platit:
+        st.subheader("🔒 Alege un plan pentru acces la ponturi")
+        
+        c1, c2, c3 = st.columns(3)
+        
+        with c1:
+            st.markdown("""
+                <div class="card-pricing">
+                    <h4>Săptămânal</h4>
+                    <div class="badge-price">40 LEI</div>
+                    <p style="color: #aaa; font-size: 12px;">7 Zile Acces VIP</p>
+                </div>
+            """, unsafe_allow_html=True)
+            if st.button("Cumpără (40 L)", key="p1", use_container_width=True):
+                # Link checkout Stripe
+                salveaza_user(email, "Săptămânal", 1)
+                st.rerun()
+
+        with c2:
+            st.markdown("""
+                <div class="card-pricing card-vip">
+                    <h4 style="color:#00E676;">Medium ⭐</h4>
+                    <div class="badge-price">70 LEI</div>
+                    <p style="color: #aaa; font-size: 12px;">1 Lună Acces VIP</p>
+                </div>
+            """, unsafe_allow_html=True)
+            if st.button("Cumpără (70 L)", key="p2", type="primary", use_container_width=True):
+                salveaza_user(email, "Medium", 1)
+                st.rerun()
+
+        with c3:
+            st.markdown("""
+                <div class="card-pricing">
+                    <h4>Pro VIP 🔥</h4>
+                    <div class="badge-price">120 LEI</div>
+                    <p style="color: #aaa; font-size: 12px;">3 Luni Acces Full</p>
+                </div>
+            """, unsafe_allow_html=True)
+            if st.button("Cumpără (120 L)", key="p3", use_container_width=True):
+                salveaza_user(email, "Pro VIP", 1)
+                st.rerun()
+
+    # Daca ARE abonament -> Afiseaza Ponturile
+    else:
+        st.success("✨ Abonament Activ! Ai acces complet la ponturi.")
+        
+        tab_azi, tab_maine, tab_admin = st.tabs(["🔥 Ponturi Azi", "📅 Ponturi Mâine", "⚙️ Admin"])
+
+        def afiseaza_ponturi_design(ziua):
+            meciuri = get_ponturi(ziua)
+            if not meciuri:
+                st.info("Niciun pont adăugat pentru moment.")
+            for m in meciuri:
+                st.markdown(f"""
+                    <div class="card-match">
+                        <small style="color: #888;">{m[1]}</small>
+                        <div style="font-size: 16px; font-weight: bold; margin: 4px 0;">{m[0]}</div>
+                        <div style="color: #00E676; font-weight: bold;">Pronostic: {m[2]} <span style="float:right; color:#fff; background:#222; padding:2px 8px; border-radius:4px;">Cotă {m[3]}</span></div>
+                    </div>
+                """, unsafe_allow_html=True)
+
+        with tab_azi:
+            afiseaza_ponturi_design("Azi")
+            
+        with tab_maine:
+            afiseaza_ponturi_design("Mâine")
+            
+        with tab_admin:
+            st.write("Panou Admin")
+            with st.form("add_p"):
+                m = st.text_input("Meci")
+                c = st.text_input("Competiție")
+                p = st.text_input("Pronostic")
+                cota = st.number_input("Cotă", min_value=1.0)
+                z = st.selectbox("Ziua", ["Azi", "Mâine"])
+                if st.form_submit_button("Adaugă Pont"):
+                    adauga_pont(m, c, p, cota, z)
+                    st.success("Adăugat!")
+                    st.rerun()
