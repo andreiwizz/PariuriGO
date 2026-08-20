@@ -1,1 +1,168 @@
 
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PariuriGO • BetGO Pro</title>
+    <style>
+        @import url('https://googleapis.com');
+        
+        body { 
+            margin: 0; 
+            padding: 0;
+            background: linear-gradient(rgba(4, 3, 8, 0.82), rgba(6, 4, 15, 0.86)), 
+                        url("teren.jpg");
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            color: #fff; 
+            overflow-x: hidden; 
+        }
+        
+        .betgo-header {
+            background: linear-gradient(90deg, #001675 0%, #00d6ff 100%);
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 214, 255, 0.25);
+        }
+        .betgo-logo { font-size: 24px; font-weight: 950; color: #ffffff; letter-spacing: -1px; }
+        .betgo-auth-buttons { display: flex; gap: 10px; }
+        
+        .btn-betgo-black { background: rgba(0, 0, 0, 0.2); color: #ffffff; border: 1px solid #ffffff; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; }
+        .btn-betgo-dark { background: #111111; color: #00d6ff; border: 1px solid #00d6ff; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; }
+
+        .app-container { display: flex; max-width: 1200px; margin: 30px auto; padding: 0 15px; gap: 20px; }
+        .col-left { width: 20%; }
+        .col-middle { width: 55%; }
+        .col-right { width: 25%; }
+
+        .menu-title { color: #00d6ff; font-weight: 800; font-size: 12px; margin-bottom: 12px; text-transform: uppercase; }
+        .menu-btn { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 12px; width: 100%; text-align: left; border-radius: 10px; font-weight: 700; font-size: 13px; margin-bottom: 8px; cursor: pointer; }
+        .menu-btn:hover { border-color: #00d6ff; background: rgba(0,214,255,0.03); }
+
+        .section-title { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 15px; text-transform: uppercase; }
+        
+        .betgo-row-container {
+            background: rgba(255, 255, 255, 0.96);
+            border-bottom: 1px solid #e2e8f0;
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+            border-radius: 8px;
+        }
+        .betgo-row-left { display: flex; align-items: center; gap: 15px; }
+        .betgo-time-box { font-size: 11px; color: #ef4444; font-weight: 700; text-align: center; min-width: 45px; }
+        .betgo-time-gray { color: #64748b; }
+        .betgo-teams-block { display: flex; flex-direction: column; gap: 2px; }
+        .betgo-team-name { font-size: 14px; font-weight: 800; color: #1e293b; }
+        .betgo-meta-info { font-size: 11px; color: #94a3b8; font-weight: 600; }
+
+        .betgo-row-right { display: flex; gap: 6px; }
+        .betgo-bet-button { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px 14px; min-width: 65px; text-align: center; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .betgo-label-odd { font-size: 11px; color: #64748b; font-weight: 600; }
+        .betgo-val-odd { font-size: 13px; color: #001675; font-weight: 800; }
+        .betgo-bet-button-vip { border-color: #b042ff; background: rgba(176, 66, 255, 0.04); }
+
+        .bilet-box { background: rgba(20, 20, 28, 0.85); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 16px; backdrop-filter: blur(10px); }
+        .bilet-title { font-weight: 800; font-size: 14px; text-align: center; margin: 0 0 12px 0; color: #00d6ff; }
+        .bilet-item { font-size: 12px; color: #cbd5e1; margin-bottom: 8px; background: rgba(255,255,255,0.02); padding: 8px; border-radius: 6px; }
+        .bilet-total { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; }
+        .stripe-btn { display: block; text-align: center; background: linear-gradient(135deg, #b042ff, #7900f2); color: #fff; text-decoration: none; padding: 12px; border-radius: 10px; font-weight: 800; font-size: 13px; margin-top: 12px; box-shadow: 0 4px 15px rgba(176, 66, 255, 0.3); }
+
+        .betgo-footer-compliance { background: rgba(15, 15, 22, 0.75); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 14px; padding: 16px; text-align: center; max-width: 1170px; margin: 40px auto 20px auto; }
+        .compliance-badge { background: #ff5700; color: #ffffff; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 6px; display: inline-block; margin-bottom: 8px; }
+        .compliance-text { font-size: 12px; color: #94a3b8; line-height: 1.5; margin: 0; }
+
+        @media (max-width: 768px) {
+            .app-container { flex-direction: column; padding: 10px; }
+            .col-left, .col-middle, .col-right { width: 100%; }
+            .betgo-row-container { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .betgo-row-right { width: 100%; justify-content: space-between; }
+            .betgo-bet-button { flex: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="betgo-header">
+        <div class="betgo-logo">BetGO</div>
+        <div class="betgo-auth-buttons">
+            <button class="btn-betgo-black">ÎNREGISTRARE</button>
+            <button class="btn-betgo-dark">CONECTARE</button>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <div class="col-left">
+            <div class="menu-title">📌 Favorite</div>
+            <button class="menu-btn">🇲🇩 Superliga României</button>
+            <button class="menu-btn">🇪🇺 UEFA Europa League</button>
+        </div>
+
+        <div class="col-middle">
+            <div class="section-title">⚽ Programe Active &bull; Predicții VIP</div>
+            
+            <div class="betgo-row-container">
+                <div class="betgo-row-left">
+                    <div class="betgo-time-box">20.08<br><span class="betgo-time-gray">20:00</span></div>
+                    <div class="betgo-teams-block">
+                        <div class="betgo-team-name">LASK Linz</div>
+                        <div class="betgo-team-name">FCSB 🇷🇴</div>
+                        <div class="betgo-meta-info">Europa League &bull; Play-off</div>
+                    </div>
+                </div>
+                <div class="betgo-row-right">
+                    <div class="betgo-bet-button"><span class="betgo-label-odd">1</span><span class="betgo-val-odd">2.15</span></div>
+                    <div class="betgo-bet-button"><span class="betgo-label-odd">X</span><span class="betgo-val-odd">3.40</span></div>
+                    <div class="betgo-bet-button betgo-bet-button-vip"><span class="betgo-label-odd" style="color:#b042ff;">2 VIP</span><span class="betgo-val-odd-vip">3.25</span></div>
+                </div>
+            </div>
+
+            <div class="betgo-row-container">
+                <div class="betgo-row-left">
+                    <div class="betgo-time-box" style="color:#00d6ff;">LIVE<br>Min 42</div>
+                    <div class="betgo-teams-block">
+                        <div class="betgo-team-name">CFR Cluj 🇷🇴</div>
+                        <div class="betgo-team-name">Pafos FC</div>
+                        <div class="betgo-meta-info">Conference League &bull; Play-off</div>
+                    </div>
+                </div>
+                <div class="betgo-row-right">
+                    <div class="betgo-bet-button betgo-bet-button-vip"><span class="betgo-label-odd" style="color:#b042ff;">1 VIP</span><span class="betgo-val-odd-vip">1.62</span></div>
+                    <div class="betgo-bet-button"><span class="betgo-label-odd">X</span><span class="betgo-val-odd">3.75</span></div>
+                    <div class="betgo-bet-button"><span class="betgo-label-odd">2</span><span class="betgo-val-odd">5.40</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-right">
+            <div class="bilet-box">
+                <div class="bilet-title">📋 BILETUL GENERAL VIP</div>
+                <div class="bilet-item"><b>LASK Linz vs FCSB</b><br>➡️ Peste 1.5 Goluri (1.35)</div>
+                <div class="bilet-item"><b>CFR Cluj vs Pafos FC</b><br>➡️ 1 Solist (1.60)</div>
+                <div class="bilet-total">
+                    <span style="font-weight:700; color:#a1a1aa; font-size:13px;">COTĂ RECOMANDATĂ</span>
+                    <span style="font-size:22px; font-weight:900; color:#00ff66;">2.16</span>
+                </div>
+                <a href="https://stripe.com" class="stripe-btn">🔓 DEBLOCHEAZĂ PE STRIPE</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="betgo-footer-compliance">
+        <div class="compliance-badge">🔞 JUCAȚI RESPONSABIL</div>
+        <p class="compliance-text">
+            Platforma BetGO oferă analize statistice matematice și predicții cu titlu pur informativ. Nu garantăm profit financiar sigur.<br>
+            Jocurile de noroc implică riscuri economice și pot crea dependență. Destinat exclusiv persoanelor de peste 18 ani (18+).
+        </p>
+    </div>
+
+</body>
+</html>
