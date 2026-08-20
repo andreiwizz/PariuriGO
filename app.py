@@ -1,7 +1,7 @@
 import streamlit as st
 import base64
 
-# 1. Configurare Pagină Full-Screen Nativă
+# 1. Configurare Pagina Full-Screen Nativa
 st.set_page_config(
     page_title="PariuriGO • VIP App",
     page_icon="⚽",
@@ -9,7 +9,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Funcție securizată pentru transformarea imaginii din folder în fundal web cu design curat
+# Functie securizata pentru transformarea imaginii din folder in fundal web
 def aplica_fundal_teren_local(cale_imagine):
     try:
         with open(cale_imagine, "rb") as f:
@@ -52,7 +52,6 @@ def aplica_fundal_teren_local(cale_imagine):
                 margin: -12px auto 25px auto; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.03);
             }
 
-            /* Câmpuri de text elegante (Glassmorphism fine) înăuntrul iPhone-ului */
             .stTextInput div[data-baseweb="input"] {
                 background-color: rgba(255, 255, 255, 0.03) !important;
                 border: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -60,7 +59,6 @@ def aplica_fundal_teren_local(cale_imagine):
             }
             .stTextInput input { color: #ffffff !important; font-size: 15px; }
 
-            /* Butoane mari forțate să arate ca niște carduri premium */
             div.stButton > button {
                 background: linear-gradient(135deg, #b042ff 0%, #7900f2 100%) !important;
                 color: #ffffff !important;
@@ -74,16 +72,9 @@ def aplica_fundal_teren_local(cale_imagine):
             }
             div.stButton > button:hover { transform: translateY(-1px) !important; box-shadow: 0 10px 25px rgba(176, 66, 255, 0.4) !important; }
 
-            /* NAVBAR-UL DE JOS */
             .app-bottom-navbar {
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-                background: #141419;
-                border-top: 1px solid #27272a;
-                padding: 12px 5px;
-                margin-top: 25px;
-                border-radius: 0 0 24px 24px;
+                display: flex; justify-content: space-around; align-items: center;
+                background: #141419; border-top: 1px solid #27272a; padding: 12px 5px; margin-top: 25px; border-radius: 0 0 24px 24px;
             }
             .nav-item-bottom { text-align: center; font-size: 11px; color: #a1a1aa; font-weight: 700; }
             .nav-item-center-gold {
@@ -97,63 +88,10 @@ def aplica_fundal_teren_local(cale_imagine):
     except:
         st.markdown("<style>.stApp { background-color: #040308 !important; }</style>", unsafe_allow_html=True)
 
-# Executăm fundalul de lux din poza ta
 aplica_fundal_teren_local("teren.jpg")
 
-# Inițializăm stările în memorie
 if "user_logat" not in st.session_state: st.session_state.user_logat = False
 if "baza_date_utilizatori" not in st.session_state: st.session_state.baza_date_utilizatori = {"admin": "pariurigo", "andreiwizz": "Parola123parola"}
 if "mod_ecran_autentificare" not in st.session_state: st.session_state.mod_ecran_autentificare = "login"
 
-# TOATE ELEMENTELE SE DESCHID REALE ACUM ÎN INTERIORUL TELEFONULUI
 st.markdown('<div class="phone-wrapper-container"><div class="phone-notch"></div>', unsafe_allow_html=True)
-
-if not st.session_state.user_logat:
-    if st.session_state.mod_ecran_autentificare == "login":
-        st.markdown("<h1 style='text-align:center; font-size:36px; font-weight:800; background: linear-gradient(135deg, #ffffff 0%, #b042ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom:5px;'>PariuriGO</h1>", unsafe_allow_html=True)
-    else:
-    st.markdown("""
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; padding:0 5px;">
-        <span style="font-size:16px; font-weight:700; color:#71717a;">🔀</span>
-        <span style="font-size:20px; font-weight:800; color:#ffffff;"><span style="color:#b042ff;">PariuriGO</span> VIP</span>
-        <span style="font-size:16px; color:#b042ff;">☰</span>
-    </div>
-    <div style="background:linear-gradient(135deg, #120b2e 0%, #05040f 100%); border:1px solid #b042ff; border-radius:20px; padding:16px; margin-bottom:18px; box-shadow:0 8px 25px rgba(176,66,255,0.15);">
-        <div style="background:rgba(176,66,255,0.2); color:#b042ff; font-size:10px; font-weight:800; padding:4px 10px; border-radius:12px; display:inline-block; margin-bottom:8px;">&bull; VIP ACTIVE</div>
-        <h3 style="margin:0 0 4px 0; font-size:19px; font-weight:800; color:#ffffff;">PREDICTION SYSTEM</h3>
-        <p style="margin:0; font-size:11px; color:#a1a1aa; line-height:1.4;">Bine ai venit în portalul premium de analiză sportivă!</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.success("🔓 Sistem complet deblocat cu succes!")
-    
-    zona_activa = st.selectbox("📂 Secțiuni active:", ["🏠 Meniu Principal", "🎟️ Biletul Zilei", "💬 Live Chat VIP"])
-    
-    if zona_activa == "🎟️ Biletul Zilei":
-        st.write("---")
-        st.markdown("### 🎫 COTA 2 PREMIUM")
-        st.info("• LASK Linz vs FCSB ➡️ Peste 1.5 goluri\n• CFR Cluj vs Pafos FC ➡️ 1 Solist")
-    elif zona_activa == "💬 Live Chat VIP":
-        st.write("---")
-        st.markdown("### 💬 Chat Premium")
-        st.write("**Admin 👑:** Biletele sunt trimise, spor la profit!")
-        
-    st.write("---")
-    
-    st.markdown("""
-    <div class="app-bottom-navbar">
-        <div class="nav-item-bottom">🤖<br><span style="color:#b042ff;">AI Engine</span></div>
-        <div class="nav-item-bottom">⚽<br>Live</div>
-        <div class="nav-item-center-gold">🏠</div>
-        <div class="nav-item-bottom">🎟️<br>Ticket</div>
-        <div class="nav-item-bottom">📞<br>Contact</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    with st.sidebar:
-        if st.button("🔒 Sign Out / Reset cont", use_container_width=True, key="logout_final_v6"):
-            st.session_state.user_logat = False
-            st.rerun()
-
-st.markdown('</div>', unsafe_allow_html=True)
-
