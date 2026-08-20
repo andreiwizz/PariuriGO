@@ -3,13 +3,13 @@ import base64
 
 # 1. Configurare Pagină Full-Screen Nativă
 st.set_page_config(
-    page_title="PariuriGO • Core VIP",
+    page_title="BetGO • Core VIP",
     page_icon="⚽",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
-# Funcție securizată pentru injectarea imaginii teren.jpg cu opacitate perfect echilibrată
+# Funcție securizată pentru injectarea imaginii teren.jpg cu opacitate
 def aplica_fundal_teren_calibrat(cale_imagine):
     try:
         with open(cale_imagine, "rb") as f:
@@ -17,7 +17,6 @@ def aplica_fundal_teren_calibrat(cale_imagine):
         b64_img = base64.b64encode(data).decode()
         st.markdown("""
         <style>
-            /* Am setat opacitatea la 0.82 ca să fie o idee mai vizibil și mai clar terenul */
             .stApp {
                 background: linear-gradient(rgba(4, 3, 8, 0.82), rgba(6, 4, 15, 0.86)), 
                             url("data:image/jpeg;base64,""" + b64_img + """") !important;
@@ -26,8 +25,6 @@ def aplica_fundal_teren_calibrat(cale_imagine):
                 background-repeat: no-repeat !important;
                 background-attachment: fixed !important;
             }
-            
-            /* Ascundem complet meniurile de fundal Streamlit */
             #MainMenu, footer, header { display: none !important; }
             div[data-testid="stToolbar"] { display: none !important; }
         </style>
@@ -35,125 +32,134 @@ def aplica_fundal_teren_calibrat(cale_imagine):
     except:
         st.markdown("<style>.stApp { background-color: #040308 !important; }</style>", unsafe_allow_html=True)
 
-# Activăm imaginea cu terenul în varianta perfect vizibilă, dar profesională
 aplica_fundal_teren_calibrat("teren.jpg")
-# ================== UPDATE ULTRAPRO: INTERFAȚA PREMIUM STIL BETANO ==================
 
-# Injectăm CSS-ul pentru structura pe coloane, bara portocalie și cardurile cu meciuri
+# Stylings CSS: Header Verde Neon & Grila curată de meciuri
 st.markdown("""
 <style>
-    /* 1. BARA DE SUS PORTOCALIE (IDENTICĂ BETANO) */
-    .betano-header {
-        background: linear-gradient(90deg, #f95700 0%, #ff6a00 100%) !important;
-        padding: 12px 20px;
+    /* Header Verde Neon */
+    .header-verde {
+        background: linear-gradient(90deg, #00E676 0%, #00B0FF 100%);
+        padding: 15px 25px;
+        border-radius: 12px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 15px rgba(249, 87, 0, 0.25);
-    }
-    .betano-logo { font-size: 24px; font-weight: 900; color: #ffffff !important; letter-spacing: -1px; }
-    .betano-auth-buttons { display: flex; gap: 10px; }
-    
-    /* 2. BUTOANELE ALBE ȘI VERZI DE SUS */
-    .btn-betano-white {
-        background: rgba(255, 255, 255, 0.15) !important;
-        color: #ffffff !important; border: 1px solid #ffffff !important;
-        padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 700;
-    }
-    .btn-betano-green {
-        background: #00db66 !important; color: #000000 !important; border: none !important;
-        padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 700;
-        box-shadow: 0 2px 8px rgba(0, 219, 102, 0.3);
+        color: #000;
+        font-weight: 800;
+        box-shadow: 0 4px 20px rgba(0, 230, 118, 0.3);
+        margin-bottom: 25px;
     }
 
-    /* 3. CARDURILE DE MECIURI MARI DE MIJLOC (SLIDERELE DIN IMAGINE) */
-    .betano-match-card {
-        background: rgba(20, 20, 28, 0.92) !important;
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px; padding: 16px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-        margin-bottom: 15px;
+    /* Grilă stilizată Meciuri (Card alb curat) */
+    .match-row {
+        background: #ffffff;
+        color: #1a1a1a;
+        padding: 12px 18px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        border-left: 4px solid #00E676;
     }
-    .betano-badge-live { background: #ff0000; color: #ffffff; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px; }
-    .betano-odds-row { display: flex; gap: 8px; margin-top: 12px; }
     
-    /* Căsuțele cu cote 1 X 2 */
-    .betano-odd-box {
-        flex: 1; background: #222232; border: 1px solid #333348;
-        border-radius: 6px; padding: 8px; text-align: center; font-weight: 800; color: #00ff66;
+    .team-name {
+        font-weight: 700;
+        font-size: 15px;
+        color: #111;
     }
-    .betano-odd-box span { display: block; font-size: 11px; color: #8888a0; font-weight: 600; }
+
+    .league-sub {
+        font-size: 11px;
+        color: #666;
+    }
+
+    .odd-box {
+        background: #f0f2f5;
+        border-radius: 6px;
+        padding: 6px 12px;
+        font-weight: bold;
+        color: #008744;
+        font-size: 14px;
+        border: 1px solid #e0e0e0;
+    }
+
+    /* Caseta de Login */
+    .google-login-box {
+        max-width: 420px;
+        margin: 60px auto;
+        background: rgba(13, 11, 22, 0.85) !important;
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(0, 230, 118, 0.2);
+        border-radius: 24px;
+        padding: 30px 24px;
+        box-shadow: 0 30px 70px -15px rgba(0, 230, 118, 0.2);
+        text-align: center;
+    }
+
+    div.stButton > button {
+        background-color: #ffffff !important;
+        color: #1f1f1f !important;
+        font-weight: 700 !important;
+        border-radius: 12px !important;
+        padding: 12px 20px !important;
+        width: 100% !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
-# ---- 1. RANDAREA BAREI PORTOCALII DE SUS ----
-st.markdown("""
-<div class="betano-header">
-    <div class="betano-logo">PariuriGO</div>
-    <div class="betano-auth-buttons">
-        <button class="btn-betano-white">ÎNREGISTRARE</button>
-        <button class="btn-betano-green">CONECTARE</button>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+if "utilizator_autentificat_google" not in st.session_state:
+    st.session_state.utilizator_autentificat_google = False
 
-# ---- 2. STRUCTURA PE 3 COLOANE (MENIU STÂNGA | MECIURI MIJLOC | BILET DREAPTA) ----
-col_stanga, col_mijloc, col_dreapta = st.columns([0.8, 2.2, 1.0], gap="medium")
-
-# COLOANA 1: MENIUL LATERAL (SPORTURI)
-with col_stanga:
-    st.markdown("<p style='color:#ff6a00; font-weight:800; font-size:12px; margin-bottom:10px;'>📌 FAVORITE</p>", unsafe_allow_html=True)
-    st.button("🇷🇴 Liga 1 România", key="menu_l1")
-    st.button("🇪🇺 Liga Campionilor", key="menu_champs")
-    st.button("🎮 CS2 Esports Pro", key="menu_cs2")
+# ---- ECRANUL A: LOGARE ----
+if not st.session_state.utilizator_autentificat_google:
+    st.markdown('<div class="google-login-box">', unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align:center; font-size:34px; font-weight:800; color:#00E676; margin-bottom:5px;'>BetGO</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align:center; color:#8e8e93; font-size:13px; margin-bottom:35px;'>Conectează-te cu Google pentru acces VIP</p>", unsafe_allow_html=True)
     
-    st.write("")
-    st.markdown("<p style='color:#888; font-weight:800; font-size:12px; margin-bottom:10px;'>⚽ SPORTURI</p>", unsafe_allow_html=True)
-    st.caption("Fotbal • Tenis • Baschet • Handbal")
+    if st.button("🔴 &nbsp; Sign in with Google", key="google_auth_btn"):
+        st.session_state.utilizator_autentificat_google = True
+        st.rerun()
+        
+    st.markdown('</div>', unsafe_allow_html=True)
 
-# COLOANA 2: PANOU CENTRAL (CARDURILE DE MECIURI TOP CU COTE INTERACTIVE)
-with col_mijloc:
-    st.markdown("<p style='color:#ffffff; font-weight:800; font-size:16px; margin-bottom:15px;'>🔥 MECIURI RECOMANDATE ÎN ACTION</p>", unsafe_allow_html=True)
-    
-    # Meciul 1 din Imagine
+# ---- ECRANUL B: INTERFAȚA VIP CU GRILĂ DE MECIURI ----
+else:
+    # Header Verde Nativ
     st.markdown("""
-    <div class="betano-match-card">
-        <span class="betano-badge-live">DISEARĂ 21:45</span>
-        <span style="color:#8888a0; font-size:12px; float:right;">🏆 UEFA EUROPA LEAGUE</span>
-        <h3 style="margin: 8px 0; font-size: 18px; font-weight: 800;">LASK Linz vs FCSB</h3>
-        <p style="color:#cbd5e1; font-size:12px; margin:0;">💡 Recomandare Algoritm: <b style="color:#00ff66;">Peste 1.5 goluri</b></p>
-        <div class="betano-odds-row">
-            <div class="betano-odd-box"><span>1</span>2.20</div>
-            <div class="betano-odd-box"><span>X</span>3.40</div>
-            <div class="betano-odd-box"><span>2</span>3.10</div>
+        <div class="header-verde">
+            <span style="font-size:22px;">⚡ BetGO VIP</span>
+            <span style="font-size:14px; background:rgba(0,0,0,0.15); padding:4px 12px; border-radius:20px;">
+                🟢 CONECTAT
+            </span>
         </div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Meciul 2 din Imagine
-    st.markdown("""
-    <div class="betano-match-card">
-        <span class="betano-badge-live" style="background:#ff6a00;">LIVE MIN 62</span>
-        <span style="color:#8888a0; font-size:12px; float:right;">🏆 SUPERLIGA</span>
-        <h3 style="margin: 8px 0; font-size: 18px; font-weight: 800;">CFR Cluj vs Pafos FC</h3>
-        <p style="color:#cbd5e1; font-size:12px; margin:0;">💡 Recomandare Algoritm: <b style="color:#00ff66;">1 Solist</b></p>
-        <div class="betano-odds-row">
-            <div class="betano-odd-box" style="border-color:#ff6a00;"><span>1</span>1.65</div>
-            <div class="betano-odd-box"><span>X</span>3.75</div>
-            <div class="betano-odd-box"><span>2</span>5.20</div>
-        </div>
-    </div>
     """, unsafe_allow_html=True)
 
-# COLOANA 3: BILETUL MEU (PANOU DREAPTA SPECIFIC BETANO)
-with col_dreapta:
-    with st.container(border=True):
-        st.markdown("<p style='font-weight:800; font-size:14px; margin:0; text-align:center;'>📋 BILETUL MEU VIP</p>", unsafe_allow_html=True)
-        st.write("---")
-        st.caption("• LASK Linz vs FCSB ➡️ Peste 1.5 goluri (1.35)")
-        st.caption("• CFR Cluj vs Pafos FC ➡️ 1 Solist (1.60)")
-        st.write("---")
-        st.metric(label="💰 COTĂ TOTALĂ", value="2.16")
-        st.link_button("🔒 DEBLOCHEAZĂ BILETUL PRIN STRIPE", "https://stripe.com", use_container_width=True)
+    # Grila Curată de Meciuri
+    meciuri_demo = [
+        {"meci": "Universitatea Craiova vs FC Ararat-Armenia", "liga": "Liga Europa", "pronostic": "1 Solist", "cota": "1.40"},
+        {"meci": "FC Inter Turku vs FC Copenhagan", "liga": "Conference League", "pronostic": "2 Solist", "cota": "1.85"},
+        {"meci": "SL Benfica vs Aarhus GF", "liga": "Liga Europa", "pronostic": "Peste 2.5 Goluri", "cota": "1.55"},
+        {"meci": "Trabzonspor vs Ferencvarosi TC", "liga": "Liga Europa", "pronostic": "Ambele Marchează", "cota": "1.78"},
+        {"meci": "LASK Linz vs FCSB", "liga": "UEFA Europa League", "pronostic": "Peste 1.5 Goluri", "cota": "1.35"}
+    ]
+
+    st.subheader("🔥 Ponturi Recomandate (Grilă Directă)")
+    
+    for m in meciuri_demo:
+        st.markdown(f"""
+            <div class="match-row">
+                <div>
+                    <div class="team-name">{m['meci']}</div>
+                    <div class="league-sub">🏆 {m['liga']} • Pronostic: <b>{m['pronostic']}</b></div>
+                </div>
+                <div class="odd-box">Cotă {m['cota']}</div>
+            </div>
+        """, unsafe_allow_html=True)
+
+    st.write("---")
+    if st.button("🔒 Deconectare Cont", key="logout_btn"):
+        st.session_state.utilizator_autentificat_google = False
+        st.rerun()
