@@ -73,3 +73,76 @@ st.markdown("<h3 style='text-align:center; color:#b042ff; font-weight:800; font-
 st.markdown("<p style='text-align:center; color:#8e8e93; font-size:13px; margin-top:-5px;'>Eroarea de sintaxă a fost eliminată complet.</p>", unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True) # Închide corect containerul telefonului
+    # ECRANUL DE ÎNREGISTRARE CONT DIRECT ÎN IPHONE
+    elif st.session_state.mod_ecran_autentificare == "register":
+        st.markdown("<h1 style='text-align:center; font-size:28px; font-weight:800; color:#b042ff; margin-bottom:5px;'>Sign Up</h1>", unsafe_allow_html=True)
+        st.markdown("<p style='text-align:center; color:#8e8e93; font-size:13px; margin-top:0; margin-bottom:25px;'>Create a permanent member profile</p>", unsafe_allow_html=True)
+        
+        new_user = st.text_input("CHOOSE USERNAME", placeholder="Username...", key="reg_user_v6")
+        new_pass = st.text_input("CHOOSE SECURE KEY", type="password", placeholder="Password...", key="reg_pass_v6")
+        confirm_pass = st.text_input("CONFIRM SECURE KEY", type="password", placeholder="Repeat password...", key="reg_pass_conf_v6")
+        
+        st.write("")
+        if st.button("✨ REGISTER PROFILE NOW", key="btn_exec_reg_v6"):
+            if not new_user or not new_pass: st.error("All areas required!")
+            elif new_user in st.session_state.baza_date_utilizatori: st.error("Username taken!")
+            elif new_pass != confirm_pass: st.error("Keys mismatch!")
+            else:
+                st.session_state.baza_date_utilizatori[new_user] = new_pass
+                st.success("Account created!")
+                st.session_state.mod_ecran_autentificare = "login"
+                st.rerun()
+        st.write("---")
+        if st.button("⬅️ BACK TO LOG IN", key="btn_back_v6"):
+            st.session_state.mod_ecran_autentificare = "login"
+            st.rerun()
+
+# ================== INTERFAȚA PENTRU UTILIZATORII LOGAȚI ==================
+else:
+    st.markdown("""
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; padding:0 5px;">
+        <span style="font-size:16px; font-weight:700; color:#71717a;">🔀</span>
+        <span style="font-size:20px; font-weight:800; color:#ffffff;"><span style="color:#b042ff;">PariuriGO</span> VIP</span>
+        <span style="font-size:16px; color:#b042ff;">☰</span>
+    </div>
+    <div style="background:linear-gradient(135deg, #120b2e 0%, #05040f 100%); border:1px solid #b042ff; border-radius:20px; padding:16px; margin-bottom:18px; box-shadow:0 8px 25px rgba(176,66,255,0.15);">
+        <div style="background:rgba(176,66,255,0.2); color:#b042ff; font-size:10px; font-weight:800; padding:4px 10px; border-radius:12px; display:inline-block; margin-bottom:8px;">&bull; VIP ACTIVE</div>
+        <h3 style="margin:0 0 4px 0; font-size:19px; font-weight:800; color:#ffffff;">PREDICTION SYSTEM</h3>
+        <p style="margin:0; font-size:11px; color:#a1a1aa; line-height:1.4;">Bine ai venit în portalul premium de analiză sportivă!</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.success("🔓 Sistem complet deblocat cu succes!")
+    
+    # Adăugăm un selector curat pentru funcții direct în telefon
+    zona_activa = st.selectbox("📂 Secțiuni active:", ["🏠 Meniu Principal", "🎟️ Biletul Zilei", "💬 Live Chat VIP"])
+    
+    if zona_activa == "🎟️ Biletul Zilei":
+        st.write("---")
+        st.markdown("### 🎫 COTA 2 PREMIUM")
+        st.info("• LASK Linz vs FCSB ➡️ Peste 1.5 goluri\n• CFR Cluj vs Pafos ➡️ 1 Solist")
+    elif zona_activa == "💬 Live Chat VIP":
+        st.write("---")
+        st.markdown("### 💬 Chat Premium")
+        st.write("**Admin 👑:** Biletele sunt trimise, spor la profit!")
+        
+    st.write("---")
+    
+    # BARA DE NAVIGARE ORIZONTALĂ DE JOS (O ÎNCHIDEM DESIGNER DIRECT ÎN CORP)
+    st.markdown("""
+    <div class="app-bottom-navbar">
+        <div class="nav-item-bottom">🤖<br><span style="color:#b042ff;">AI Engine</span></div>
+        <div class="nav-item-bottom">⚽<br>Live</div>
+        <div class="nav-item-center-gold">🏠</div>
+        <div class="nav-item-bottom">🎟️<br>Ticket</div>
+        <div class="nav-item-bottom">📞<br>Contact</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    with st.sidebar:
+        if st.button("🔒 Sign Out / Reset cont", use_container_width=True, key="logout_final_v6"):
+            st.session_state.user_logat = False
+            st.rerun()
+
+st.markdown('</div>', unsafe_allow_html=True) # ÎNCHIDE CORPUL PENTRU wrapper-container
+
