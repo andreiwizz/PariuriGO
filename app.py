@@ -43,3 +43,98 @@ if not st.session_state.utilizator_logat:
             st.error("Access Denied! Check your credentials.")
             
     st.markdown('</div>', unsafe_allow_html=True) # Închide caseta de login în modul securizat
+# ---- ECRANUL DEBLOCAT (MENIUL PRINCIPAL DE SPORTURI DIN APLICAȚIE) ----
+else:
+    st.markdown('<p style="color:#a855f7; font-size:13px; font-weight:800; margin-bottom:15px; text-transform:uppercase; letter-spacing:0.5px; text-align:center;">🔥 PREDICTION ENGINES ACTIVATED</p>', unsafe_allow_html=True)
+    
+    # Meniul de control discret integrat în interfață
+    optiune = st.selectbox(
+        "⚡ SELECTEAZĂ PORTALUL:", 
+        ["Alege un sport activ...", "⚽ FOTBAL", "🎮 COUNTER-STRIKE 2 (CS2)"],
+        key="sel_sport_premium_v3"
+    )
+    
+    if optiune == "⚽ FOTBAL":
+        st.session_state.ecran_activ = "modul_fotbal"
+    elif optiune == "🎮 COUNTER-STRIKE 2 (CS2)":
+        st.session_state.ecran_activ = "modul_cs2"
+
+    st.write("")
+    
+    # 1. FOTBAL AVAILABLE
+    st.markdown("""
+    <div class="premium-sport-card">
+        <div class="sport-left-section">
+            <div class="sport-icon-box">⚽</div>
+            <div>
+                <div class="card-main-title">Fotbal</div>
+                <div class="card-sub-desc">Goals Predictor & Half-Time Analytics</div>
+            </div>
+        </div>
+        <span class="tag-active">AVAILABLE</span>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # 2. CS2 AVAILABLE
+    st.markdown("""
+    <div class="premium-sport-card" style="border-color: rgba(168, 85, 247, 0.25);">
+        <div class="sport-left-section">
+            <div class="sport-icon-box" style="color:#a855f7;">🎮</div>
+            <div>
+                <div class="card-main-title" style="color:#a855f7;">CS2 Esports</div>
+                <div class="card-sub-desc">Pistol Rounds & Map Performance Data</div>
+            </div>
+        </div>
+        <span class="tag-active" style="background:rgba(168,85,247,0.1); color:#a855f7 !important; border:1px solid #a855f7;">AVAILABLE</span>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # 3. BASCHET SOON
+    st.markdown("""
+    <div class="premium-sport-card" style="opacity:0.4;">
+        <div class="sport-left-section">
+            <div class="sport-icon-box">🏀</div>
+            <div>
+                <div class="card-main-title">Baschet</div>
+                <div class="card-sub-desc">NBA Lineups & Player Performance</div>
+            </div>
+        </div>
+        <span class="tag-upcoming">SOON</span>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # 4. HOCHEY SOON
+    st.markdown("""
+    <div class="premium-sport-card" style="opacity:0.4;">
+        <div class="sport-left-section">
+            <div class="sport-icon-box">🏒</div>
+            <div>
+                <div class="card-main-title">Hockey</div>
+                <div class="card-sub-desc">NHL System Predictions</div>
+            </div>
+        </div>
+        <span class="tag-upcoming">SOON</span>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # 5. TENIS SOON
+    st.markdown("""
+    <div class="premium-sport-card" style="opacity:0.4;">
+        <div class="sport-left-section">
+            <div class="sport-icon-box">🎾</div>
+            <div>
+                <div class="card-main-title">Tenis</div>
+                <div class="card-sub-desc">Live Court Analytics</div>
+            </div>
+        </div>
+        <span class="tag-upcoming">SOON</span>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Buton mic și elegant în sidebar în caz că vrei să dai Log Out pe viitor
+    with st.sidebar:
+        if st.button("🔒 Sign Out / Lock Device", use_container_width=True):
+            st.session_state.utilizator_logat = False
+            st.rerun()
+
+st.markdown('</div>', unsafe_allow_html=True) # Închide corect phone-wrapper-container
