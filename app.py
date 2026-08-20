@@ -81,3 +81,46 @@ with tab_admin:
                 st.rerun()
             else:
                 st.error("Te rugăm să completezi toate câmpurile.")
+import streamlit as st
+
+# Pagina de Abonamente / Paywall
+st.subheader("🔒 Alege un plan pentru a debloca ponturile VIP")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.markdown("""
+        <div style="background-color: #262730; padding: 20px; border-radius: 10px; text-align: center;">
+            <h3>Săptămânal</h3>
+            <h2>40 lei <span>/săpt</span></h2>
+            <p>✅ Acces la ponturile zilnice</p>
+            <p>✅ Suport dedicat</p>
+        </div>
+    """, unsafe_allow_html=True)
+    if st.button("Abonează-te (40 lei)", key="sapt"):
+        st.info("Redirecționare către plata Stripe...")
+
+with col2:
+    st.markdown("""
+        <div style="background-color: #1E3A8A; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #3B82F6;">
+            <h3>Medium ⭐</h3>
+            <h2>70 lei <span>/lună</span></h2>
+            <p>✅ Acces la ponturi zilnice</p>
+            <p>✅ Statistici avansate</p>
+        </div>
+    """, unsafe_allow_html=True)
+    if st.button("Abonează-te (70 lei)", key="med"):
+        st.info("Redirecționare către plata Stripe...")
+
+with col3:
+    st.markdown("""
+        <div style="background-color: #064E3B; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #10B981;">
+            <h3>Pro (VIP) 🔥</h3>
+            <h2>120 lei <span>/3 luni</span></h2>
+            <p>✅ Acces la absolut toate ponturile</p>
+            <p>✅ Cota 2 & Biletul Zilei</p>
+            <p>✅ Notification Alert</p>
+        </div>
+    """, unsafe_allow_html=True)
+    if st.button("Abonează-te (120 lei)", key="pro"):
+        st.info("Redirecționare către plata Stripe...")
