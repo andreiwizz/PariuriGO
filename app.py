@@ -111,49 +111,7 @@ st.markdown('<div class="phone-wrapper-container"><div class="phone-notch"></div
 if not st.session_state.user_logat:
     if st.session_state.mod_ecran_autentificare == "login":
         st.markdown("<h1 style='text-align:center; font-size:36px; font-weight:800; background: linear-gradient(135deg, #ffffff 0%, #b042ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom:5px;'>PariuriGO</h1>", unsafe_allow_html=True)
-        st.markdown("<p style='text-align:center; color:#8e8e93; font-size:13px; margin-top:0; margin-bottom:30px; font-weight:500;'>Sign in to deblock the premium center</p>", unsafe_allow_html=True)
-        
-        username = st.text_input("USER IDENTITY", placeholder="Username...", key="user_login_premium")
-        password = st.text_input("SECURE KEY", type="password", placeholder="Password...", key="pass_login_premium")
-        
-        st.write("")
-        if st.button("👉 SIGN IN TO APPLICATION", key="btn_exec_login_v6"):
-            if username in st.session_state.baza_date_utilizatori and st.session_state.baza_date_utilizatori[username] == password:
-                st.session_state.user_logat = True
-                st.rerun()
-            else: st.error("Access Denied! Wrong data.")
-                
-        st.write("---")
-        st.markdown("<p style='text-align:center; font-size:13px; color:#8e8e93;'>New to our network?</p>", unsafe_allow_html=True)
-        if st.button("➕ CREATE PROFILE ACCOUNT 🚀", key="btn_go_to_reg_v6"):
-            st.session_state.mod_ecran_autentificare = "register"
-            st.rerun()
-
-    elif st.session_state.mod_ecran_autentificare == "register":
-        st.markdown("<h1 style='text-align:center; font-size:28px; font-weight:800; color:#b042ff; margin-bottom:5px;'>Sign Up</h1>", unsafe_allow_html=True)
-        st.markdown("<p style='text-align:center; color:#8e8e93; font-size:13px; margin-top:0; margin-bottom:25px;'>Create a permanent member profile</p>", unsafe_allow_html=True)
-        
-        new_user = st.text_input("CHOOSE USERNAME", placeholder="Username...", key="reg_user_v6")
-        new_pass = st.text_input("CHOOSE SECURE KEY", type="password", placeholder="Password...", key="reg_pass_v6")
-        confirm_pass = st.text_input("CONFIRM SECURE KEY", type="password", placeholder="Repeat password...", key="reg_pass_conf_v6")
-        
-        st.write("")
-        if st.button("✨ REGISTER PROFILE NOW", key="btn_exec_reg_v6"):
-            if not new_user or not new_pass: st.error("All areas required!")
-            elif new_user in st.session_state.baza_date_utilizatori: st.error("Username taken!")
-            elif new_pass != confirm_pass: st.error("Keys mismatch!")
-            else:
-                st.session_state.baza_date_utilizatori[new_user] = new_pass
-                st.success("Account created!")
-                st.session_state.mod_ecran_autentificare = "login"
-                st.rerun()
-        st.write("---")
-        if st.button("⬅️ BACK TO LOG IN", key="btn_back_v6"):
-            st.session_state.mod_ecran_autentificare = "login"
-            st.rerun()
-
-# ================== INTERFAȚA PENTRU UTILIZATORII LOGAȚI ==================
-else:
+    else:
     st.markdown("""
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; padding:0 5px;">
         <span style="font-size:16px; font-weight:700; color:#71717a;">🔀</span>
@@ -174,7 +132,7 @@ else:
     if zona_activa == "🎟️ Biletul Zilei":
         st.write("---")
         st.markdown("### 🎫 COTA 2 PREMIUM")
-        st.info("• LASK Linz vs FCSB ➡️ Peste 1.5 goluri\n• CFR Cluj vs Pafos ➡️ 1 Solist")
+        st.info("• LASK Linz vs FCSB ➡️ Peste 1.5 goluri\n• CFR Cluj vs Pafos FC ➡️ 1 Solist")
     elif zona_activa == "💬 Live Chat VIP":
         st.write("---")
         st.markdown("### 💬 Chat Premium")
@@ -184,3 +142,18 @@ else:
     
     st.markdown("""
     <div class="app-bottom-navbar">
+        <div class="nav-item-bottom">🤖<br><span style="color:#b042ff;">AI Engine</span></div>
+        <div class="nav-item-bottom">⚽<br>Live</div>
+        <div class="nav-item-center-gold">🏠</div>
+        <div class="nav-item-bottom">🎟️<br>Ticket</div>
+        <div class="nav-item-bottom">📞<br>Contact</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    with st.sidebar:
+        if st.button("🔒 Sign Out / Reset cont", use_container_width=True, key="logout_final_v6"):
+            st.session_state.user_logat = False
+            st.rerun()
+
+st.markdown('</div>', unsafe_allow_html=True)
+
