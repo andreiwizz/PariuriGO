@@ -11,7 +11,7 @@ st.set_page_config(
 
 data_azi = datetime.now().strftime("%d.%m.%Y")
 
-# Injectăm stilurile profesionale OLED și Glassmorphism direct aici
+# Injectăm stilurile profesionale OLED, Telefon Centrat și Glassmorphism direct aici
 st.markdown("""
 <style>
     @import url('https://googleapis.com');
@@ -105,41 +105,21 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# Inițializăm stările de memorie
 if "utilizator_logat" not in st.session_state:
     st.session_state.utilizator_logat = False
+if "baza_date_utilizatori" not in st.session_state:
+    st.session_state.baza_date_utilizatori = {"admin": "pariurigo", "andreiwizz": "Parola123parola"}
+if "mod_ecran_autentificare" not in st.session_state:
+    st.session_state.mod_ecran_autentificare = "login"
 
-# CONSTRUIM DESIGN-UL DE TELEFON
+# CONSTRUIM CORPUL TELEFONULUI MOBIL CENTRAT PENTRU TOT SITE-UL
 st.markdown('<div class="phone-wrapper-container"><div class="phone-notch"></div>', unsafe_allow_html=True)
 
-# ---- ECRANUL DE LOGIN PROFESIONAL ----
+# ---- CAZUL A: UTILIZATORUL NU ESTE LOGAT ÎNCĂ ----
 if not st.session_state.utilizator_logat:
-    st.markdown("<h1 style='text-align:center; font-size:28px; font-weight:800; background: linear-gradient(135deg, #ffffff 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;'>PariuriGO</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align:center; color:#8e8e93; font-size:13px; margin-top:0; margin-bottom:25px; font-weight:500;'>Sign in to access the VIP prediction engine</p>", unsafe_allow_html=True)
     
-    username = st.text_input("USER IDENTITY", placeholder="Enter your membership username...", key="input_user")
-    password = st.text_input("SECURE KEY", type="password", placeholder="Enter your password...", key="input_pass")
-    
-    st.write("")
-    
-    if st.button("SIGN IN TO PREMIUM ACCOUNT", use_container_width=True):
-        if username == "admin" and password == "pariurigo":
-            st.session_state.utilizator_logat = True
-            st.success("Access Granted!")
-            st.rerun()
-        else:
-            st.error("Access Denied! Check your credentials.")
-            
-    st.markdown('</div>', unsafe_allow_html=True)
-# ---- INTERFAȚA DE LOGARE EXTINSĂ CU CREARE CONT AUTOMATĂ ----
-else:
-    # Inițializăm baza de date pentru clienții noi în memoria aplicației
-    if "baza_date_utilizatori" not in st.session_state:
-        st.session_state.baza_date_utilizatori = {"admin": "pariurigo", "andreiwizz": "Parola123parola"}
-        
-    if "mod_ecran_autentificare" not in st.session_state:
-        st.session_state.mod_ecran_autentificare = "login"
-
-    # Verificăm dacă suntem în modul normal de LOGIN
+    # ECRANUL DE LOGIN
     if st.session_state.mod_ecran_autentificare == "login":
         st.markdown("<h1 style='text-align:center; font-size:28px; font-weight:800; background: linear-gradient(135deg, #ffffff 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;'>PariuriGO</h1>", unsafe_allow_html=True)
         st.markdown("<p style='text-align:center; color:#8e8e93; font-size:13px; margin-top:0; margin-bottom:25px; font-weight:500;'>Sign in to access your VIP prediction portal</p>", unsafe_allow_html=True)
@@ -158,12 +138,12 @@ else:
                 st.error("Invalid Username or Password!")
                 
         st.write("---")
-        st.markdown("<p style='text-align:center; font-size:14px; color:#8e8e93;'>New to PariuriGO?</p>", unsafe_allow_html=True)
+        st.markdown("<p style='text-align:center; font-size:14px; color:#8e8e93; margin-bottom: 5px;'>New to PariuriGO?</p>", unsafe_allow_html=True)
         if st.button("CREATE NEW ACCOUNT 🚀", use_container_width=True):
             st.session_state.mod_ecran_autentificare = "register"
             st.rerun()
 
-    # Verificăm dacă utilizatorul a dat click pe CREARE CONT (REGISTER)
+    # ECRANUL DE REGISTER (CREARE CONT)
     elif st.session_state.mod_ecran_autentificare == "register":
         st.markdown("<h1 style='text-align:center; font-size:26px; font-weight:800; color:#a855f7;'>Sign Up Center</h1>", unsafe_allow_html=True)
         st.markdown("<p style='text-align:center; color:#8e8e93; font-size:13px; margin-top:0; margin-bottom:25px;'>Create a permanent membership profile</p>", unsafe_allow_html=True)
@@ -180,9 +160,8 @@ else:
             elif new_user in st.session_state.baza_date_utilizatori:
                 st.error("This username identity is already taken!")
             elif new_pass != confirm_pass:
-                st.error("Passwords do not match! Check the secure key.")
+                st.error("Passwords do not match!")
             else:
-                # Salvăm utilizatorul în baza de date locală
                 st.session_state.baza_date_utilizatori[new_user] = new_pass
                 st.success("Account successfully created!")
                 st.session_state.mod_ecran_autentificare = "login"
@@ -193,10 +172,8 @@ else:
             st.session_state.mod_ecran_autentificare = "login"
             st.rerun()
 
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# ---- ECRANUL DEBLOCAT: MENIUL PRINCIPAL DUPĂ LOGARE/ÎNREGISTRARE REUȘITĂ ----
-if st.session_state.utilizator_logat:
+# ---- CAZUL B: UTILIZATORUL ESTE LOGAT CU SUCCES (ECRANUL INTERIOR) ----
+else:
     st.markdown('<p style="color:#a855f7; font-size:13px; font-weight:800; margin-bottom:15px; text-transform:uppercase; letter-spacing:0.5px; text-align:center;">🔥 PREDICTION ENGINES ACTIVATED</p>', unsafe_allow_html=True)
     
     st.markdown("""
@@ -226,5 +203,5 @@ if st.session_state.utilizator_logat:
         if st.button("🔒 Lock Application / Sign Out", use_container_width=True):
             st.session_state.utilizator_logat = False
             st.rerun()
-            
-    st.markdown('</div>', unsafe_allow_html=True)
+
+st.markdown('</div>', unsafe_allow_html=True) # Închide corect phone-wrapper-container
