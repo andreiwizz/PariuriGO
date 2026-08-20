@@ -34,3 +34,17 @@ def get_ponturi(ziua):
     date = c.fetchall()
     conn.close()
     return date
+# Adaugă această funcție în baza.py pentru a gestiona utilizatorii
+def init_db_users():
+    conn = sqlite3.connect("betgo.db")
+    c = conn.cursor()
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS utilizatori (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            email TEXT UNIQUE,
+            plan TEXT DEFAULT 'Gratuit',
+            data_expirare DATE
+        )
+    ''')
+    conn.commit()
+    conn.close()
